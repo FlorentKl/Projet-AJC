@@ -14,9 +14,9 @@ public class AssociationRecetteCommentaireKey implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_comment_comment_fk"))
 	private Recette recette;
-	@ManyToOne
-	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "comment_auteur_fk"))
-	private Utilisateur auteur;
+        @ManyToOne
+        @JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "comment_auteur_fk"))
+        private Utilisateur auteur;
 	
 	public AssociationRecetteCommentaireKey() {
 		

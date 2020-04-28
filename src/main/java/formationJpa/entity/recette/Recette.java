@@ -17,16 +17,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import formationJpa.entity.AssociationRecetteCommentaire;
 import formationJpa.entity.Utilisateur;
 import formationJpa.entity.Ingredients.AssociationIngredientRecette;
-import formationJpa.entity.Ingredients.Ingredient;
 import formationJpa.entity.tag.AssociationTagRecette;
-import formationJpa.entity.tag.Tag;
 
 @Entity
 @Table(name = "Recipe")
@@ -49,7 +46,7 @@ public  abstract class Recette {
 	private List<AssociationIngredientRecette> ingredients;
 	@OneToMany(mappedBy ="id_recette")
 	private List<EtapeRecette> etapes;
-	@OneToMany(mappedBy ="id.commentaires")
+        @OneToMany(mappedBy = "id.recette")
 	private List<AssociationRecetteCommentaire>  commentaires;
 	@ManyToOne
 	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))

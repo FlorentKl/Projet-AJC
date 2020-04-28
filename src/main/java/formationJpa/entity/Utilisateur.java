@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,13 +16,13 @@ import javax.persistence.Table;
 import formationJpa.entity.recette.Recette;
 
 @Entity
-@Table(name = "user")
+@Table(name = "adherents")
 @SequenceGenerator(name = "seqUser", sequenceName = "seq_user", initialValue = 100, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Utilisateur {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqUser")
-	@Column(name="id_user")
+        @Column(name = "id_adherent")
 	private Integer id;
 	@Column(name = "username", length = 150,nullable = false )
 	private String pseudo;
@@ -31,12 +30,17 @@ public class Utilisateur {
 	private String password;
 	@OneToMany(mappedBy ="auteur")
 	private List<Recette> recette;
-	@OneToMany(mappedBy ="id.auteur")
+        @OneToMany(mappedBy = "id.auteur")
 	private List<AssociationRecetteCommentaire> commentaires;
 	
 	public Utilisateur() {
 		
 	}
+	
+	public Utilisateur(String pseudo, String password) {
+            this.pseudo = pseudo;
+            this.password = password;
+        }
 
 	public Utilisateur(Integer id, String pseudo, String password) {
 		this.id = id;
