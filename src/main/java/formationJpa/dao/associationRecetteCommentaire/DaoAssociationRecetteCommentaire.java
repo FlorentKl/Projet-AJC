@@ -1,0 +1,9 @@
+package formationJpa.dao.associationRecetteCommentaire;
+
+import formationJpa.dao.DaoGeneric;
+import formationJpa.entity.AssociationRecetteCommentaire;
+import formationJpa.entity.AssociationRecetteCommentaireKey;
+
+public interface DaoAssociationRecetteCommentaire extends DaoGeneric<AssociationRecetteCommentaire, AssociationRecetteCommentaireKey>{
+
+}

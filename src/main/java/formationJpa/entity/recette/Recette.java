@@ -21,9 +21,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import formationJpa.entity.AssociationRecetteCommentaires;
+import formationJpa.entity.AssociationRecetteCommentaire;
 import formationJpa.entity.Utilisateur;
-import formationJpa.entity.Ingredients.AssociationIngredientsRecette;
+import formationJpa.entity.Ingredients.AssociationIngredientRecette;
 import formationJpa.entity.Ingredients.Ingredient;
 import formationJpa.entity.tag.AssociationTagRecette;
 import formationJpa.entity.tag.Tag;
@@ -46,11 +46,11 @@ public  abstract class Recette {
 	@OneToMany(mappedBy = "id.recette")
 	private List<AssociationTagRecette> tags;
 	@OneToMany(mappedBy = "id.recette")
-	private List<AssociationIngredientsRecette> ingredients;
+	private List<AssociationIngredientRecette> ingredients;
 	@OneToMany(mappedBy ="id_recette")
 	private List<EtapeRecette> etapes;
 	@OneToMany(mappedBy ="id.commentaires")
-	private List<AssociationRecetteCommentaires>  commentaires;
+	private List<AssociationRecetteCommentaire>  commentaires;
 	@ManyToOne
 	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
 	private Utilisateur auteur;
@@ -113,11 +113,11 @@ public  abstract class Recette {
 		this.tags = tags;
 	}
 
-	public List<AssociationIngredientsRecette> getIngredients() {
+	public List<AssociationIngredientRecette> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(List<AssociationIngredientsRecette> ingredients) {
+	public void setIngredients(List<AssociationIngredientRecette> ingredients) {
 		this.ingredients = ingredients;
 	}
 
@@ -129,11 +129,11 @@ public  abstract class Recette {
 		this.etapes = etapes;
 	}
 
-	public List<AssociationRecetteCommentaires> getCommentaires() {
+	public List<AssociationRecetteCommentaire> getCommentaires() {
 		return commentaires;
 	}
 
-	public void setCommentaires(List<AssociationRecetteCommentaires> commentaires) {
+	public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
 		this.commentaires = commentaires;
 	}
 

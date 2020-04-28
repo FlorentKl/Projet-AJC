@@ -31,7 +31,7 @@ public class Ingredient {
 	@Column(name = "picture_ingredients")
 	private String photo;
 	@OneToMany(mappedBy = "id.recette")
-	private List<AssociationIngredientsRecette> recettes;
+	private List<AssociationIngredientRecette> recettes;
 	@Column(name = "type", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -70,11 +70,11 @@ public class Ingredient {
 		this.photo = photo;
 	}
 
-	public List<AssociationIngredientsRecette> getRecettes() {
+	public List<AssociationIngredientRecette> getRecettes() {
 		return recettes;
 	}
 
-	public void setRecettes(List<AssociationIngredientsRecette> recettes) {
+	public void setRecettes(List<AssociationIngredientRecette> recettes) {
 		this.recettes = recettes;
 	}
 

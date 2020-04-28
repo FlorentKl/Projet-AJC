@@ -1,0 +1,9 @@
+package formationJpa.dao.associationIngredientRecette;
+
+import formationJpa.dao.DaoGeneric;
+import formationJpa.entity.Ingredients.AssociationIngredientRecette;
+import formationJpa.entity.Ingredients.AssociationIngredientRecetteKey;
+
+public interface DaoAssociationIngredientRecette extends DaoGeneric<AssociationIngredientRecette, AssociationIngredientRecetteKey>{
+
+}

@@ -19,7 +19,7 @@ import formationJpa.entity.recette.Recette;
 
 @Entity
 @Table(name = "comment")
-public class AssociationRecetteCommentaires {
+public class AssociationRecetteCommentaire {
 	@Column(name = "text")
 	private String texte;
 	@EmbeddedId
@@ -28,13 +28,13 @@ public class AssociationRecetteCommentaires {
 	private Integer note;
 
 	
-	public AssociationRecetteCommentaires(String texte, AssociationRecetteCommentaireKey id, Integer note) {
+	public AssociationRecetteCommentaire(String texte, AssociationRecetteCommentaireKey id, Integer note) {
 		this.texte = texte;
 		this.id = id;
 		this.note = note;
 	}
 
-	public AssociationRecetteCommentaires() {
+	public AssociationRecetteCommentaire() {
 		
 	}
 
@@ -79,7 +79,7 @@ public class AssociationRecetteCommentaires {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AssociationRecetteCommentaires other = (AssociationRecetteCommentaires) obj;
+		AssociationRecetteCommentaire other = (AssociationRecetteCommentaire) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -32,7 +32,7 @@ public class Utilisateur {
 	@OneToMany(mappedBy ="auteur")
 	private List<Recette> recette;
 	@OneToMany(mappedBy ="id.auteur")
-	private List<AssociationRecetteCommentaires> commentaires;
+	private List<AssociationRecetteCommentaire> commentaires;
 	
 	public Utilisateur() {
 		
@@ -77,11 +77,11 @@ public class Utilisateur {
 		this.recette = recette;
 	}
 
-	public List<AssociationRecetteCommentaires> getCommentaires() {
+	public List<AssociationRecetteCommentaire> getCommentaires() {
 		return commentaires;
 	}
 
-	public void setCommentaires(List<AssociationRecetteCommentaires> commentaires) {
+	public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
 		this.commentaires = commentaires;
 	}
 

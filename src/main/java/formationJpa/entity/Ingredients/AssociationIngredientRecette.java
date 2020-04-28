@@ -14,7 +14,7 @@ import formationJpa.entity.recette.Recette;
 
 @Entity
 @Table(name = "recipe_ingredients")
-public class AssociationIngredientsRecette {
+public class AssociationIngredientRecette {
 	private Integer quantite;
 	@EmbeddedId
 	private AssociationIngredientRecetteKey id;
@@ -30,11 +30,11 @@ public class AssociationIngredientsRecette {
 	// TODO gerer l'aspect Masse Type et Volume
 	
 	
-	public AssociationIngredientsRecette() {
+	public AssociationIngredientRecette() {
 		
 	}
 
-	public AssociationIngredientsRecette(Integer quantite) {
+	public AssociationIngredientRecette(Integer quantite) {
 		this.quantite = quantite;
 	}
 
@@ -86,7 +86,7 @@ public class AssociationIngredientsRecette {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AssociationIngredientsRecette other = (AssociationIngredientsRecette) obj;
+		AssociationIngredientRecette other = (AssociationIngredientRecette) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
