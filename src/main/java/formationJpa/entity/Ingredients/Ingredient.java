@@ -30,7 +30,7 @@ public class Ingredient {
 	private String nom;
 	@Column(name = "picture_ingredients")
 	private String photo;
-	@OneToMany(mappedBy = "recette")
+	@OneToMany(mappedBy = "id.recette")
 	private List<AssociationIngredientsRecette> recettes;
 	@Column(name = "type", length = 2)
 	@Enumerated(EnumType.STRING)

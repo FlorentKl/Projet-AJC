@@ -43,13 +43,13 @@ public  abstract class Recette {
 	private Integer nbPersonne;
 	@Column(name = "duration_recipe",length = 150)
 	private Integer temps;
-	@OneToMany(mappedBy = "recette")
+	@OneToMany(mappedBy = "id.recette")
 	private List<AssociationTagRecette> tags;
-	@OneToMany(mappedBy = "recette")
+	@OneToMany(mappedBy = "id.recette")
 	private List<AssociationIngredientsRecette> ingredients;
 	@OneToMany(mappedBy ="id_recette")
 	private List<EtapeRecette> etapes;
-	@OneToMany(mappedBy ="commentaires")
+	@OneToMany(mappedBy ="id.commentaires")
 	private List<AssociationRecetteCommentaires>  commentaires;
 	@ManyToOne
 	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))

@@ -1,12 +1,22 @@
 package formationJpa.entity.recette;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
+@SequenceGenerator(name = "seqEtape", sequenceName = "seq_etape", initialValue = 100, allocationSize = 1)
 public class EtapeRecette {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqEtape")
+	@Column(name = "id_etape")
+	private Integer id;
 	private String text;
 	private String photo;
 	@ManyToOne

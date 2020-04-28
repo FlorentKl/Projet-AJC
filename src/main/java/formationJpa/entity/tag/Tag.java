@@ -29,7 +29,7 @@ public class Tag {
 	private Integer id;
 	@Column(name = "tag",length = 150)
 	private String tag;
-	@OneToMany(mappedBy = "tag")
+	@OneToMany(mappedBy = "id.tag")
 	private List<AssociationTagRecette> recettes ;
 	
 	public Tag() {
