@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="jacques" transaction-type="RESOURCE_LOCAL">
+		<!-- provider => implementation de jpa utilisée -->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<!-- Propriétés pour unité de persistence -->
+		<properties>
+			<!--  driver jdbc -->
+			<property name="hibernate.connection.diver" value="org.postgresql.Driver"/>
+			<!--  url -->
+			<property name="hibernate.connection.url" value="jdbc:postgresql://127.0.0.1:5432/projet_ajc"/>
+			<!-- login -->
+			<property name="hibernate.connection.user" value="postgres"/>
+			<!-- password -->
+			<property name="hibernate.connection.password" value="postgres"/>
+			<!-- dialect : explique comment va communiquer avec BDD, quelle langue interne utilisé -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+			<!-- Contrôle correspondance entre entity et table de la BDD -->
+			<!-- validate : Si pas correspondance : erreur et persistence unit ne peux pas se créerz -->
+			<!-- create : drop tables correspondant aux entity du code au lancement, et on crée de nouvelles tables Plutot pour test -->
+			<!-- create-drop : crée une structure pendant l'execution du programme puis a la fin drop tout. Plutot pour test -->
+			<!-- update : ajout de colonnes manquantes dans les tables. Ne sait pas supprimer -->
+			<property name="hibernate.hbm2ddl.auto" value="create"/>
+			
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+		</properties>
+	</persistence-unit>
+</persistence>
