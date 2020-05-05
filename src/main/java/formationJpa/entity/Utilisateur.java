@@ -30,7 +30,7 @@ public class Utilisateur {
 	private String password;
 	@OneToMany(mappedBy ="auteur")
 	private List<Recette> recette;
-        @OneToMany(mappedBy = "id.auteur")
+    @OneToMany(mappedBy = "id.auteur")
 	private List<AssociationRecetteCommentaire> commentaires;
 	
 	public Utilisateur() {

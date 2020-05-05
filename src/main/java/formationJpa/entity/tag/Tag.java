@@ -40,6 +40,10 @@ public class Tag {
 		this.id = id;
 		this.tag = tag;
 	}
+	
+	public Tag(String tag) {
+		this.tag = tag;
+	}
 
 	public Integer getId() {
 		return id;
