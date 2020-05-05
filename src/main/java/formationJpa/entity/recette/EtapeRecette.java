@@ -36,6 +36,14 @@ public class EtapeRecette {
 		this.photo = photo;
 	}
 
+        public Integer getId() {
+            return this.id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
 	public String getText() {
 		return text;
 	}
