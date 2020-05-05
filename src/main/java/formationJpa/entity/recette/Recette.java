@@ -2,6 +2,7 @@ package formationJpa.entity.recette;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -40,13 +41,13 @@ public  abstract class Recette {
 	private Integer nbPersonne;
 	@Column(name = "duration_recipe",length = 150)
 	private Integer temps;
-	@OneToMany(mappedBy = "id.recette")
+        @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
 	private List<AssociationTagRecette> tags;
-	@OneToMany(mappedBy = "id.recette")
+        @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
 	private List<AssociationIngredientRecette> ingredients;
-	@OneToMany(mappedBy ="id_recette")
+        @OneToMany(mappedBy = "id_recette", cascade = CascadeType.REMOVE)
 	private List<EtapeRecette> etapes;
-        @OneToMany(mappedBy = "id.recette")
+        @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
 	private List<AssociationRecetteCommentaire>  commentaires;
 	@ManyToOne
 	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
