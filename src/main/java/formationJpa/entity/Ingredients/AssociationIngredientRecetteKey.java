@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import formationJpa.entity.recette.Recette;
+
 @Embeddable
 public class AssociationIngredientRecetteKey implements Serializable{
 	@ManyToOne

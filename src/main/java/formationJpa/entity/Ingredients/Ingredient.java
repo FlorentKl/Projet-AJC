@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import formationJpa.entity.recette.Recette;
-
 @Entity
 @Table(name = "ingredients")
 @SequenceGenerator(name = "seqIngredients", sequenceName = "seq_ingredients", initialValue = 100, allocationSize = 1)
@@ -40,8 +38,11 @@ public class Ingredient {
 		
 	}
 
-	public Ingredient(Integer id, String nom, String photo) {
-		this.id = id;
+        public Ingredient(String nom) {
+            this.nom = nom;
+        }
+
+        public Ingredient(String nom, String photo) {
 		this.nom = nom;
 		this.photo = photo;
 	}
