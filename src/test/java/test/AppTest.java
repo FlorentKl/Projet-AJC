@@ -1,20 +1,33 @@
 package test;
 
-import formationJpa.context.Context;
-import formationJpa.dao.utilisateur.DaoUtilisateur;
-import formationJpa.dao.utilisateur.DaoUtilisateurFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import formationJpa.config.Config;
 import formationJpa.entity.Utilisateur;
+import formationJpa.entity.tag.Tag;
+import formationJpa.service.TagService;
+import formationJpa.service.UtilisateurService;
 
 public class AppTest {
 
     public static void main(String[] args) {
-        DaoUtilisateur daoUtilisateur = DaoUtilisateurFactory.getInstance();
-        Utilisateur machin = new Utilisateur("machin", "bidule");
-        daoUtilisateur.insert(machin);
-        daoUtilisateur.delete(machin);
-        
-        System.out.println("----");
-        Context.destroy();
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+		
+		//utilisateur
+		UtilisateurService utilisateurService = ctx.getBean(UtilisateurService.class);
+		Utilisateur vincent = new Utilisateur(100, "vincent", "nouveaupassword");
+//		utilisateurService.add(vincent);
+		utilisateurService.update(vincent);
+//		System.out.println(utilisateurService.findById(101).get());
+		
+		
+		//tag
+//		TagService tagService = ctx.getBean(TagService.class);
+//		Tag pates = new Tag("pates");
+//		tagService.add(pates);
+		
+		
+		ctx.close();
     }
 
 }
