@@ -18,12 +18,12 @@
 	
 	<!-- indique dans quels packages sont présent les composants. Si plusieurs packages, format package1, package2, ...
 	Scan aussi les sous-packages, puis construit les beans necessaire -->
-	<context:component-scan base-package="formationJpaSpring.dao"></context:component-scan>
+	<context:component-scan base-package="formationJpa.dao"></context:component-scan>
 	
 	<!-- Permet d'indiquer un fichier tier properties -->
 	<context:property-placeholder location="classpath:config.properties"/> 
 	
-	<jpa:repositories base-package="formationJpaSpring.repository"></jpa:repositories>
+	<jpa:repositories base-package="formationJpa.repository"></jpa:repositories>
 
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -60,7 +60,7 @@
 				<prop key="hibernate.show_sql">true</prop> <!-- Config show_sql ici ou bien dans property dans HibernateJpaVendorAdapter -->
 			</props>
 		</property>
-		<property name="packagesToScan" value="formationJpaSpring.entity"></property>
+		<property name="packagesToScan" value="formationJpa.entity"></property>
 	</bean>
 	
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

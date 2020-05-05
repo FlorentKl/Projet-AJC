@@ -1,6 +1,13 @@
 package formationJpa.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import formationJpa.repository.recette.RecetteRepository;
+
 public class RecetteService {
+
+    @Autowired
+    RecetteRepository recetteRepository;
 
 	// TODO - ajout
 	// TODO - mise à jour
