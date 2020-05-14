@@ -46,6 +46,7 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-webmvc</artifactId>
 		    <version>${spring-version}</version>
+<<<<<<< HEAD
 		</dependency>
 		<!-- Projet Ajc Service -->
 		<dependency>
