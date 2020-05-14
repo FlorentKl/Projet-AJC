@@ -5,8 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import formationJpa.repository.AssociationIngredientRecetteRepository;
 import formationJpa.entity.Ingredients.AssociationIngredientRecette;
+import formationJpa.entity.Ingredients.AssociationIngredientRecetteKey;
+import formationJpa.repository.AssociationIngredientRecetteRepository;
 
 @Service
 public class AssociationIngredientRecetteService {
@@ -60,7 +61,7 @@ public class AssociationIngredientRecetteService {
 	}
 	
 	
-	public void deleteById(Integer id) {
+        public void deleteById(AssociationIngredientRecetteKey id) {
 		Optional<AssociationIngredientRecette> opt=associationIngredientRecetteRepository.findById(id);
 		if(opt.isPresent()) {
 			deleteById(id);
@@ -70,7 +71,7 @@ public class AssociationIngredientRecetteService {
 		
 	}
 	
-	public AssociationIngredientRecette searchById(Integer id) {
+        public AssociationIngredientRecette searchById(AssociationIngredientRecetteKey id) {
 		Optional<AssociationIngredientRecette> opt=associationIngredientRecetteRepository.findById(id);
 		if(opt.isPresent()) {
 			return opt.get();
