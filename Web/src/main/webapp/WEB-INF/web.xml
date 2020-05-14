@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0">
-	<display-name>20200511</display-name>
+	<display-name>web</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -62,7 +62,7 @@
 		<!-- Indique quelle classe est utilisée -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>formationSpringMvc.config.Config</param-value>
+			<param-value>projetWeb.config.WebConfig</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
