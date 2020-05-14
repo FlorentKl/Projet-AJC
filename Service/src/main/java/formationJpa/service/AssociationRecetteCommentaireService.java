@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import formationJpa.entity.AssociationRecetteCommentaire;
-import formationJpa.entity.Ingredients.AssociationIngredientRecette;
-import formationJpa.repository.AssociationIngredientRecetteRepository;
+import formationJpa.entity.AssociationRecetteCommentaireKey;
 import formationJpa.repository.AssociationRecetteCommentaireRepository;
 
 @Service
@@ -52,7 +51,7 @@ public class AssociationRecetteCommentaireService {
 		associationRecetteCommentaireRepository.delete(associationRecetteCommentaire);
 	}
 	
-	public void deleteById(Integer id) {
+        public void deleteById(AssociationRecetteCommentaireKey id) {
 		Optional<AssociationRecetteCommentaire> opt=associationRecetteCommentaireRepository.findById(id);
 		if(opt.isPresent()) {
 			deleteById(id);
@@ -63,7 +62,7 @@ public class AssociationRecetteCommentaireService {
 		
 	}
 	
-	public AssociationRecetteCommentaire recherche(Integer id) {
+        public AssociationRecetteCommentaire recherche(AssociationRecetteCommentaireKey id) {
 		Optional<AssociationRecetteCommentaire> opt=associationRecetteCommentaireRepository.findById(id);
 		if(opt.isPresent()) {
 			return opt.get();
