@@ -28,7 +28,6 @@ public class EtapeRecette {
 	//TODO trouver comment déclarer des photo en java
 	
 	public EtapeRecette() {
-		
 	}
 
 	public EtapeRecette(String text, String photo) {

@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import formationJpa.entity.AssociationRecetteCommentaire;
 import formationJpa.entity.Utilisateur;
@@ -31,7 +32,7 @@ import formationJpa.entity.tag.AssociationTagRecette;
 @SequenceGenerator(name = "seqRecipe", sequenceName = "seq_recipe", initialValue = 100, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING, length = 1)
-public  abstract class Recette {
+public class Recette {
 	@Column(name = "name_recipe",length = 150)
 	private String nom;
 	@Id
@@ -58,7 +59,8 @@ public  abstract class Recette {
 	@Column(name = "difficulte", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Difficulte difficulte;
-	
+        @Version
+        private Integer version;
 	
 	public Recette() {
 		
@@ -159,7 +161,15 @@ public  abstract class Recette {
 		this.difficulte = difficulte;
 	}
 
-	@Override
+        public Integer getVersion() {
+            return version;
+        }
+
+        public void setVersion(Integer version) {
+            this.version = version;
+        }
+
+        @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
