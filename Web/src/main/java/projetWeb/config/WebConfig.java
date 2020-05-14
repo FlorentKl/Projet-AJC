@@ -19,11 +19,13 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import formationJpa.config.Config;
+
 @Configuration
 @ComponentScan(basePackages = { "projetWeb.controller" })
 @EnableWebMvc
-@Import(formationJpa.config.Config.class)
-public class Config implements WebMvcConfigurer {
+@Import(Config.class)
+public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
