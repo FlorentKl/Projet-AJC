@@ -24,6 +24,7 @@ public class EmptyController {
 		List<Recette> recettes = recetteService.findAllWithTags();
 		modelAndView.addObject("recettes", recettes);
 		return modelAndView;
+		
 	}
 
 }
