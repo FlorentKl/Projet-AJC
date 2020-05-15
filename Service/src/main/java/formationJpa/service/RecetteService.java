@@ -170,5 +170,9 @@ public class RecetteService {
         return recetteRepository.findByCoutNot(cout);
     }
     
+    public  List<Recette> findAllWithTags(){
+    	return recetteRepository.findAllWithTags();
+    }
+    
     // TODO - findByNote
 }

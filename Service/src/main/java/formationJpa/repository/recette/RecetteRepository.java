@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import formationJpa.entity.Utilisateur;
 import formationJpa.entity.Ingredients.Ingredient;
@@ -42,5 +43,10 @@ public interface RecetteRepository<T extends Recette> extends JpaRepository<T, I
 
     List<T> findByCoutNot(Couts cout);
 
+    //ADDED
+    @Query("select distinct r from Recette r left join fetch r.tags")
+	List<Recette> findAllWithTags();
+    
+    
     // TODO List<T> findByNote()
 }
