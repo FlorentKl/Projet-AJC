@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -33,167 +34,176 @@ import projetSpringBoot.entity.tag.AssociationTagRecette;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING, length = 1)
 public class Recette {
-	@Column(name = "name_recipe",length = 150)
-	private String nom;
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqRecipe")
-	private Integer id;
-	@Column(name = "nbperson_recipe",length = 150)
-	private Integer nbPersonne;
-	@Column(name = "duration_recipe",length = 150)
-	private Integer temps;
-        @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
-	private List<AssociationTagRecette> tags;
-        @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
-	private List<AssociationIngredientRecette> ingredients;
-        @OneToMany(mappedBy = "id_recette", cascade = CascadeType.REMOVE)
-	private List<EtapeRecette> etapes;
-        @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
-	private List<AssociationRecetteCommentaire>  commentaires;
-	@ManyToOne
-	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
-	private Utilisateur auteur;
-	@Column(name = "cost", length = 2)
-	@Enumerated(EnumType.STRING)
-	private Couts cout;
-	@Column(name = "difficulte", length = 2)
-	@Enumerated(EnumType.STRING)
-	private Difficulte difficulte;
-        @Version
-        private Integer version;
-	
-	public Recette() {
-		
-	}
+    @Column(name = "name_recipe", length = 150)
+    private String nom;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqRecipe")
+    private Integer id;
+    @Column(name = "nbperson_recipe", length = 150)
+    private Integer nbPersonne;
+    @Column(name = "duration_recipe", length = 150)
+    private Integer temps;
+    @Lob
+    @Column(name = "recipe_image")
+    private byte[] photo;
+    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    private List<AssociationTagRecette> tags;
+    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    private List<AssociationIngredientRecette> ingredients;
+    @OneToMany(mappedBy = "id_recette", cascade = CascadeType.REMOVE)
+    private List<EtapeRecette> etapes;
+    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    private List<AssociationRecetteCommentaire> commentaires;
+    @ManyToOne
+    @JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
+    private Utilisateur auteur;
+    @Column(name = "cost", length = 2)
+    @Enumerated(EnumType.STRING)
+    private Couts cout;
+    @Column(name = "difficulte", length = 2)
+    @Enumerated(EnumType.STRING)
+    private Difficulte difficulte;
+    @Version
+    private Integer version;
 
-	public Recette(String nom, Integer id, Integer nbPersonne, Integer temps) {
-		this.nom = nom;
-		this.id = id;
-		this.nbPersonne = nbPersonne;
-		this.temps = temps;
-	}
+    public Recette() {
 
-	public String getNom() {
-		return nom;
-	}
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public Recette(String nom, Integer id, Integer nbPersonne, Integer temps) {
+        this.nom = nom;
+        this.id = id;
+        this.nbPersonne = nbPersonne;
+        this.temps = temps;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	public Integer getNbPersonne() {
-		return nbPersonne;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setNbPersonne(Integer nbPersonne) {
-		this.nbPersonne = nbPersonne;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getTemps() {
-		return temps;
-	}
+    public Integer getNbPersonne() {
+        return nbPersonne;
+    }
 
-	public void setTemps(Integer temps) {
-		this.temps = temps;
-	}
+    public void setNbPersonne(Integer nbPersonne) {
+        this.nbPersonne = nbPersonne;
+    }
 
-	public List<AssociationTagRecette> getTags() {
-		return tags;
-	}
+    public Integer getTemps() {
+        return temps;
+    }
 
-	public void setTags(List<AssociationTagRecette> tags) {
-		this.tags = tags;
-	}
+    public void setTemps(Integer temps) {
+        this.temps = temps;
+    }
 
-	public List<AssociationIngredientRecette> getIngredients() {
-		return ingredients;
-	}
+    public byte[] getPhoto() {
+        return photo;
+    }
 
-	public void setIngredients(List<AssociationIngredientRecette> ingredients) {
-		this.ingredients = ingredients;
-	}
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 
-	public List<EtapeRecette> getEtapes() {
-		return etapes;
-	}
+    public List<AssociationTagRecette> getTags() {
+        return tags;
+    }
 
-	public void setEtapes(List<EtapeRecette> etapes) {
-		this.etapes = etapes;
-	}
+    public void setTags(List<AssociationTagRecette> tags) {
+        this.tags = tags;
+    }
 
-	public List<AssociationRecetteCommentaire> getCommentaires() {
-		return commentaires;
-	}
+    public List<AssociationIngredientRecette> getIngredients() {
+        return ingredients;
+    }
 
-	public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
-		this.commentaires = commentaires;
-	}
+    public void setIngredients(List<AssociationIngredientRecette> ingredients) {
+        this.ingredients = ingredients;
+    }
 
-	public Utilisateur getAuteur() {
-		return auteur;
-	}
+    public List<EtapeRecette> getEtapes() {
+        return etapes;
+    }
 
-	public void setAuteur(Utilisateur auteur) {
-		this.auteur = auteur;
-	}
+    public void setEtapes(List<EtapeRecette> etapes) {
+        this.etapes = etapes;
+    }
 
-	public Couts getCout() {
-		return cout;
-	}
+    public List<AssociationRecetteCommentaire> getCommentaires() {
+        return commentaires;
+    }
 
-	public void setCout(Couts cout) {
-		this.cout = cout;
-	}
+    public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
+        this.commentaires = commentaires;
+    }
 
-	public Difficulte getDifficulte() {
-		return difficulte;
-	}
+    public Utilisateur getAuteur() {
+        return auteur;
+    }
 
-	public void setDifficulte(Difficulte difficulte) {
-		this.difficulte = difficulte;
-	}
+    public void setAuteur(Utilisateur auteur) {
+        this.auteur = auteur;
+    }
 
-        public Integer getVersion() {
-            return version;
-        }
+    public Couts getCout() {
+        return cout;
+    }
 
-        public void setVersion(Integer version) {
-            this.version = version;
-        }
+    public void setCout(Couts cout) {
+        this.cout = cout;
+    }
 
-        @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public Difficulte getDifficulte() {
+        return difficulte;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Recette other = (Recette) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
-	
+    public void setDifficulte(Difficulte difficulte) {
+        this.difficulte = difficulte;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Recette other = (Recette) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
 }
-
