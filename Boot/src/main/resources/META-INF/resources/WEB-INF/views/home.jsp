@@ -34,6 +34,7 @@
 </head>
 <body>
 
+	<!-- Jumbotron -->
 	<div class="jumbotron jumbotron-fluid p-0 m-0">
 		<div class="container">
 			<h1 class="display-4">AJC Kitchen</h1>
@@ -41,6 +42,7 @@
 		</div>
 	</div>
 
+	<!-- Nav bar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
 		<a class="navbar-brand" href="#">AJC Kitchen</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -53,16 +55,23 @@
 				<li class="nav-item active"><a class="nav-link" href="#">Recettes
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Choisi pour moi</a>
-				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Mes favoris</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Mon compte</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Choisi
+						pour moi</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Mes
+						favoris</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Mon
+						compte</a></li>
 			</ul>
 		</div>
 	</nav>
 
+	<!-- Barre de recherche -->
 	<div class="container">
 		<div class="input-group">
+			<div class="input-group-append mr-3" id="button-addon4">
+				<button class="btn btn-outline-secondary" type="button">Partager
+					une recette</button>
+			</div>
 			<input class="form-control" type="text" placeholder="Search"
 				aria-label="Search">
 			<div class="input-group-append" id="button-addon4">
@@ -73,7 +82,7 @@
 		</div>
 	</div>
 
-
+	<!-- Grille de recettes -->
 	<div class="container">
 		<c:forEach var="i" begin="0" end="9" step="3">
 			<div class="row">
