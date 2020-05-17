@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.recette;
+package projetSpringBoot.model.recette;
 
 import java.util.List;
 
@@ -23,10 +23,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import projetSpringBoot.entity.AssociationRecetteCommentaire;
-import projetSpringBoot.entity.Utilisateur;
-import projetSpringBoot.entity.Ingredients.AssociationIngredientRecette;
-import projetSpringBoot.entity.tag.AssociationTagRecette;
+import projetSpringBoot.model.AssociationRecetteCommentaire;
+import projetSpringBoot.model.Utilisateur;
+import projetSpringBoot.model.Ingredients.AssociationIngredientRecette;
+import projetSpringBoot.model.tag.AssociationTagRecette;
 
 @Entity
 @Table(name = "Recipe")

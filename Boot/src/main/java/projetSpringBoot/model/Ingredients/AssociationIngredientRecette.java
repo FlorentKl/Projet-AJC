@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.Ingredients;
+package projetSpringBoot.model.Ingredients;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import projetSpringBoot.entity.recette.Recette;
+import projetSpringBoot.model.recette.Recette;
 
 @Entity
 @Table(name = "recipe_ingredients")

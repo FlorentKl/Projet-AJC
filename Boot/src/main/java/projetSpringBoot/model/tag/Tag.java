@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.tag;
+package projetSpringBoot.model.tag;
 
 import java.util.List;
 

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projetSpringBoot.entity.Ingredients.Ingredient;
-import projetSpringBoot.entity.Ingredients.Type;
+import projetSpringBoot.model.Ingredients.Ingredient;
+import projetSpringBoot.model.Ingredients.Type;
 import projetSpringBoot.repository.IngredientRepository;
 
 @Service

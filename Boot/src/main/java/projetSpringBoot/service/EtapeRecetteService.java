@@ -1,56 +1,54 @@
 package projetSpringBoot.service;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projetSpringBoot.entity.recette.EtapeRecette;
 import projetSpringBoot.exception.NoEtapeRecetteException;
+import projetSpringBoot.model.recette.EtapeRecette;
 import projetSpringBoot.repository.EtapeRecetteRepository;
-
 
 @Service
 public class EtapeRecetteService {
-	
+
 	@Autowired
 	private EtapeRecetteRepository etapeRecetteRepository;
-	
-	
+
 	public void insert(EtapeRecette etapeRecette) throws NoEtapeRecetteException {
-		if(etapeRecette.getText().isEmpty()) {
+		if (etapeRecette.getTexte().isEmpty()) {
 			throw new NoEtapeRecetteException();
 		}
-		etapeRecetteRepository.save(etapeRecette);		
+		etapeRecetteRepository.save(etapeRecette);
 	}
-	
+
 	public EtapeRecette update(EtapeRecette etapeRecette) {
-		Optional<EtapeRecette> opt=etapeRecetteRepository.findById(etapeRecette.getId());
+		Optional<EtapeRecette> opt = etapeRecetteRepository.findById(etapeRecette.getId());
 		if (opt.isPresent()) {
-			EtapeRecette etapeRecetteEnBase=opt.get();
-			if(etapeRecette.getText()!=null) {
-				etapeRecetteEnBase.setText(etapeRecette.getText());
+			EtapeRecette etapeRecetteEnBase = opt.get();
+			if (etapeRecette.getTexte() != null) {
+				etapeRecetteEnBase.setTexte(etapeRecette.getTexte());
 			}
-			if(etapeRecette.getPhoto()!=null) {
+			if (etapeRecette.getPhoto() != null) {
 				etapeRecetteEnBase.setPhoto(etapeRecette.getPhoto());
 			}
 			etapeRecetteRepository.save(etapeRecetteEnBase);
 			return etapeRecetteEnBase;
-		
-		}else {
+
+		} else {
 			return null;
 		}
 	}
-	
+
 	public void delete(EtapeRecette etapeRecette) {
 		delete(etapeRecette);
 	}
+
 	public void deleteById(Integer id) {
 		etapeRecetteRepository.deleteById(id);
-		
+
 	}
-		
+
 	public Optional<EtapeRecette> findById(Integer id) {
 		return etapeRecetteRepository.findById(id);
 	}

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projetSpringBoot.entity.tag.AssociationTagRecette;
-import projetSpringBoot.entity.tag.AssociationTagRecetteKey;
+import projetSpringBoot.model.tag.AssociationTagRecette;
+import projetSpringBoot.model.tag.AssociationTagRecetteKey;
 import projetSpringBoot.repository.AssociationTagRecetteRepository;
 
 @Service

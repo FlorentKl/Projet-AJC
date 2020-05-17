@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.Ingredients;
+package projetSpringBoot.model.Ingredients;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import projetSpringBoot.entity.recette.Recette;
+import projetSpringBoot.model.recette.Recette;
 
 @Embeddable
 public class AssociationIngredientRecetteKey implements Serializable{

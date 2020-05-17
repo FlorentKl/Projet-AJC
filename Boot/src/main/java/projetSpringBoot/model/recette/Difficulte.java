@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.recette;
+package projetSpringBoot.model.recette;
 
 public enum Difficulte {
 	F("facile"), M("medium"), D("difficile"),E("expert");

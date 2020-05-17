@@ -1,54 +1,27 @@
-package projetSpringBoot.entity;
+package projetSpringBoot.model.tag;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "comment")
-public class AssociationRecetteCommentaire {
-    @Column(name = "text")
-    private String texte;
+@Table(name = "tag_recette")
+public class AssociationTagRecette {
     @EmbeddedId
-    private AssociationRecetteCommentaireKey id;
-    @Column(name = "notation")
-    private Integer note;
+    private AssociationTagRecetteKey id;
     @Version
     private Integer version;
 
-    public AssociationRecetteCommentaire(String texte, AssociationRecetteCommentaireKey id, Integer note) {
-        this.texte = texte;
-        this.id = id;
-        this.note = note;
-    }
-
-    public AssociationRecetteCommentaire() {
+    public AssociationTagRecette() {
 
     }
 
-    public String getTexte() {
-        return texte;
-    }
-
-    public void setTexte(String texte) {
-        this.texte = texte;
-    }
-
-    public Integer getNote() {
-        return note;
-    }
-
-    public void setNote(Integer note) {
-        this.note = note;
-    }
-
-    public AssociationRecetteCommentaireKey getId() {
+    public AssociationTagRecetteKey getId() {
         return id;
     }
 
-    public void setId(AssociationRecetteCommentaireKey id) {
+    public void setId(AssociationTagRecetteKey id) {
         this.id = id;
     }
 
@@ -76,7 +49,7 @@ public class AssociationRecetteCommentaire {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AssociationRecetteCommentaire other = (AssociationRecetteCommentaire) obj;
+        AssociationTagRecette other = (AssociationTagRecette) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

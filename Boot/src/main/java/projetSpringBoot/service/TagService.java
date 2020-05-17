@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projetSpringBoot.entity.tag.Tag;
+import projetSpringBoot.model.tag.Tag;
 import projetSpringBoot.repository.TagRepository;
 
 @Service

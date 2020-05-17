@@ -1,4 +1,4 @@
-package projetSpringBoot.entity;
+package projetSpringBoot.model;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import projetSpringBoot.entity.recette.Recette;
+import projetSpringBoot.model.recette.Recette;
 
 @Entity
 @Table(name = "adherents")

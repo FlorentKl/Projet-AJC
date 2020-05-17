@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.Ingredients;
+package projetSpringBoot.model.Ingredients;
 
 import java.util.List;
 

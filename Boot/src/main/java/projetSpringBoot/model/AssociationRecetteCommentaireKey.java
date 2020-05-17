@@ -1,4 +1,4 @@
-package projetSpringBoot.entity;
+package projetSpringBoot.model;
 
 import java.io.Serializable;
 
@@ -7,39 +7,42 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import projetSpringBoot.entity.recette.Recette;
+import projetSpringBoot.model.recette.Recette;
 
 @Embeddable
-public class AssociationRecetteCommentaireKey implements Serializable{
+public class AssociationRecetteCommentaireKey implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_comment_comment_fk"))
 	private Recette recette;
-        @ManyToOne
-        @JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "comment_auteur_fk"))
-        private Utilisateur auteur;
-	
+	@ManyToOne
+	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "comment_auteur_fk"))
+	private Utilisateur auteur;
+
 	public AssociationRecetteCommentaireKey() {
-		
+
 	}
-	
+
 	public AssociationRecetteCommentaireKey(Recette recette, Utilisateur auteur) {
 		this.recette = recette;
 		this.auteur = auteur;
 	}
 
-
 	public Recette getRecette() {
 		return recette;
 	}
+
 	public void setRecette(Recette recette) {
 		this.recette = recette;
 	}
+
 	public Utilisateur getAuteur() {
 		return auteur;
 	}
+
 	public void setAuteur(Utilisateur auteur) {
 		this.auteur = auteur;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -48,6 +51,7 @@ public class AssociationRecetteCommentaireKey implements Serializable{
 		result = prime * result + ((recette == null) ? 0 : recette.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -69,6 +73,5 @@ public class AssociationRecetteCommentaireKey implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projetSpringBoot.entity.Ingredients.AssociationIngredientRecette;
-import projetSpringBoot.entity.Ingredients.AssociationIngredientRecetteKey;
+import projetSpringBoot.model.Ingredients.AssociationIngredientRecette;
+import projetSpringBoot.model.Ingredients.AssociationIngredientRecetteKey;
 import projetSpringBoot.repository.AssociationIngredientRecetteRepository;
 
 @Service

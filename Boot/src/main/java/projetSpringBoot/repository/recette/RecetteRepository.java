@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import projetSpringBoot.entity.Utilisateur;
-import projetSpringBoot.entity.Ingredients.Ingredient;
-import projetSpringBoot.entity.recette.Couts;
-import projetSpringBoot.entity.recette.Difficulte;
-import projetSpringBoot.entity.recette.Recette;
-import projetSpringBoot.entity.tag.Tag;
+import projetSpringBoot.model.Utilisateur;
+import projetSpringBoot.model.Ingredients.Ingredient;
+import projetSpringBoot.model.recette.Couts;
+import projetSpringBoot.model.recette.Difficulte;
+import projetSpringBoot.model.recette.Recette;
+import projetSpringBoot.model.tag.Tag;
 
 public interface RecetteRepository<T extends Recette> extends JpaRepository<T, Integer> {
 

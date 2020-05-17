@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.Ingredients;
+package projetSpringBoot.model.Ingredients;
 
 public enum Volume {
 	ML("mililitre"), CL("centilitre"), L("litre");

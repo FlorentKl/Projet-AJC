@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.recette;
+package projetSpringBoot.model.recette;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

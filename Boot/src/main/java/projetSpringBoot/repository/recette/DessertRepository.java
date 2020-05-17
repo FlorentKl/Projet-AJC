@@ -1,6 +1,6 @@
 package projetSpringBoot.repository.recette;
 
-import projetSpringBoot.entity.recette.Dessert;
+import projetSpringBoot.model.recette.Dessert;
 
 public interface DessertRepository extends RecetteRepository<Dessert> {
 }

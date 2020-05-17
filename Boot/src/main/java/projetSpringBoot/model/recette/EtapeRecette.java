@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.recette;
+package projetSpringBoot.model.recette;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "recipe_step")
@@ -20,7 +21,8 @@ public class EtapeRecette {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEtape")
     @Column(name = "id_etape")
     private Integer id;
-    private String text;
+    @Column(name = "text")
+    private String texte;
     @Lob
     @Column(name = "recipe_step_photo")
     private byte[] photo;
@@ -29,6 +31,8 @@ public class EtapeRecette {
     @ManyToOne
     @JoinColumn(name = "id_recette", foreignKey = @ForeignKey(name = "recette_etapeRecette_etapeRecette_fk"))
     private Recette id_recette;
+    @Version
+    private Integer version;
 
     // TODO trouver comment d�clarer des photo en java
 
@@ -43,12 +47,12 @@ public class EtapeRecette {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getTexte() {
+        return this.texte;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTexte(String texte) {
+        this.texte = texte;
     }
 
     public byte[] getPhoto() {
@@ -73,6 +77,20 @@ public class EtapeRecette {
 
     public void setNumEtape(Integer numEtape) {
         this.numEtape = numEtape;
+    }
+
+    /**
+     * @return the version
+     */
+    public Integer getVersion() {
+        return this.version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override

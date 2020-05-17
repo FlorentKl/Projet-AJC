@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import projetSpringBoot.entity.recette.Boisson;
-import projetSpringBoot.entity.recette.Couts;
-import projetSpringBoot.entity.recette.Dessert;
-import projetSpringBoot.entity.recette.Difficulte;
-import projetSpringBoot.entity.recette.Entree;
-import projetSpringBoot.entity.recette.EtapeRecette;
-import projetSpringBoot.entity.recette.Plat;
-import projetSpringBoot.entity.recette.Recette;
 import projetSpringBoot.exception.NoEtapeRecetteException;
+import projetSpringBoot.model.recette.Boisson;
+import projetSpringBoot.model.recette.Couts;
+import projetSpringBoot.model.recette.Dessert;
+import projetSpringBoot.model.recette.Difficulte;
+import projetSpringBoot.model.recette.Entree;
+import projetSpringBoot.model.recette.EtapeRecette;
+import projetSpringBoot.model.recette.Plat;
+import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.service.EtapeRecetteService;
 import projetSpringBoot.service.RecetteService;
+import projetSpringBoot.wrapper.RecetteAndEtapeWrapper;
 
 @Controller
 @RequestMapping("/creation-recette")
@@ -35,14 +36,14 @@ public class CreationRecetteController {
     @GetMapping(value = { "", "/" })
     public ModelAndView recetteCreationFormulaire() {
         ModelAndView modelAndView = new ModelAndView("Recette/CreationRecette");
-        modelAndView.addObject("recette", new Recette());
+        modelAndView.addObject("recetteEtapeWrapper", new RecetteAndEtapeWrapper());
         modelAndView.addObject("couts", Couts.values());
         modelAndView.addObject("difficultes", Difficulte.values());
         return modelAndView;
     }
 
     @PostMapping("/ajout/entree")
-    public ModelAndView ajoutEntree(@Valid @ModelAttribute("entree") Entree entree,
+    public ModelAndView ajoutEntree(@Valid @ModelAttribute("recettes") Entree entree,
             @Valid @ModelAttribute("etapeRecette") EtapeRecette[] etapeRecettes, BindingResult br) {
         ModelAndView mav = save(entree, br);
         for (EtapeRecette er : etapeRecettes) {

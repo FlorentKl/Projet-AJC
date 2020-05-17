@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import projetSpringBoot.entity.Ingredients.Ingredient;
-import projetSpringBoot.entity.Ingredients.Type;
+import projetSpringBoot.model.Ingredients.Ingredient;
+import projetSpringBoot.model.Ingredients.Type;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
     Optional<Ingredient> findById(Integer id);

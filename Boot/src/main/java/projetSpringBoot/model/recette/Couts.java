@@ -1,4 +1,4 @@
-package projetSpringBoot.entity.recette;
+package projetSpringBoot.model.recette;
 
 public enum Couts {
 	L("low"), M("medium"), E("expensive"),VE("very_expensive");
