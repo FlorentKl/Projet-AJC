@@ -69,15 +69,14 @@
 	<div class="container">
 		<div class="input-group">
 			<div class="input-group-append mr-3" id="button-addon4">
-				<button class="btn btn-outline-secondary" type="button">Partager
-					une recette</button>
+				<a href="${ctx}/creation-recette" class="btn btn-outline-secondary">Partager une
+					recette</a>
 			</div>
-			<input class="form-control" type="text" placeholder="Search"
+			<input class="form-control" type="text" placeholder="Recherche"
 				aria-label="Search">
 			<div class="input-group-append" id="button-addon4">
 				<button class="btn btn-outline-secondary" type="button">Recherche</button>
-				<button class="btn btn-outline-secondary" type="button">Recherche
-					avancée</button>
+				<a href="" class="btn btn-outline-secondary">Recherche avancée</a>
 			</div>
 		</div>
 	</div>
@@ -109,6 +108,24 @@
 		</c:forEach>
 	</div>
 
+	<!-- Pagination -->
+	<div class="container d-flex justify-content-center">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link" href="#"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+				</a></li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+						class="sr-only">Next</span>
+				</a></li>
+			</ul>
+		</nav>
+	</div>
 
 
 </body>
