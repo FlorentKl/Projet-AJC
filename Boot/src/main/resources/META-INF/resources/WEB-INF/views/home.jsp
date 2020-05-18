@@ -34,6 +34,7 @@
 </head>
 <body>
 
+	<!-- Jumbotron -->
 	<div class="jumbotron jumbotron-fluid p-0 m-0">
 		<div class="container">
 			<h1 class="display-4">AJC Kitchen</h1>
@@ -41,6 +42,7 @@
 		</div>
 	</div>
 
+	<!-- Nav bar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
 		<a class="navbar-brand" href="#">AJC Kitchen</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -53,27 +55,33 @@
 				<li class="nav-item active"><a class="nav-link" href="#">Recettes
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Choisi pour moi</a>
-				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Mes favoris</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Mon compte</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Choisi
+						pour moi</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Mes
+						favoris</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Mon
+						compte</a></li>
 			</ul>
 		</div>
 	</nav>
 
+	<!-- Barre de recherche -->
 	<div class="container">
 		<div class="input-group">
-			<input class="form-control" type="text" placeholder="Search"
+			<div class="input-group-append mr-3" id="button-addon4">
+				<a href="${ctx}/creation-recette" class="btn btn-outline-secondary">Partager une
+					recette</a>
+			</div>
+			<input class="form-control" type="text" placeholder="Recherche"
 				aria-label="Search">
 			<div class="input-group-append" id="button-addon4">
 				<button class="btn btn-outline-secondary" type="button">Recherche</button>
-				<button class="btn btn-outline-secondary" type="button">Recherche
-					avancée</button>
+				<a href="" class="btn btn-outline-secondary">Recherche avancée</a>
 			</div>
 		</div>
 	</div>
 
-
+	<!-- Grille de recettes -->
 	<div class="container">
 		<c:forEach var="i" begin="0" end="9" step="3">
 			<div class="row">
@@ -100,6 +108,24 @@
 		</c:forEach>
 	</div>
 
+	<!-- Pagination -->
+	<div class="container d-flex justify-content-center">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link" href="#"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+				</a></li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+						class="sr-only">Next</span>
+				</a></li>
+			</ul>
+		</nav>
+	</div>
 
 
 </body>
