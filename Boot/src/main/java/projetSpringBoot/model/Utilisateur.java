@@ -1,6 +1,7 @@
 package projetSpringBoot.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +30,14 @@ public class Utilisateur {
     private String pseudo;
     @Column(name = "password", length = 150, nullable = false)
     private String password;
+    @Column(name="enable")
+	private Boolean enabled;
     @OneToMany(mappedBy = "auteur")
     private List<Recette> recette;
     @OneToMany(mappedBy = "id.auteur")
     private List<AssociationRecetteCommentaire> commentaires;
+    @OneToMany(mappedBy="utilisateur")
+	private Set<UtilisateurRole> roles;
     @Version
     private Integer version;
 
@@ -75,7 +80,15 @@ public class Utilisateur {
         this.password = password;
     }
 
-    public List<Recette> getRecette() {
+    public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public List<Recette> getRecette() {
         return recette;
     }
 
@@ -91,7 +104,15 @@ public class Utilisateur {
         this.commentaires = commentaires;
     }
 
-    public Integer getVersion() {
+    public Set<UtilisateurRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<UtilisateurRole> roles) {
+		this.roles = roles;
+	}
+
+	public Integer getVersion() {
         return version;
     }
 
