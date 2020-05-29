@@ -1,5 +1,7 @@
 package projetSpringBoot.controller.recette;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import projetSpringBoot.container.RecetteAndEtapeContainer;
 import projetSpringBoot.exception.NoEtapeRecetteException;
-import projetSpringBoot.model.recette.Boisson;
 import projetSpringBoot.model.recette.Couts;
-import projetSpringBoot.model.recette.Dessert;
 import projetSpringBoot.model.recette.Difficulte;
-import projetSpringBoot.model.recette.Entree;
 import projetSpringBoot.model.recette.EtapeRecette;
-import projetSpringBoot.model.recette.Plat;
 import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.service.EtapeRecetteService;
 import projetSpringBoot.service.RecetteService;
-import projetSpringBoot.wrapper.RecetteAndEtapeWrapper;
 
 @Controller
 @RequestMapping("/creation-recette")
@@ -36,70 +34,50 @@ public class CreationRecetteController {
     @GetMapping(value = { "", "/" })
     public ModelAndView recetteCreationFormulaire() {
         ModelAndView modelAndView = new ModelAndView("Recette/CreationRecette");
-        modelAndView.addObject("recetteEtapeWrapper", new RecetteAndEtapeWrapper());
+        modelAndView.addObject("recetteEtapeContainer", new RecetteAndEtapeContainer());
         modelAndView.addObject("couts", Couts.values());
         modelAndView.addObject("difficultes", Difficulte.values());
         return modelAndView;
     }
 
     @PostMapping("/ajout/entree")
-    public ModelAndView ajoutEntree(@Valid @ModelAttribute("recettes") Entree entree,
-            @Valid @ModelAttribute("etapeRecette") EtapeRecette[] etapeRecettes, BindingResult br) {
-        ModelAndView mav = save(entree, br);
-        for (EtapeRecette er : etapeRecettes) {
-            try {
-                etapeRecetteService.insert(er);
-            } catch (NoEtapeRecetteException e) {
-                e.printStackTrace();
-            }
-        }
-        return mav;
+    public ModelAndView ajoutEntree(@Valid @ModelAttribute("recetteEtapeContainer") RecetteAndEtapeContainer recette,
+            BindingResult br) {
+        System.out.println(recette);
+        return save(recette.getEntree(), recette.getEtapeRecettes(), br);
     }
 
     @PostMapping("/ajout/plat")
-    public ModelAndView ajoutEntree(@Valid @ModelAttribute("plat") Plat plat,
-            @Valid @ModelAttribute("etapeRecette") EtapeRecette[] etapeRecettes, BindingResult br) {
-        ModelAndView mav = save(plat, br);
-        for (EtapeRecette er : etapeRecettes) {
-            try {
-                etapeRecetteService.insert(er);
-            } catch (NoEtapeRecetteException e) {
-                e.printStackTrace();
-            }
-        }
-        return mav;
+    public ModelAndView ajoutPlat(@Valid @ModelAttribute("recetteEtapeContainer") RecetteAndEtapeContainer recette,
+            BindingResult br) {
+        return save(recette.getPlat(), recette.getEtapeRecettes(), br);
     }
 
     @PostMapping("/ajout/dessert")
-    public ModelAndView ajoutEntree(@Valid @ModelAttribute("dessert") Dessert dessert,
-            @Valid @ModelAttribute("etapeRecette") EtapeRecette[] etapeRecettes, BindingResult br) {
-        ModelAndView mav = save(dessert, br);
-        for (EtapeRecette er : etapeRecettes) {
-            try {
-                etapeRecetteService.insert(er);
-            } catch (NoEtapeRecetteException e) {
-                e.printStackTrace();
-            }
-        }
-        return mav;
+    public ModelAndView ajoutDessert(@Valid @ModelAttribute("recetteEtapeContainer") RecetteAndEtapeContainer recette,
+            BindingResult br) {
+        return save(recette.getDessert(), recette.getEtapeRecettes(), br);
     }
 
     @PostMapping("/ajout/boisson")
-    public ModelAndView ajoutEntree(@Valid @ModelAttribute("boisson") Boisson boisson,
-            @Valid @ModelAttribute("etapeRecette") EtapeRecette[] etapeRecettes, BindingResult br) {
-        ModelAndView mav = save(boisson, br);
-        for (EtapeRecette er : etapeRecettes) {
+    public ModelAndView ajoutBoisson(@Valid @ModelAttribute("recetteEtapeContainer") RecetteAndEtapeContainer recette,
+            BindingResult br) {
+        return save(recette.getBoisson(), recette.getEtapeRecettes(), br);
+    }
+
+    private ModelAndView save(Recette r, List<EtapeRecette> etapes, BindingResult br) {
+        Recette newRecette = recetteService.insert(r);
+        int nombreEtape = 1;
+        for (EtapeRecette er : etapes) {
+            er.setId_recette(newRecette);
+            er.setNumEtape(nombreEtape);
+            nombreEtape++;
             try {
                 etapeRecetteService.insert(er);
             } catch (NoEtapeRecetteException e) {
                 e.printStackTrace();
             }
         }
-        return mav;
-    }
-
-    private ModelAndView save(Recette r, BindingResult br) {
-        recetteService.insert(r);
         return new ModelAndView("redirect:/creation-recette");
     }
 }

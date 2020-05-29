@@ -5,12 +5,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import projetSpringBoot.model.recette.Recette;
 
 @Entity
 @Table(name = "recipe_ingredients")
@@ -25,13 +20,10 @@ public class AssociationIngredientRecette {
 	@Enumerated(EnumType.STRING)
 	private Masse mesure_solide;
 
-	
-	
 	// TODO gerer l'aspect Masse Type et Volume
-	
-	
+
 	public AssociationIngredientRecette() {
-		
+
 	}
 
 	public AssociationIngredientRecette(Integer quantite) {
@@ -94,7 +86,5 @@ public class AssociationIngredientRecette {
 			return false;
 		return true;
 	}
-
-	
 
 }

@@ -33,7 +33,7 @@ import projetSpringBoot.model.tag.AssociationTagRecette;
 @SequenceGenerator(name = "seqRecipe", sequenceName = "seq_recipe", initialValue = 100, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING, length = 1)
-public class Recette {
+public abstract class Recette {
     @Column(name = "name_recipe", length = 150)
     private String nom;
     @Id
@@ -43,6 +43,12 @@ public class Recette {
     private Integer nbPersonne;
     @Column(name = "duration_recipe", length = 150)
     private Integer temps;
+    @Column(name = "cost", length = 2)
+    @Enumerated(EnumType.STRING)
+    private Couts cout;
+    @Column(name = "difficulte", length = 2)
+    @Enumerated(EnumType.STRING)
+    private Difficulte difficulte;
     @Lob
     @Column(name = "recipe_image")
     private byte[] photo;
@@ -57,12 +63,6 @@ public class Recette {
     @ManyToOne
     @JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
     private Utilisateur auteur;
-    @Column(name = "cost", length = 2)
-    @Enumerated(EnumType.STRING)
-    private Couts cout;
-    @Column(name = "difficulte", length = 2)
-    @Enumerated(EnumType.STRING)
-    private Difficulte difficulte;
     @Version
     private Integer version;
 
