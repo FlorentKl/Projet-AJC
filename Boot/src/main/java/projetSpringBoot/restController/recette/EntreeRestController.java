@@ -1,4 +1,4 @@
-package projetSpringBoot.RestController.recette;
+package projetSpringBoot.restController.recette;
 
 import java.util.List;
 import java.util.Optional;

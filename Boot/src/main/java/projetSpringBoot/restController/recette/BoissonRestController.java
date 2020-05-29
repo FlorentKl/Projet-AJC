@@ -1,4 +1,4 @@
-package projetSpringBoot.RestController.recette;
+package projetSpringBoot.restController.recette;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,59 +21,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import projetSpringBoot.model.recette.Dessert;
+import projetSpringBoot.model.recette.Boisson;
 import projetSpringBoot.model.views.Views;
-import projetSpringBoot.service.recette.DessertService;
+import projetSpringBoot.service.recette.BoissonService;
 
 @RestController
-@RequestMapping("/rest/dessert")
+@RequestMapping("/rest/boisson")
 @CrossOrigin(origins = "*")
-public class DessertRestController {
+public class BoissonRestController {
     @Autowired
-    DessertService dessertService;
+    BoissonService boissonService;
 
     @JsonView(Views.Common.class)
     @GetMapping(value = { "", "/" })
-    public ResponseEntity<List<Dessert>> findAllDessert() {
-        return new ResponseEntity<List<Dessert>>(dessertService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Boisson>> findAllBoisson() {
+        return new ResponseEntity<List<Boisson>>(boissonService.findAll(), HttpStatus.OK);
     }
 
     @JsonView(Views.Common.class)
     @GetMapping("/{id}")
-    public ResponseEntity<Dessert> findById(@PathVariable("id") Integer id) {
-        Optional<Dessert> opt = dessertService.findById(id);
-        return opt.map(dessert -> {
-            return new ResponseEntity<Dessert>(dessert, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<Dessert>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Boisson> findById(@PathVariable("id") Integer id) {
+        Optional<Boisson> opt = boissonService.findById(id);
+        return opt.map(boisson -> {
+            return new ResponseEntity<Boisson>(boisson, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<Boisson>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> addDessert(@RequestBody Dessert dessert, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Void> addBoisson(@RequestBody Boisson boisson, BindingResult br, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        dessertService.insert(dessert);
+        boissonService.insert(boisson);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(uCB.path("/rest/dessert/{id}").buildAndExpand(dessert.getId()).toUri());
+        headers.setLocation(uCB.path("/rest/boisson/{id}").buildAndExpand(boisson.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        Optional<Dessert> opt = dessertService.findById(id);
-        return opt.map(dessert -> {
-            dessertService.deleteById(dessert.getId());
+        Optional<Boisson> opt = boissonService.findById(id);
+        return opt.map(boisson -> {
+            boissonService.deleteById(boisson.getId());
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Dessert dessert, @PathVariable("id") Integer id) {
-        Optional<Dessert> opt = dessertService.findById(id);
+    public ResponseEntity<Void> update(@RequestBody Boisson boisson, @PathVariable("id") Integer id) {
+        Optional<Boisson> opt = boissonService.findById(id);
 
         return opt.map(temp -> {
-            dessertService.update(dessert);
+            boissonService.update(boisson);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
     }

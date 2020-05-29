@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import projetSpringBoot.container.RecetteAndEtapeContainer;
-import projetSpringBoot.exception.NoEtapeRecetteException;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.EtapeRecette;
@@ -73,11 +72,7 @@ public class CreationRecetteController {
             er.setId_recette(r);
             er.setNumEtape(nombreEtape);
             nombreEtape++;
-            try {
-                etapeRecetteService.insert(er);
-            } catch (NoEtapeRecetteException e) {
-                e.printStackTrace();
-            }
+            etapeRecetteService.insert(er);
         }
         return new ModelAndView("redirect:/creation-recette");
     }
