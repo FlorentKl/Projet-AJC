@@ -16,11 +16,12 @@ public class AssociationRecetteCommentaireServiceImpl implements AssociationRece
 	@Autowired
 	private AssociationRecetteCommentaireRepository associationRecetteCommentaireRepository;
 
-	public void insert(AssociationRecetteCommentaire associationRecetteCommentaire) {
+	public Boolean insert(AssociationRecetteCommentaire associationRecetteCommentaire) {
 		if (associationRecetteCommentaire.getNote() < 0 || associationRecetteCommentaire.getNote() > 10) {
-			throw new IllegalArgumentException();
+			return false;
 		}
 		associationRecetteCommentaireRepository.save(associationRecetteCommentaire);
+		return true;
 
 	}
 
@@ -28,13 +29,12 @@ public class AssociationRecetteCommentaireServiceImpl implements AssociationRece
 		Optional<AssociationRecetteCommentaire> opt = associationRecetteCommentaireRepository
 				.findById(associationRecetteCommentaire.getId());
 		if (opt.isPresent()) {
-			AssociationRecetteCommentaire ingredientRecette = opt.get();
+			AssociationRecetteCommentaire associationEnBase = opt.get();
 
-			associationRecetteCommentaire.setNote(associationRecetteCommentaire.getNote());
+			associationEnBase.setNote(associationRecetteCommentaire.getNote());
+			associationEnBase.setTexte(associationRecetteCommentaire.getTexte());
 
-			associationRecetteCommentaire.setTexte(associationRecetteCommentaire.getTexte());
-			associationRecetteCommentaireRepository.save(associationRecetteCommentaire);
-			return associationRecetteCommentaire;
+			return associationRecetteCommentaireRepository.save(associationEnBase);
 		} else {
 			// salleRepository.save(salle);// on insert
 			return null;

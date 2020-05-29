@@ -16,12 +16,13 @@ public class IngredientServiceImpl implements IngredientService {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    public void insert(Ingredient ingredient) {
+    public Boolean insert(Ingredient ingredient) {
         String nomIngredient = ingredient.getNom();
         if (nomIngredient == null || nomIngredient.isEmpty()) {
-            throw new IllegalArgumentException("Nom null pour ingr�dient");
+            return false;
         }
         ingredientRepository.save(ingredient);
+        return true;
     }
 
     public Ingredient update(Ingredient ingredient) {

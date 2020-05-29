@@ -15,8 +15,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
-	public void insert(Utilisateur utilisateur) {
-		utilisateurRepository.save(utilisateur);
+	public Boolean insert(Utilisateur utilisateur) {
+		Optional<Utilisateur> opt = utilisateurRepository.findByPseudo(utilisateur.getPseudo());
+		if (!opt.isPresent()) {
+			utilisateurRepository.save(utilisateur);
+			return true;
+		}
+		return false;
 	}
 
 	public Utilisateur update(Utilisateur utilisateur) {

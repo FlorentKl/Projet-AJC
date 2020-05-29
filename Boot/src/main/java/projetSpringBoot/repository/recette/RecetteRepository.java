@@ -43,10 +43,9 @@ public interface RecetteRepository<T extends Recette> extends JpaRepository<T, I
 
     List<T> findByCoutNot(Couts cout);
 
-    //ADDED
+    // ADDED
     @Query("select distinct r from Recette r left join fetch r.tags")
-	List<Recette> findAllWithTags();
-    
-    
+    List<T> findAllWithTags();
+
     // TODO List<T> findByNote()
 }

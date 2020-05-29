@@ -20,7 +20,7 @@ import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.EtapeRecette;
 import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.service.EtapeRecetteService;
-import projetSpringBoot.service.RecetteService;
+import projetSpringBoot.service.recette.RecetteService;
 
 @Controller
 @RequestMapping("/creation-recette")
@@ -66,10 +66,11 @@ public class CreationRecetteController {
     }
 
     private ModelAndView save(Recette r, List<EtapeRecette> etapes, BindingResult br) {
-        Recette newRecette = recetteService.insert(r);
+        // Recette newRecette = recetteService.insert(r);
+        recetteService.insert(r);
         int nombreEtape = 1;
         for (EtapeRecette er : etapes) {
-            er.setId_recette(newRecette);
+            er.setId_recette(r);
             er.setNumEtape(nombreEtape);
             nombreEtape++;
             try {

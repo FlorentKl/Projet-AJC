@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import projetSpringBoot.model.recette.Recette;
-import projetSpringBoot.service.RecetteService;
+import projetSpringBoot.service.recette.RecetteService;
 
 @Controller
 public class HomeController {

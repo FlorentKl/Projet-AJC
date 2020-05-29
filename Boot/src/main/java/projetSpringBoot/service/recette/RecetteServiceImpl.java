@@ -21,19 +21,38 @@ public class RecetteServiceImpl implements RecetteService {
     RecetteRepository<Recette> recetteRepository;
 
     @Override
-    public void insert(Recette recette) {
+    public Boolean insert(Recette recette) {
         String nomRecette = recette.getNom();
         if (nomRecette == null || nomRecette.isEmpty()) {
-            throw new IllegalArgumentException("Nom null pour Recette");
+            return false;
         }
         recetteRepository.save(recette);
+        return true;
     }
 
     /// update Recette fait update, mais les controle se font dans les methodes
     /// specifique d'update de chaque classes
     @Override
     public Recette update(Recette recette) {
-        return recetteRepository.save(recette);
+        Optional<Recette> opt = recetteRepository.findById(recette.getId());
+        if (opt.isPresent()) {
+            Recette recetteEnBase = opt.get();
+            if (recette.getNom() != null) {
+                recetteEnBase.setNom(recette.getNom());
+            }
+            recetteEnBase.setAuteur(recette.getAuteur());
+            recetteEnBase.setCout(recette.getCout());
+            recetteEnBase.setDifficulte(recette.getDifficulte());
+            recetteEnBase.setNbPersonne(recette.getNbPersonne());
+            recetteEnBase.setPhoto(recette.getPhoto());
+            recetteEnBase.setTags(recette.getTags());
+            recetteEnBase.setTemps(recette.getTemps());
+            recetteEnBase.setCommentaires(recette.getCommentaires());
+            recetteEnBase.setEtapes(recette.getEtapes());
+            return recetteRepository.save(recetteEnBase);
+        } else {
+            return null;
+        }
     }
 
     // delete
@@ -79,6 +98,11 @@ public class RecetteServiceImpl implements RecetteService {
     }
 
     @Override
+    public List<Recette> findAllWithTags() {
+        return recetteRepository.findAllWithTags();
+    }
+
+    @Override
     public List<Recette> findByTags(Tag tag) {
         return recetteRepository.findByTags(tag);
     }
@@ -111,11 +135,6 @@ public class RecetteServiceImpl implements RecetteService {
     @Override
     public List<Recette> findByCoutNot(Couts cout) {
         return recetteRepository.findByCoutNot(cout);
-    }
-
-    @Override
-    public List<Recette> findAllWithTags() {
-        return recetteRepository.findAllWithTags();
     }
 
 }

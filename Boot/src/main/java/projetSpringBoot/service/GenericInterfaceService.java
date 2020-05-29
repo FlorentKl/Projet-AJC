@@ -6,7 +6,10 @@ import java.util.Optional;
 import projetSpringBoot.exception.NoEtapeRecetteException;
 
 public interface GenericInterfaceService<T, I> {
-    void insert(T t) throws NoEtapeRecetteException;
+    /**
+     * @return Return true si insert OK, sinon false
+     */
+    Boolean insert(T t) throws NoEtapeRecetteException;
 
     T update(T t);
 

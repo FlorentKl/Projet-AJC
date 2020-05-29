@@ -17,11 +17,12 @@ public class EtapeRecetteServiceImpl implements EtapeRecetteService {
 	private EtapeRecetteRepository etapeRecetteRepository;
 
 	@Override
-	public void insert(EtapeRecette etapeRecette) throws NoEtapeRecetteException {
+	public Boolean insert(EtapeRecette etapeRecette) throws NoEtapeRecetteException {
 		if (etapeRecette.getTexte().isEmpty()) {
-			throw new NoEtapeRecetteException();
+			return false;
 		}
 		etapeRecetteRepository.save(etapeRecette);
+		return true;
 	}
 
 	@Override

@@ -12,31 +12,27 @@ import projetSpringBoot.repository.AssociationIngredientRecetteRepository;
 
 @Service
 public class AssociationIngredientRecetteServiceImpl implements AssociationIngredientRecetteService {
-	// TODO - ajout
-	// TODO - mise � jour
-	// TODO - delete
-	// TODO - deleteByKey
-	// TODO - findById
 
 	@Autowired
 	private AssociationIngredientRecetteRepository associationIngredientRecetteRepository;
 
-	public void insert(AssociationIngredientRecette associationIngredientRecette) {
+	public Boolean insert(AssociationIngredientRecette associationIngredientRecette) {
 
 		if (associationIngredientRecette.getQuantite() < 0) {
-			throw new IllegalArgumentException();
+			return false;
 		}
 
 		if (associationIngredientRecette.getMesure_liquide() == null
 				&& associationIngredientRecette.getMesure_solide() == null) {
-			throw new IllegalArgumentException();
+			return false;
 		}
 
 		if (associationIngredientRecette.getMesure_liquide() != null
 				&& associationIngredientRecette.getMesure_solide() != null) {
-			throw new IllegalArgumentException();
+			return false;
 		}
 		associationIngredientRecetteRepository.save(associationIngredientRecette);
+		return true;
 
 	}
 
