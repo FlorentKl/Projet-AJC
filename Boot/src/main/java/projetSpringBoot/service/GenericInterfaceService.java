@@ -3,13 +3,11 @@ package projetSpringBoot.service;
 import java.util.List;
 import java.util.Optional;
 
-import projetSpringBoot.exception.NoEtapeRecetteException;
-
 public interface GenericInterfaceService<T, I> {
     /**
      * @return Return true si insert OK, sinon false
      */
-    Boolean insert(T t) throws NoEtapeRecetteException;
+    Boolean insert(T t);
 
     T update(T t);
 

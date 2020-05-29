@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.Ingredient;
@@ -13,6 +14,7 @@ import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.tag.Tag;
 import projetSpringBoot.repository.recette.BoissonRepository;
 
+@Service
 public class BoissonServiceImpl implements BoissonService {
 
     @Autowired

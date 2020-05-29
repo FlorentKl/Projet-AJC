@@ -17,7 +17,7 @@ public class EtapeRecetteServiceImpl implements EtapeRecetteService {
 	private EtapeRecetteRepository etapeRecetteRepository;
 
 	@Override
-	public Boolean insert(EtapeRecette etapeRecette) throws NoEtapeRecetteException {
+	public Boolean insert(EtapeRecette etapeRecette) {
 		if (etapeRecette.getTexte().isEmpty()) {
 			return false;
 		}
