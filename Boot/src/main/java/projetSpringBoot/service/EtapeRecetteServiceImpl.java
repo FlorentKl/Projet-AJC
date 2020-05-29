@@ -1,5 +1,6 @@
 package projetSpringBoot.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class EtapeRecetteServiceImpl implements EtapeRecetteService {
 	public void deleteById(Integer id) {
 		etapeRecetteRepository.deleteById(id);
 
+	}
+
+	public List<EtapeRecette> findAll() {
+		return etapeRecetteRepository.findAll();
 	}
 
 	@Override
