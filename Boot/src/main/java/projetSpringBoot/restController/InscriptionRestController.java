@@ -1,4 +1,4 @@
-package projetSpringBoot.RestController;
+package projetSpringBoot.restController;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package projetSpringBoot.RestController;
+package projetSpringBoot.restController;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
