@@ -1,4 +1,4 @@
-package projetSpringBoot.restController;
+package projetSpringBoot.RestController;
 
 import java.util.Optional;
 
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import projetSpringBoot.model.Roles;
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.UtilisateurRole;
-import projetSpringBoot.repository.UtilisateurRepository;
-import projetSpringBoot.repository.UtilisateurRoleRepository;
+import projetSpringBoot.service.UtilisateurRoleServiceImpl;
+import projetSpringBoot.service.UtilisateurServiceImpl;
 
 @RestController
 @RequestMapping("/rest/inscription")
@@ -29,9 +29,9 @@ import projetSpringBoot.repository.UtilisateurRoleRepository;
 public class InscriptionRestController {
 	
 	@Autowired
-	private UtilisateurRepository utilisateurRepository;
+	private UtilisateurServiceImpl utilisateurService;
 	@Autowired
-	private UtilisateurRoleRepository utilisateurRoleRepository;
+	private UtilisateurRoleServiceImpl utilisateurRoleService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -40,23 +40,23 @@ public class InscriptionRestController {
 		if (br.hasErrors()) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
-		Optional<Utilisateur> opt = utilisateurRepository.findByPseudo(utilisateur.getPseudo());
+		Optional<Utilisateur> opt = utilisateurService.findByPseudo(utilisateur.getPseudo());
 		if (opt.isPresent()) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 		utilisateur.setEnabled(true);
 		utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
-		utilisateurRepository.save(utilisateur);
+		utilisateurService.insert(utilisateur);
 		UtilisateurRole role = new UtilisateurRole();
 		role.setUtilisateur(utilisateur);
 		role.setRole(Roles.ROLE_USER);
-		utilisateurRoleRepository.save(role);
+		utilisateurRoleService.insert(role);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{pseudo}")
 	public ResponseEntity<Boolean> loginDispo(@PathVariable("pseudo") String pseudo){
-		Optional<Utilisateur> opt = utilisateurRepository.findByPseudo(pseudo);
+		Optional<Utilisateur> opt = utilisateurService.findByPseudo(pseudo);
 		if (opt.isPresent()) {
 			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 		}
