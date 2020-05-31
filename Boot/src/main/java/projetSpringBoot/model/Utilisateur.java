@@ -55,7 +55,7 @@ public class Utilisateur {
     private List<Recette> recette;
 
     @OneToMany(mappedBy = "id.auteur")
-    private List<AssociationRecetteCommentaire> commentaires;
+    private List<Commentaire> commentaires;
 
     @OneToMany(mappedBy = "utilisateur")
     private Set<UtilisateurRole> roles;
@@ -134,11 +134,11 @@ public class Utilisateur {
         this.recette = recette;
     }
 
-    public List<AssociationRecetteCommentaire> getCommentaires() {
+    public List<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
+    public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
 

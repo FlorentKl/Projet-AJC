@@ -20,27 +20,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import projetSpringBoot.model.AssociationRecetteCommentaire;
-import projetSpringBoot.model.AssociationRecetteCommentaireKey;
-import projetSpringBoot.service.AssociationRecetteCommentaireService;
+import projetSpringBoot.model.Commentaire;
+import projetSpringBoot.model.CommentaireKey;
+import projetSpringBoot.service.CommentaireService;
 
 @RestController
 @RequestMapping("/rest/commentaire")
 @CrossOrigin(origins = "*")
 public class CommentaireRestController {
     @Autowired
-    AssociationRecetteCommentaireService arcService;
+    CommentaireService commentaireService;
 
     @GetMapping(value = { "", "/" })
-    public ResponseEntity<List<AssociationRecetteCommentaire>> findAll() {
+    public ResponseEntity<List<Commentaire>> findAll() {
 
-        return new ResponseEntity<List<AssociationRecetteCommentaire>>(arcService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Commentaire>>(commentaireService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AssociationRecetteCommentaire> findById(
-            @PathVariable("id") AssociationRecetteCommentaireKey id) {
-        Optional<AssociationRecetteCommentaire> opt = arcService.findById(id);
+    public ResponseEntity<Commentaire> findById(@PathVariable("id") CommentaireKey id) {
+        Optional<Commentaire> opt = commentaireService.findById(id);
         if (opt.isPresent()) {
             return new ResponseEntity<>(opt.get(), HttpStatus.OK);
         } else {
@@ -49,12 +48,12 @@ public class CommentaireRestController {
     }
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> postAssociationRecetteCommentaire(@RequestBody AssociationRecetteCommentaire arc,
-            BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Void> postCommentaire(@RequestBody Commentaire arc, BindingResult br,
+            UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
-        arc = arcService.insert(arc);
+        arc = commentaireService.insert(arc);
         URI uri = uCB.path("/rest/commentaire/{id}").buildAndExpand(arc.getId()).toUri();
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uri);
@@ -62,23 +61,22 @@ public class CommentaireRestController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteAssociationRecetteCommentaire(@PathVariable AssociationRecetteCommentaireKey id) {
-        Optional<AssociationRecetteCommentaire> opt = arcService.findById(id);
+    public ResponseEntity<Void> deleteCommentaire(@PathVariable CommentaireKey id) {
+        Optional<Commentaire> opt = commentaireService.findById(id);
         if (opt.isPresent()) {
-            arcService.delete(opt.get());
+            commentaireService.delete(opt.get());
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody AssociationRecetteCommentaire arc,
-            @PathVariable("id") AssociationRecetteCommentaireKey id) {
-        Optional<AssociationRecetteCommentaire> opt = arcService.findById(id);
+    public ResponseEntity<Void> update(@RequestBody Commentaire arc, @PathVariable("id") CommentaireKey id) {
+        Optional<Commentaire> opt = commentaireService.findById(id);
         if (opt.isPresent()) {
-            AssociationRecetteCommentaire arcEnBase = opt.get();
+            Commentaire commEnBase = opt.get();
 
-            arcEnBase = arcService.insert(arcEnBase);
+            commEnBase = commentaireService.insert(commEnBase);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

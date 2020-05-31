@@ -12,12 +12,12 @@ import javax.persistence.Version;
 
 @Entity
 @Table(name = "comment")
-public class AssociationRecetteCommentaire {
+public class Commentaire {
     @Column(name = "text")
     private String texte;
 
     @EmbeddedId
-    private AssociationRecetteCommentaireKey id;
+    private CommentaireKey id;
 
     @Column(name = "notation")
     private Integer note;
@@ -29,13 +29,13 @@ public class AssociationRecetteCommentaire {
     @Version
     private Integer version;
 
-    public AssociationRecetteCommentaire(String texte, AssociationRecetteCommentaireKey id, Integer note) {
+    public Commentaire(String texte, CommentaireKey id, Integer note) {
         this.texte = texte;
         this.id = id;
         this.note = note;
     }
 
-    public AssociationRecetteCommentaire() {
+    public Commentaire() {
 
     }
 
@@ -55,11 +55,11 @@ public class AssociationRecetteCommentaire {
         this.note = note;
     }
 
-    public AssociationRecetteCommentaireKey getId() {
+    public CommentaireKey getId() {
         return id;
     }
 
-    public void setId(AssociationRecetteCommentaireKey id) {
+    public void setId(CommentaireKey id) {
         this.id = id;
     }
 
@@ -95,7 +95,7 @@ public class AssociationRecetteCommentaire {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AssociationRecetteCommentaire other = (AssociationRecetteCommentaire) obj;
+        Commentaire other = (Commentaire) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 
-import projetSpringBoot.model.AssociationRecetteCommentaire;
+import projetSpringBoot.model.Commentaire;
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.AssociationIngredientRecette;
 import projetSpringBoot.model.imageModel.ImageModel;
@@ -98,7 +98,7 @@ public abstract class Recette {
 
     @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
-    private List<AssociationRecetteCommentaire> commentaires;
+    private List<Commentaire> commentaires;
 
     @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @ManyToOne
@@ -185,11 +185,11 @@ public abstract class Recette {
         this.etapes = etapes;
     }
 
-    public List<AssociationRecetteCommentaire> getCommentaires() {
+    public List<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
+    public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
 
