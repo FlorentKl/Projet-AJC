@@ -15,9 +15,8 @@ public class TagServiceImpl implements TagService {
 	@Autowired
 	private TagRepository tagRepository;
 
-	public Boolean insert(Tag tag) {
-		tagRepository.save(tag);
-		return true;
+	public Tag insert(Tag tag) {
+		return tagRepository.save(tag);
 	}
 
 	public Tag update(Tag tag) {

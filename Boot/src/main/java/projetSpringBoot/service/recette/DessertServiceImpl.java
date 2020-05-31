@@ -43,13 +43,12 @@ public class DessertServiceImpl implements DessertService {
     }
 
     @Override
-    public Boolean insert(Dessert t) {
+    public Dessert insert(Dessert t) {
         String nomRecette = t.getNom();
         if (nomRecette == null || nomRecette.isEmpty()) {
-            return false;
+            return t;
         }
-        dessertRepository.save(t);
-        return true;
+        return dessertRepository.save(t);
     }
 
     @Override
@@ -64,7 +63,6 @@ public class DessertServiceImpl implements DessertService {
             recetteEnBase.setCout(t.getCout());
             recetteEnBase.setDifficulte(t.getDifficulte());
             recetteEnBase.setNbPersonne(t.getNbPersonne());
-            recetteEnBase.setPhoto(t.getPhoto());
             recetteEnBase.setTags(t.getTags());
             recetteEnBase.setTemps(t.getTemps());
             recetteEnBase.setCommentaires(t.getCommentaires());

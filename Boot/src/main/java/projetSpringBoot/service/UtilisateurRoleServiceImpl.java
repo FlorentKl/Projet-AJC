@@ -14,11 +14,10 @@ public class UtilisateurRoleServiceImpl implements UtilisateurRoleService {
 
 	@Autowired
 	private UtilisateurRoleRepository utilisateurRoleRepository;
-	
+
 	@Override
-	public Boolean insert(UtilisateurRole ur) {
-		utilisateurRoleRepository.save(ur);
-		return true;
+	public UtilisateurRole insert(UtilisateurRole ur) {
+		return utilisateurRoleRepository.save(ur);
 	}
 
 	@Override

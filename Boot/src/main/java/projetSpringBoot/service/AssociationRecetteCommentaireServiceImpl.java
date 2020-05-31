@@ -16,12 +16,11 @@ public class AssociationRecetteCommentaireServiceImpl implements AssociationRece
 	@Autowired
 	private AssociationRecetteCommentaireRepository associationRecetteCommentaireRepository;
 
-	public Boolean insert(AssociationRecetteCommentaire associationRecetteCommentaire) {
-		if (associationRecetteCommentaire.getNote() < 0 || associationRecetteCommentaire.getNote() > 10) {
-			return false;
+	public AssociationRecetteCommentaire insert(AssociationRecetteCommentaire t) {
+		if (t.getNote() < 0 || t.getNote() > 10) {
+			return t;
 		}
-		associationRecetteCommentaireRepository.save(associationRecetteCommentaire);
-		return true;
+		return associationRecetteCommentaireRepository.save(t);
 
 	}
 

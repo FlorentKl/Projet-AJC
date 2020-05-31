@@ -7,7 +7,7 @@ public interface GenericInterfaceService<T, I> {
     /**
      * @return Return true si insert OK, sinon false
      */
-    Boolean insert(T t);
+    T insert(T t);
 
     T update(T t);
 

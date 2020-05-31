@@ -16,23 +16,20 @@ public class AssociationIngredientRecetteServiceImpl implements AssociationIngre
 	@Autowired
 	private AssociationIngredientRecetteRepository associationIngredientRecetteRepository;
 
-	public Boolean insert(AssociationIngredientRecette associationIngredientRecette) {
+	public AssociationIngredientRecette insert(AssociationIngredientRecette t) {
 
-		if (associationIngredientRecette.getQuantite() < 0) {
-			return false;
+		if (t.getQuantite() < 0) {
+			return t;
 		}
 
-		if (associationIngredientRecette.getMesure_liquide() == null
-				&& associationIngredientRecette.getMesure_solide() == null) {
-			return false;
+		if (t.getMesure_liquide() == null && t.getMesure_solide() == null) {
+			return t;
 		}
 
-		if (associationIngredientRecette.getMesure_liquide() != null
-				&& associationIngredientRecette.getMesure_solide() != null) {
-			return false;
+		if (t.getMesure_liquide() != null && t.getMesure_solide() != null) {
+			return t;
 		}
-		associationIngredientRecetteRepository.save(associationIngredientRecette);
-		return true;
+		return associationIngredientRecetteRepository.save(t);
 
 	}
 

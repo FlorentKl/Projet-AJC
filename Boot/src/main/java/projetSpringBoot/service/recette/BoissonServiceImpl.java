@@ -43,13 +43,12 @@ public class BoissonServiceImpl implements BoissonService {
     }
 
     @Override
-    public Boolean insert(Boisson t) {
+    public Boisson insert(Boisson t) {
         String nomRecette = t.getNom();
         if (nomRecette == null || nomRecette.isEmpty()) {
-            return false;
+            return t;
         }
-        boissonRepository.save(t);
-        return true;
+        return boissonRepository.save(t);
     }
 
     @Override
@@ -64,7 +63,6 @@ public class BoissonServiceImpl implements BoissonService {
             recetteEnBase.setCout(t.getCout());
             recetteEnBase.setDifficulte(t.getDifficulte());
             recetteEnBase.setNbPersonne(t.getNbPersonne());
-            recetteEnBase.setPhoto(t.getPhoto());
             recetteEnBase.setTags(t.getTags());
             recetteEnBase.setTemps(t.getTemps());
             recetteEnBase.setCommentaires(t.getCommentaires());

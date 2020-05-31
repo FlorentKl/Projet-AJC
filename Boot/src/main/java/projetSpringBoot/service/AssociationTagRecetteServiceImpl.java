@@ -16,9 +16,8 @@ public class AssociationTagRecetteServiceImpl implements AssociationTagRecetteSe
 	@Autowired
 	private AssociationTagRecetteRepository associationTagRecetteRepository;
 
-	public Boolean insert(AssociationTagRecette associationTagRecette) {
-		associationTagRecetteRepository.save(associationTagRecette);
-		return true;
+	public AssociationTagRecette insert(AssociationTagRecette t) {
+		return associationTagRecetteRepository.save(t);
 	}
 
 	public AssociationTagRecette update(AssociationTagRecette associationTagRecette) {

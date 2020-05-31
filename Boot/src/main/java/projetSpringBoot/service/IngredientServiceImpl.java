@@ -16,27 +16,24 @@ public class IngredientServiceImpl implements IngredientService {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    public Boolean insert(Ingredient ingredient) {
+    public Ingredient insert(Ingredient ingredient) {
         String nomIngredient = ingredient.getNom();
         if (nomIngredient == null || nomIngredient.isEmpty()) {
-            return false;
+            return ingredient;
         }
-        ingredientRepository.save(ingredient);
-        return true;
+        return ingredientRepository.save(ingredient);
     }
 
     public Ingredient update(Ingredient ingredient) {
         Optional<Ingredient> opt = ingredientRepository.findById(ingredient.getId());
         if (opt.isPresent()) {
             Ingredient ingrEnBase = opt.get();
-            System.out.println(ingrEnBase.getNom());
             if (ingredient.getNom() != null) {
                 ingrEnBase.setNom(ingredient.getNom());
             }
             if (ingredient.getPhoto() != null) {
                 ingrEnBase.setPhoto(ingredient.getPhoto());
             }
-            System.out.println("truc" + ingrEnBase.getNom());
             return ingredientRepository.save(ingrEnBase);
         }
 

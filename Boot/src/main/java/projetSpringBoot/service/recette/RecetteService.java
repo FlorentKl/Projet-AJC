@@ -7,7 +7,7 @@ import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.service.GenericInterfaceService;
 
 public interface RecetteService extends GenericInterfaceService<Recette, Integer>, GenericRecetteService<Recette> {
-    Boolean insert(Recette recette);
+    Recette insert(Recette recette);
 
     // Find All
     List<Recette> findAll();

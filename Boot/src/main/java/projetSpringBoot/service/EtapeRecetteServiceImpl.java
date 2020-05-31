@@ -17,12 +17,11 @@ public class EtapeRecetteServiceImpl implements EtapeRecetteService {
 	private EtapeRecetteRepository etapeRecetteRepository;
 
 	@Override
-	public Boolean insert(EtapeRecette etapeRecette) {
+	public EtapeRecette insert(EtapeRecette etapeRecette) {
 		if (etapeRecette.getTexte().isEmpty()) {
-			return false;
+			return etapeRecette;
 		}
-		etapeRecetteRepository.save(etapeRecette);
-		return true;
+		return etapeRecetteRepository.save(etapeRecette);
 	}
 
 	@Override
@@ -32,9 +31,6 @@ public class EtapeRecetteServiceImpl implements EtapeRecetteService {
 			EtapeRecette etapeRecetteEnBase = opt.get();
 			if (etapeRecette.getTexte() != null) {
 				etapeRecetteEnBase.setTexte(etapeRecette.getTexte());
-			}
-			if (etapeRecette.getPhoto() != null) {
-				etapeRecetteEnBase.setPhoto(etapeRecette.getPhoto());
 			}
 			etapeRecetteRepository.save(etapeRecetteEnBase);
 			return etapeRecetteEnBase;

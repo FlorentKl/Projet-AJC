@@ -43,13 +43,12 @@ public class PlatServiceImpl implements PlatService {
     }
 
     @Override
-    public Boolean insert(Plat t) {
+    public Plat insert(Plat t) {
         String nomRecette = t.getNom();
         if (nomRecette == null || nomRecette.isEmpty()) {
-            return false;
+            return t;
         }
-        platRepository.save(t);
-        return true;
+        return platRepository.save(t);
     }
 
     @Override
@@ -64,7 +63,6 @@ public class PlatServiceImpl implements PlatService {
             recetteEnBase.setCout(t.getCout());
             recetteEnBase.setDifficulte(t.getDifficulte());
             recetteEnBase.setNbPersonne(t.getNbPersonne());
-            recetteEnBase.setPhoto(t.getPhoto());
             recetteEnBase.setTags(t.getTags());
             recetteEnBase.setTemps(t.getTemps());
             recetteEnBase.setCommentaires(t.getCommentaires());

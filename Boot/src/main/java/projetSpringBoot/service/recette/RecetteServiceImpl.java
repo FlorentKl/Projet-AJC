@@ -21,13 +21,12 @@ public class RecetteServiceImpl implements RecetteService {
     RecetteRepository<Recette> recetteRepository;
 
     @Override
-    public Boolean insert(Recette recette) {
+    public Recette insert(Recette recette) {
         String nomRecette = recette.getNom();
         if (nomRecette == null || nomRecette.isEmpty()) {
-            return false;
+            return recette;
         }
-        recetteRepository.save(recette);
-        return true;
+        return recetteRepository.save(recette);
     }
 
     /// update Recette fait update, mais les controle se font dans les methodes
@@ -44,7 +43,6 @@ public class RecetteServiceImpl implements RecetteService {
             recetteEnBase.setCout(recette.getCout());
             recetteEnBase.setDifficulte(recette.getDifficulte());
             recetteEnBase.setNbPersonne(recette.getNbPersonne());
-            recetteEnBase.setPhoto(recette.getPhoto());
             recetteEnBase.setTags(recette.getTags());
             recetteEnBase.setTemps(recette.getTemps());
             recetteEnBase.setCommentaires(recette.getCommentaires());

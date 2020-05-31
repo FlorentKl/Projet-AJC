@@ -43,13 +43,12 @@ public class EntreeServiceImpl implements EntreeService {
     }
 
     @Override
-    public Boolean insert(Entree t) {
+    public Entree insert(Entree t) {
         String nomRecette = t.getNom();
         if (nomRecette == null || nomRecette.isEmpty()) {
-            return false;
+            return t;
         }
-        entreeRepository.save(t);
-        return true;
+        return entreeRepository.save(t);
     }
 
     @Override
@@ -64,7 +63,6 @@ public class EntreeServiceImpl implements EntreeService {
             recetteEnBase.setCout(t.getCout());
             recetteEnBase.setDifficulte(t.getDifficulte());
             recetteEnBase.setNbPersonne(t.getNbPersonne());
-            recetteEnBase.setPhoto(t.getPhoto());
             recetteEnBase.setTags(t.getTags());
             recetteEnBase.setTemps(t.getTemps());
             recetteEnBase.setCommentaires(t.getCommentaires());
