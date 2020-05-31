@@ -1,5 +1,6 @@
 package projetSpringBoot.model.recette;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -75,6 +78,11 @@ public abstract class Recette {
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "recipe_pic_FK"))
     private ImageModel picture;
+
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @Column(name = "date_creation")
+    @Temporal(TemporalType.DATE)
+    private Date dateCreation;
 
     @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
@@ -143,6 +151,14 @@ public abstract class Recette {
 
     public void setImgRecette(ImageModel picture) {
         this.picture = picture;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
     public List<AssociationTagRecette> getTags() {
@@ -233,5 +249,4 @@ public abstract class Recette {
             return false;
         return true;
     }
-
 }

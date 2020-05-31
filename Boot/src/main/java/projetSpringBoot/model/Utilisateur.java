@@ -1,5 +1,6 @@
 package projetSpringBoot.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import projetSpringBoot.model.imageModel.ImageModel;
@@ -37,12 +40,16 @@ public class Utilisateur {
     @Column(name = "password", length = 150, nullable = false)
     private String password;
 
+    @Column(name = "date_inscription")
+    @Temporal(TemporalType.DATE)
+    private Date dateInscription;
+
     @Column(name = "enable")
     private Boolean enabled;
 
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
-    private ImageModel picture;
+    private ImageModel imageProfil;
 
     @OneToMany(mappedBy = "auteur")
     private List<Recette> recette;
@@ -95,6 +102,14 @@ public class Utilisateur {
         this.password = password;
     }
 
+    public Date getDateInscription() {
+        return dateInscription;
+    }
+
+    public void setDateInscription(Date dateInscription) {
+        this.dateInscription = dateInscription;
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -104,11 +119,11 @@ public class Utilisateur {
     }
 
     public ImageModel getImgProfil() {
-        return picture;
+        return imageProfil;
     }
 
-    public void setImgProfil(ImageModel picture) {
-        this.picture = picture;
+    public void setImgProfil(ImageModel imageProfil) {
+        this.imageProfil = imageProfil;
     }
 
     public List<Recette> getRecette() {
@@ -167,4 +182,5 @@ public class Utilisateur {
             return false;
         return true;
     }
+
 }

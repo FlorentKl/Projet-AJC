@@ -1,9 +1,13 @@
 package projetSpringBoot.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
@@ -11,10 +15,17 @@ import javax.persistence.Version;
 public class AssociationRecetteCommentaire {
     @Column(name = "text")
     private String texte;
+
     @EmbeddedId
     private AssociationRecetteCommentaireKey id;
+
     @Column(name = "notation")
     private Integer note;
+
+    @Column(name = "date_inscription")
+    @Temporal(TemporalType.DATE)
+    private Date dateCommentaire;
+
     @Version
     private Integer version;
 
@@ -52,6 +63,14 @@ public class AssociationRecetteCommentaire {
         this.id = id;
     }
 
+    public Date getDateCommentaire() {
+        return dateCommentaire;
+    }
+
+    public void setDateCommentaire(Date dateCommentaire) {
+        this.dateCommentaire = dateCommentaire;
+    }
+
     public Integer getVersion() {
         return version;
     }
@@ -84,5 +103,4 @@ public class AssociationRecetteCommentaire {
             return false;
         return true;
     }
-
 }

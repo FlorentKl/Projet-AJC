@@ -1,7 +1,7 @@
 package projetSpringBoot.model.recette;
 
 public enum Difficulte {
-	F("facile"), M("medium"), D("difficile"),E("expert");
+	F("facile"), M("medium"), D("difficile"), E("expert");
 
 	private String label;
 
