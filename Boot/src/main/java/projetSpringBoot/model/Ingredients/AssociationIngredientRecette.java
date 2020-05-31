@@ -11,11 +11,14 @@ import javax.persistence.Table;
 @Table(name = "recipe_ingredients")
 public class AssociationIngredientRecette {
 	private Integer quantite;
+
 	@EmbeddedId
 	private AssociationIngredientRecetteKey id;
+
 	@Column(name = "mesure_liquide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Volume mesure_liquide;
+
 	@Column(name = "mesure_solide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Masse mesure_solide;
