@@ -16,21 +16,22 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 import projetSpringBoot.model.AssociationRecetteCommentaire;
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.AssociationIngredientRecette;
+import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.tag.AssociationTagRecette;
 import projetSpringBoot.model.views.Views;
 
@@ -43,56 +44,60 @@ import projetSpringBoot.model.views.Views;
 @JsonSubTypes({ @Type(value = Entree.class), @Type(value = Plat.class), @Type(value = Dessert.class),
         @Type(value = Boisson.class) })
 public abstract class Recette {
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "name_recipe", length = 150)
     private String nom;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqRecipe")
     private Integer id;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "nbperson_recipe", length = 150)
     private Integer nbPersonne;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "duration_recipe", length = 150)
     private Integer temps;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "cost", length = 2)
     @Enumerated(EnumType.STRING)
     private Couts cout;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "difficulte", length = 2)
     @Enumerated(EnumType.STRING)
     private Difficulte difficulte;
 
-    @JsonView(Views.Common.class)
-    @Lob
-    @Column(name = "recipe_image")
-    private byte[] photo;
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @OneToOne
+    @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "recipe_pic_FK"))
+    private ImageModel picture;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
     private List<AssociationTagRecette> tags;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
     private List<AssociationIngredientRecette> ingredients;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id_recette", cascade = CascadeType.REMOVE)
     private List<EtapeRecette> etapes;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
     private List<AssociationRecetteCommentaire> commentaires;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @ManyToOne
     @JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
     private Utilisateur auteur;
 
-    @JsonView(Views.Common.class)
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Version
     private Integer version;
 
@@ -132,12 +137,12 @@ public abstract class Recette {
         this.temps = temps;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public ImageModel getImgRecette() {
+        return picture;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setImgRecette(ImageModel picture) {
+        this.picture = picture;
     }
 
     public List<AssociationTagRecette> getTags() {

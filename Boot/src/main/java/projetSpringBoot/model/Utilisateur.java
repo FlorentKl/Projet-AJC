@@ -5,16 +5,20 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Recette;
 
 @Entity
@@ -26,18 +30,29 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqUser")
     @Column(name = "id_adherent")
     private Integer id;
+
     @Column(name = "username", length = 150, nullable = false)
     private String pseudo;
+
     @Column(name = "password", length = 150, nullable = false)
     private String password;
-    @Column(name="enable")
-	private Boolean enabled;
+
+    @Column(name = "enable")
+    private Boolean enabled;
+
+    @OneToOne
+    @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
+    private ImageModel picture;
+
     @OneToMany(mappedBy = "auteur")
     private List<Recette> recette;
+
     @OneToMany(mappedBy = "id.auteur")
     private List<AssociationRecetteCommentaire> commentaires;
-    @OneToMany(mappedBy="utilisateur")
-	private Set<UtilisateurRole> roles;
+
+    @OneToMany(mappedBy = "utilisateur")
+    private Set<UtilisateurRole> roles;
+
     @Version
     private Integer version;
 
@@ -81,14 +96,22 @@ public class Utilisateur {
     }
 
     public Boolean getEnabled() {
-		return enabled;
-	}
+        return enabled;
+    }
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public List<Recette> getRecette() {
+    public ImageModel getImgProfil() {
+        return picture;
+    }
+
+    public void setImgProfil(ImageModel picture) {
+        this.picture = picture;
+    }
+
+    public List<Recette> getRecette() {
         return recette;
     }
 
@@ -105,14 +128,14 @@ public class Utilisateur {
     }
 
     public Set<UtilisateurRole> getRoles() {
-		return roles;
-	}
+        return roles;
+    }
 
-	public void setRoles(Set<UtilisateurRole> roles) {
-		this.roles = roles;
-	}
+    public void setRoles(Set<UtilisateurRole> roles) {
+        this.roles = roles;
+    }
 
-	public Integer getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
@@ -144,5 +167,4 @@ public class Utilisateur {
             return false;
         return true;
     }
-
 }

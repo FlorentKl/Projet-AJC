@@ -7,34 +7,48 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.imageModel.ImageModel;
+import projetSpringBoot.model.views.Views;
 
 @Entity
 @Table(name = "recipe_step")
 @SequenceGenerator(name = "seqEtape", sequenceName = "seq_etape", initialValue = 100, allocationSize = 1)
 public class EtapeRecette {
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEtape")
     @Column(name = "id_etape")
     private Integer id;
+
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "text")
     private String texte;
-    @Lob
-    @Column(name = "recipe_step_photo")
-    private byte[] photo;
+
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "recipe_step_number")
     private Integer numEtape;
+
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @OneToOne
+    @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
+    private ImageModel picture;
+
+    @JsonView(value = { Views.Common.class })
     @ManyToOne
     @JoinColumn(name = "id_recette", foreignKey = @ForeignKey(name = "recette_etapeRecette_etapeRecette_fk"))
     private Recette id_recette;
+
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Version
     private Integer version;
-
-    // TODO trouver comment d�clarer des photo en java
 
     public EtapeRecette() {
     }
@@ -55,12 +69,12 @@ public class EtapeRecette {
         this.texte = texte;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public ImageModel getImgRecette() {
+        return picture;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setImgRecette(ImageModel picture) {
+        this.picture = picture;
     }
 
     public Recette getId_recette() {
