@@ -5,11 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
+
 @Entity
 @Table(name = "tag_recette")
 public class AssociationTagRecette {
+    @JsonView(value = { Views.RecetteWithAll.class })
     @EmbeddedId
     private AssociationTagRecetteKey id;
+
     @Version
     private Integer version;
 

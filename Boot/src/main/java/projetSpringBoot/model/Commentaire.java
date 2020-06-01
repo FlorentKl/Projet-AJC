@@ -10,22 +10,31 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
+
 @Entity
 @Table(name = "comment")
 public class Commentaire {
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "text")
     private String texte;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @EmbeddedId
     private CommentaireKey id;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "notation")
     private Integer note;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "date_inscription")
     @Temporal(TemporalType.DATE)
     private Date dateCommentaire;
 
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Version
     private Integer version;
 

@@ -7,18 +7,25 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import projetSpringBoot.model.recette.Recette;
+import projetSpringBoot.model.views.Views;
+
 @Embeddable
-public class AssociationTagRecetteKey implements Serializable{
+public class AssociationTagRecetteKey implements Serializable {
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_tag_recette_fk"))
 	private Recette recette;
+
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@ManyToOne
 	@JoinColumn(name = "tag", foreignKey = @ForeignKey(name = "recette_tag_tag_fk"))
-	private Tag tag ;
-	
+	private Tag tag;
+
 	public AssociationTagRecetteKey() {
-		
+
 	}
 
 	public AssociationTagRecetteKey(Recette recette, Tag tag) {
@@ -72,6 +79,5 @@ public class AssociationTagRecetteKey implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

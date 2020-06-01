@@ -38,6 +38,21 @@ public class DessertRestController {
         return new ResponseEntity<List<Dessert>>(dessertService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all" })
+    public ResponseEntity<List<Dessert>> findAllRecetteWithAll() {
+        return new ResponseEntity<List<Dessert>>(dessertService.findAll(), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all/{id}" })
+    public ResponseEntity<Dessert> findByIdWithAll(@PathVariable("id") Integer id) {
+        Optional<Dessert> opt = dessertService.findById(id);
+        return opt.map(dessert -> {
+            return new ResponseEntity<>(dessert, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.Common.class)
     @GetMapping("/{id}")
     public ResponseEntity<Dessert> findById(@PathVariable("id") Integer id) {

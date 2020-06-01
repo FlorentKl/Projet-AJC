@@ -38,6 +38,21 @@ public class BoissonRestController {
         return new ResponseEntity<List<Boisson>>(boissonService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all" })
+    public ResponseEntity<List<Boisson>> findAllRecetteWithAll() {
+        return new ResponseEntity<List<Boisson>>(boissonService.findAll(), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all/{id}" })
+    public ResponseEntity<Boisson> findByIdWithAll(@PathVariable("id") Integer id) {
+        Optional<Boisson> opt = boissonService.findById(id);
+        return opt.map(boisson -> {
+            return new ResponseEntity<>(boisson, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.Common.class)
     @GetMapping("/{id}")
     public ResponseEntity<Boisson> findById(@PathVariable("id") Integer id) {

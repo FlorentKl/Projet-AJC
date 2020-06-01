@@ -7,26 +7,31 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import projetSpringBoot.model.recette.Recette;
+import projetSpringBoot.model.views.Views;
 
 @Embeddable
-public class AssociationIngredientRecetteKey implements Serializable{
+public class AssociationIngredientRecetteKey implements Serializable {
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_ingredient_recette_fk"))
 	private Recette recette;
+
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@ManyToOne
 	@JoinColumn(name = "ingredient", foreignKey = @ForeignKey(name = "recette_ingredient_ingredient_fk"))
 	private Ingredient ingredient;
-	
+
 	public AssociationIngredientRecetteKey() {
-		
+
 	}
 
 	public AssociationIngredientRecetteKey(Recette recette, Ingredient ingredient) {
 		this.recette = recette;
 		this.ingredient = ingredient;
 	}
-
 
 	public Recette getRecette() {
 		return recette;
@@ -43,6 +48,7 @@ public class AssociationIngredientRecetteKey implements Serializable{
 	public void setIngredient(Ingredient ingredient) {
 		this.ingredient = ingredient;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
