@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.Ingredients.Ingredient;
+import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.IngredientService;
 
 @RestController
@@ -30,11 +33,13 @@ public class IngredientRestController {
     @Autowired
     IngredientService ingredientService;
 
+    @JsonView(value = { Views.IngredientView.class })
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Ingredient>> findAll() {
         return new ResponseEntity<List<Ingredient>>(ingredientService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(value = { Views.IngredientView.class })
     @GetMapping(value = "/{id}")
     public ResponseEntity<Ingredient> findById(@PathVariable("id") Integer id) {
         Optional<Ingredient> opt = ingredientService.findById(id);

@@ -32,7 +32,7 @@ public class BoissonRestController {
     @Autowired
     BoissonService boissonService;
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Boisson>> findAllBoisson() {
         return new ResponseEntity<List<Boisson>>(boissonService.findAll(), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class BoissonRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping("/{id}")
     public ResponseEntity<Boisson> findById(@PathVariable("id") Integer id) {
         Optional<Boisson> opt = boissonService.findById(id);

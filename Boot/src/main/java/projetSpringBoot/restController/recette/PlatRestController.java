@@ -32,7 +32,7 @@ public class PlatRestController {
     @Autowired
     PlatService platService;
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Plat>> findAllPlat() {
         return new ResponseEntity<List<Plat>>(platService.findAll(), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class PlatRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping("/{id}")
     public ResponseEntity<Plat> findById(@PathVariable("id") Integer id) {
         Optional<Plat> opt = platService.findById(id);

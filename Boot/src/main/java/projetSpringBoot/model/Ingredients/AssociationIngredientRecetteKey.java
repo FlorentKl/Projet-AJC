@@ -14,6 +14,7 @@ import projetSpringBoot.model.views.Views;
 
 @Embeddable
 public class AssociationIngredientRecetteKey implements Serializable {
+	@JsonView(value = { Views.IngredientView.class })
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_ingredient_recette_fk"))
 	private Recette recette;
