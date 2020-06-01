@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -24,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import projetSpringBoot.model.views.Views;
 
 import projetSpringBoot.model.imageModel.ImageModel;
+import projetSpringBoot.model.views.Views;
 
 
 @Entity
@@ -31,24 +35,33 @@ import projetSpringBoot.model.imageModel.ImageModel;
 @SequenceGenerator(name = "seqIngredients", sequenceName = "seq_ingredients", initialValue = 100, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Ingredient {
+	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqIngredients")
 	@Column(name = "id_ingredients")
 	private Integer id;
-	@JsonView(Views.RecetteWithAll.class)
-	@Column(name = "name_ingredients",length = 150)
+
+	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
+	@Column(name = "name_ingredients", length = 150)
 	private String nom;
 
+	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
 	@OneToOne
 	@JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "ingredient_pic_FK"))
 	private ImageModel picture;
 
+	@JsonView(value = { Views.IngredientView.class })
 	@OneToMany(mappedBy = "id.recette")
 	private List<AssociationIngredientRecette> recettes;
 
+	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
 	@Column(name = "type", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Type type;
+
+	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
+	@Version
+	private Integer version;
 
 	public Ingredient() {
 
@@ -96,6 +109,14 @@ public class Ingredient {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	@Override

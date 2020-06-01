@@ -22,26 +22,26 @@ import projetSpringBoot.model.views.Views;
 @Table(name = "recipe_step")
 @SequenceGenerator(name = "seqEtape", sequenceName = "seq_etape", initialValue = 100, allocationSize = 1)
 public class EtapeRecette {
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEtape")
     @Column(name = "id_etape")
     private Integer id;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "text")
     private String texte;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "recipe_step_number")
     private Integer numEtape;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
     private ImageModel picture;
 
-    @JsonView(value = { Views.Common.class })
+    // @JsonView(value = {})
     @ManyToOne
     @JoinColumn(name = "id_recette", foreignKey = @ForeignKey(name = "recette_etapeRecette_etapeRecette_fk"))
     private Recette id_recette;

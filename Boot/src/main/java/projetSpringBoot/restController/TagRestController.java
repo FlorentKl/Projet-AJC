@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.tag.Tag;
+import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.TagService;
 
 @RestController
@@ -30,12 +33,14 @@ public class TagRestController {
     @Autowired
     TagService tagService;
 
+    @JsonView(Views.TagView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Tag>> findAll() {
 
         return new ResponseEntity<List<Tag>>(tagService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.TagView.class)
     @GetMapping(value = "/{id}")
     public ResponseEntity<Tag> findById(@PathVariable("id") Integer id) {
         Optional<Tag> opt = tagService.findById(id);

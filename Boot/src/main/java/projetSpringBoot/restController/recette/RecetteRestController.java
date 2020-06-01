@@ -43,13 +43,11 @@ public class RecetteRestController {
     @Autowired
     RecetteService recetteService;
 
-    @Autowired
-    BoissonService boissonService;
+    /*
+     * Get Mapping
+     */
 
-    @Autowired
-    ImageService imageService;
-
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Recette>> findAllRecette() {
         return new ResponseEntity<List<Recette>>(recetteService.findAll(), HttpStatus.OK);
@@ -61,8 +59,17 @@ public class RecetteRestController {
         return new ResponseEntity<List<Recette>>(recetteService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Recette> findById(@PathVariable("id") Integer id) {
+        Optional<Recette> opt = recetteService.findById(id);
+        return opt.map(recette -> {
+            return new ResponseEntity<Recette>(recette, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<Recette>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.RecetteWithAll.class)
-    @GetMapping(value = { "/all/{id}" })
+    @GetMapping(value = { "/all/id/{id}" })
     public ResponseEntity<Recette> findByIdWithAll(@PathVariable("id") Integer id) {
         Optional<Recette> opt = recetteService.findById(id);
         return opt.map(recette -> {
@@ -70,17 +77,36 @@ public class RecetteRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
-    @GetMapping("/{id}")
-    public ResponseEntity<Recette> findById(@PathVariable("id") Integer id) {
-        Optional<Recette> opt = recetteService.findById(id);
-        return opt.map(recette -> {
-            return new ResponseEntity<Recette>(recette, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<Recette>(HttpStatus.NOT_FOUND));
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/nom/{nom}")
+    public ResponseEntity<List<Recette>> findByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(recetteService.findByNomContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/notnom/{nom}")
+    public ResponseEntity<List<Recette>> findByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(recetteService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/nom/{nom}")
+    public ResponseEntity<List<Recette>> findAllByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(recetteService.findByNomContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/notnom/{nom}")
+    public ResponseEntity<List<Recette>> findAllByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(recetteService.findByNomNotContaining(nom), HttpStatus.OK);
     }
     
 
-    @DeleteMapping("/{id}")
+    /*
+     * Delete Mapping
+     */
+
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         Optional<Recette> opt = recetteService.findById(id);
         return opt.map(recette -> {

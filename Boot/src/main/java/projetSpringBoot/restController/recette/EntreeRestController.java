@@ -32,7 +32,11 @@ public class EntreeRestController {
     @Autowired
     EntreeService entreeService;
 
-    @JsonView(Views.Common.class)
+    /*
+     * Get Mapping
+     */
+
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Entree>> findAllEntree() {
         return new ResponseEntity<List<Entree>>(entreeService.findAll(), HttpStatus.OK);
@@ -44,6 +48,15 @@ public class EntreeRestController {
         return new ResponseEntity<List<Entree>>(entreeService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/{id}")
+    public ResponseEntity<Entree> findById(@PathVariable("id") Integer id) {
+        Optional<Entree> opt = entreeService.findById(id);
+        return opt.map(entree -> {
+            return new ResponseEntity<Entree>(entree, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<Entree>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping(value = { "/all/{id}" })
     public ResponseEntity<Entree> findByIdWithAll(@PathVariable("id") Integer id) {
@@ -53,14 +66,32 @@ public class EntreeRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
-    @GetMapping("/{id}")
-    public ResponseEntity<Entree> findById(@PathVariable("id") Integer id) {
-        Optional<Entree> opt = entreeService.findById(id);
-        return opt.map(entree -> {
-            return new ResponseEntity<Entree>(entree, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<Entree>(HttpStatus.NOT_FOUND));
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/nom/{nom}")
+    public ResponseEntity<List<Entree>> findByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(entreeService.findByNomContaining(nom), HttpStatus.OK);
     }
+
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/notnom/{nom}")
+    public ResponseEntity<List<Entree>> findByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(entreeService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/nom/{nom}")
+    public ResponseEntity<List<Entree>> findAllByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(entreeService.findByNomContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/notnom/{nom}")
+    public ResponseEntity<List<Entree>> findAllByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(entreeService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+    /*
+     * Post Mapping
+     */
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Void> addEntree(@RequestBody Entree entree, BindingResult br, UriComponentsBuilder uCB) {
@@ -73,6 +104,10 @@ public class EntreeRestController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    /*
+     * Delete Mapping
+     */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         Optional<Entree> opt = entreeService.findById(id);
@@ -82,6 +117,10 @@ public class EntreeRestController {
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
     }
+
+    /*
+     * Put Mapping
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Entree entree, @PathVariable("id") Integer id) {

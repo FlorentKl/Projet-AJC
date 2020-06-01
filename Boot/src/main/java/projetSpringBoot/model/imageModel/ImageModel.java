@@ -8,25 +8,38 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
 
 @Entity
 @Table(name = "picture")
 @SequenceGenerator(name = "seqImage", sequenceName = "seq_picture", initialValue = 100, allocationSize = 1)
 public class ImageModel {
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqImage")
     @Column(name = "id_pic")
     private Integer id;
 
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Column(name = "pic_name")
     private String name;
 
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Column(name = "pic_type")
     private String type;
 
+    // @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
     @Lob
     @Column(name = "pic")
     private byte[] image;
+
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
+    @Version
+    private Integer version;
 
     public ImageModel() {
     }
@@ -69,6 +82,14 @@ public class ImageModel {
         this.image = image;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -93,5 +114,4 @@ public class ImageModel {
             return false;
         return true;
     }
-
 }

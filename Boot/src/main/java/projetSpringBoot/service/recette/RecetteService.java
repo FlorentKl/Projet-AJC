@@ -14,7 +14,4 @@ public interface RecetteService extends GenericInterfaceService<Recette, Integer
 
     // findById
     Optional<Recette> findById(Integer id);
-
-    // findByNom
-    List<Recette> findRecetteByNom(String nom);
 }

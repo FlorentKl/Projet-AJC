@@ -32,7 +32,11 @@ public class PlatRestController {
     @Autowired
     PlatService platService;
 
-    @JsonView(Views.Common.class)
+    /*
+     * Get Mapping
+     */
+
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Plat>> findAllPlat() {
         return new ResponseEntity<List<Plat>>(platService.findAll(), HttpStatus.OK);
@@ -44,6 +48,15 @@ public class PlatRestController {
         return new ResponseEntity<List<Plat>>(platService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/{id}")
+    public ResponseEntity<Plat> findById(@PathVariable("id") Integer id) {
+        Optional<Plat> opt = platService.findById(id);
+        return opt.map(plat -> {
+            return new ResponseEntity<Plat>(plat, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<Plat>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping(value = { "/all/{id}" })
     public ResponseEntity<Plat> findByIdWithAll(@PathVariable("id") Integer id) {
@@ -53,14 +66,33 @@ public class PlatRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
-    @GetMapping("/{id}")
-    public ResponseEntity<Plat> findById(@PathVariable("id") Integer id) {
-        Optional<Plat> opt = platService.findById(id);
-        return opt.map(plat -> {
-            return new ResponseEntity<Plat>(plat, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<Plat>(HttpStatus.NOT_FOUND));
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/nom/{nom}")
+    public ResponseEntity<List<Plat>> findByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(platService.findByNomContaining(nom), HttpStatus.OK);
     }
+
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/notnom/{nom}")
+    public ResponseEntity<List<Plat>> findByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(platService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/nom/{nom}")
+    public ResponseEntity<List<Plat>> findAllByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(platService.findByNomContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/notnom/{nom}")
+    public ResponseEntity<List<Plat>> findAllByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(platService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    /*
+     * Post Mapping
+     */
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Void> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
@@ -73,6 +105,10 @@ public class PlatRestController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    /*
+     * Delete Mapping
+     */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         Optional<Plat> opt = platService.findById(id);
@@ -82,6 +118,10 @@ public class PlatRestController {
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
     }
+
+    /*
+     * Put Mapping
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Plat plat, @PathVariable("id") Integer id) {

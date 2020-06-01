@@ -9,6 +9,11 @@ import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.tag.Tag;
 
 public interface GenericRecetteService<T> {
+    // findByNom
+    List<T> findByNomContaining(String nom);
+
+    List<T> findByNomNotContaining(String nom);
+
     // findByIngredientContaining
     List<T> findByIngredientContaining(Ingredient ingredient);
 

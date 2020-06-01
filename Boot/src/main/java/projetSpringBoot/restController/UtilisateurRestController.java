@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.Utilisateur;
+import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.UtilisateurService;
 
 @RestController
@@ -30,12 +33,14 @@ public class UtilisateurRestController {
     @Autowired
     UtilisateurService utilisateurService;
 
+    @JsonView(Views.UtilisateurView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Utilisateur>> findAll() {
 
         return new ResponseEntity<List<Utilisateur>>(utilisateurService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.UtilisateurView.class)
     @GetMapping(value = "/{id}")
     public ResponseEntity<Utilisateur> findById(@PathVariable("id") Integer id) {
         Optional<Utilisateur> opt = utilisateurService.findById(id);

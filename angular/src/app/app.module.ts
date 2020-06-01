@@ -14,6 +14,7 @@ import { RecipeCardComponent } from './components/recipe-card/recipe-card.compon
 import { MontestComponent } from './components/montest/montest.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { HomeComponent } from './components/home/home.component';
+import { IndexComponent } from './components/index/index.component';
 
 @NgModule({
   declarations: [
@@ -25,12 +26,13 @@ import { HomeComponent } from './components/home/home.component';
     RecipeCardComponent,
     MontestComponent,
     RecipeComponent,
-    HomeComponent
+    HomeComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

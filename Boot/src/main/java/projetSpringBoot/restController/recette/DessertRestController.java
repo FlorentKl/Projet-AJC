@@ -32,7 +32,11 @@ public class DessertRestController {
     @Autowired
     DessertService dessertService;
 
-    @JsonView(Views.Common.class)
+    /*
+     * Get Mapping
+     */
+
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Dessert>> findAllDessert() {
         return new ResponseEntity<List<Dessert>>(dessertService.findAll(), HttpStatus.OK);
@@ -44,6 +48,15 @@ public class DessertRestController {
         return new ResponseEntity<List<Dessert>>(dessertService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/{id}")
+    public ResponseEntity<Dessert> findById(@PathVariable("id") Integer id) {
+        Optional<Dessert> opt = dessertService.findById(id);
+        return opt.map(dessert -> {
+            return new ResponseEntity<Dessert>(dessert, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<Dessert>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping(value = { "/all/{id}" })
     public ResponseEntity<Dessert> findByIdWithAll(@PathVariable("id") Integer id) {
@@ -53,14 +66,32 @@ public class DessertRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
-    @GetMapping("/{id}")
-    public ResponseEntity<Dessert> findById(@PathVariable("id") Integer id) {
-        Optional<Dessert> opt = dessertService.findById(id);
-        return opt.map(dessert -> {
-            return new ResponseEntity<Dessert>(dessert, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<Dessert>(HttpStatus.NOT_FOUND));
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/nom/{nom}")
+    public ResponseEntity<List<Dessert>> findByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(dessertService.findByNomContaining(nom), HttpStatus.OK);
     }
+
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/notnom/{nom}")
+    public ResponseEntity<List<Dessert>> findByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(dessertService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/nom/{nom}")
+    public ResponseEntity<List<Dessert>> findAllByNomLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(dessertService.findByNomContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/all/notnom/{nom}")
+    public ResponseEntity<List<Dessert>> findAllByNomNotLike(@PathVariable("nom") String nom) {
+        return new ResponseEntity<>(dessertService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+    /*
+     * Post Mapping
+     */
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Void> addDessert(@RequestBody Dessert dessert, BindingResult br, UriComponentsBuilder uCB) {
@@ -73,6 +104,10 @@ public class DessertRestController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    /*
+     * Delete Mapping
+     */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         Optional<Dessert> opt = dessertService.findById(id);
@@ -82,6 +117,10 @@ public class DessertRestController {
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
     }
+
+    /*
+     * Put Mapping
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Dessert dessert, @PathVariable("id") Integer id) {

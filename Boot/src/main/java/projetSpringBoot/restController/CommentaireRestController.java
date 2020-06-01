@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.Commentaire;
 import projetSpringBoot.model.CommentaireKey;
+import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.CommentaireService;
 
 @RestController
@@ -31,12 +34,14 @@ public class CommentaireRestController {
     @Autowired
     CommentaireService commentaireService;
 
+    @JsonView(value = { Views.CommentaireView.class })
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Commentaire>> findAll() {
 
         return new ResponseEntity<List<Commentaire>>(commentaireService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(value = { Views.CommentaireView.class })
     @GetMapping(value = "/{id}")
     public ResponseEntity<Commentaire> findById(@PathVariable("id") CommentaireKey id) {
         Optional<Commentaire> opt = commentaireService.findById(id);

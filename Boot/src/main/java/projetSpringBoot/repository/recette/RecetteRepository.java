@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.Ingredient;
@@ -21,9 +23,11 @@ public interface RecetteRepository<T extends Recette> extends JpaRepository<T, I
 
     List<T> findByNom(String nom);
 
-    List<T> findByNomLike(String nom);
+    @Transactional
+    List<T> findByNomContainingIgnoreCase(String nom);
 
-    List<T> findByNomNotLike(String nom);
+    @Transactional
+    List<T> findByNomNotContainingIgnoreCase(String nom);
 
     List<T> findByIngredients(Ingredient ingredient);
 

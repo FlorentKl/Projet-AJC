@@ -1,9 +1,11 @@
 import {Routes} from '@angular/router';
+import {IndexComponent} from './components/index/index.component';
 import {RecipeComponent} from './components/recipe/recipe.component';
-import {HomeComponent} from './components/home/home.component';
+import {RecipeCardComponent} from './components/recipe-card/recipe-card.component';
 
 export const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: 'produits', component: RecipeComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'}
+  {path: 'index', component: IndexComponent},
+  {path: 'recette', component: RecipeComponent},
+  {path: '', redirectTo: 'index', pathMatch: 'full'}
+
 ];

@@ -32,6 +32,9 @@ public class ImageRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
+            System.out.println(file.getOriginalFilename());
+            System.out.println(file.getContentType());
+            System.out.println(file.getBytes());
             ImageModel im = new ImageModel(file.getOriginalFilename(), file.getContentType(), file.getBytes());
             im = imageService.insert(im);
             return new ResponseEntity<>(im, HttpStatus.CREATED);

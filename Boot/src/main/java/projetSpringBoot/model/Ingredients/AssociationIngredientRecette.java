@@ -20,21 +20,24 @@ import projetSpringBoot.model.views.Views;
 @Table(name = "recipe_ingredients")
 public class AssociationIngredientRecette {
 
-	@JsonView(value = { Views.RecetteWithAll.class })
+	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
 	private Integer quantite;
-	@JsonView(value = { Views.RecetteWithAll.class })
+
+	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
 	@EmbeddedId
 	private AssociationIngredientRecetteKey id;
-	@JsonView(value = { Views.RecetteWithAll.class })
+
+	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
 	@Column(name = "mesure_liquide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Volume mesure_liquide;
-	@JsonView(value = { Views.RecetteWithAll.class })
+
+	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
 	@Column(name = "mesure_solide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Masse mesure_solide;
 
-	@JsonView(value = { Views.RecetteWithAll.class })
+	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
 	@Version
 	private Integer version;
 
