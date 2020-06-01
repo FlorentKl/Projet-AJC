@@ -43,12 +43,6 @@ public class RecetteRestController {
     @Autowired
     RecetteService recetteService;
 
-    @Autowired
-    BoissonService boissonService;
-
-    @Autowired
-    ImageService imageService;
-
     @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Recette>> findAllRecette() {
@@ -65,9 +59,14 @@ public class RecetteRestController {
     @GetMapping(value = { "/all/{id}" })
     public ResponseEntity<Recette> findByIdWithAll(@PathVariable("id") Integer id) {
         Optional<Recette> opt = recetteService.findById(id);
-        return opt.map(recette -> {
+        if (opt.isPresent()) {
+            Recette recette = opt.get();
             return new ResponseEntity<>(recette, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // return opt.map(recette -> {
+        // return new ResponseEntity<>(recette, HttpStatus.OK);
+        // }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @JsonView(Views.RecetteView.class)

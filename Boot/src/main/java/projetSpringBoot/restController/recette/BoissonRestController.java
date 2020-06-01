@@ -49,6 +49,7 @@ public class BoissonRestController {
     public ResponseEntity<Boisson> findByIdWithAll(@PathVariable("id") Integer id) {
         Optional<Boisson> opt = boissonService.findById(id);
         return opt.map(boisson -> {
+            System.out.println(boisson.getTags());
             return new ResponseEntity<>(boisson, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

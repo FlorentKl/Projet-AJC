@@ -10,6 +10,7 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import projetSpringBoot.model.Commentaire;
 import projetSpringBoot.model.Utilisateur;
@@ -94,19 +98,23 @@ public abstract class Recette {
     private Date dateCreation;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<AssociationTagRecette> tags;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<AssociationIngredientRecette> ingredients;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id_recette", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id_recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<EtapeRecette> etapes;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Commentaire> commentaires;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
