@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -14,19 +19,24 @@ import projetSpringBoot.model.views.Views;
 @Entity
 @Table(name = "recipe_ingredients")
 public class AssociationIngredientRecette {
-	@JsonView(Views.RecetteWithAll.class)
+
+	@JsonView(value = { Views.RecetteWithAll.class })
 	private Integer quantite;
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@EmbeddedId
-	@JsonView(Views.RecetteWithAll.class)
 	private AssociationIngredientRecetteKey id;
-	@JsonView(Views.RecetteWithAll.class)
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@Column(name = "mesure_liquide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Volume mesure_liquide;
-	@JsonView(Views.RecetteWithAll.class)
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@Column(name = "mesure_solide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Masse mesure_solide;
+
+	@JsonView(value = { Views.RecetteWithAll.class })
+	@Version
+	private Integer version;
 
 	// TODO gerer l'aspect Masse Type et Volume
 
@@ -68,6 +78,14 @@ public class AssociationIngredientRecette {
 
 	public void setMesure_solide(Masse mesure_solide) {
 		this.mesure_solide = mesure_solide;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	@Override

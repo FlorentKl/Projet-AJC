@@ -31,8 +31,8 @@ public class IngredientServiceImpl implements IngredientService {
             if (ingredient.getNom() != null) {
                 ingrEnBase.setNom(ingredient.getNom());
             }
-            if (ingredient.getPhoto() != null) {
-                ingrEnBase.setPhoto(ingredient.getPhoto());
+            if (ingredient.getPicture() != null) {
+                ingrEnBase.setPicture(ingredient.getPicture());
             }
             return ingredientRepository.save(ingrEnBase);
         }

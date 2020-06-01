@@ -1,5 +1,6 @@
 package projetSpringBoot.model.recette;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -28,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 
-import projetSpringBoot.model.AssociationRecetteCommentaire;
+import projetSpringBoot.model.Commentaire;
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.AssociationIngredientRecette;
 import projetSpringBoot.model.imageModel.ImageModel;
@@ -76,6 +79,11 @@ public abstract class Recette {
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "recipe_pic_FK"))
     private ImageModel picture;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @Column(name = "date_creation")
+    @Temporal(TemporalType.DATE)
+    private Date dateCreation;
+
     @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
     private List<AssociationTagRecette> tags;
@@ -90,7 +98,7 @@ public abstract class Recette {
 
     @JsonView(value = { Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
-    private List<AssociationRecetteCommentaire> commentaires;
+    private List<Commentaire> commentaires;
 
     @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @ManyToOne
@@ -145,6 +153,14 @@ public abstract class Recette {
         this.picture = picture;
     }
 
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
     public List<AssociationTagRecette> getTags() {
         return tags;
     }
@@ -169,11 +185,11 @@ public abstract class Recette {
         this.etapes = etapes;
     }
 
-    public List<AssociationRecetteCommentaire> getCommentaires() {
+    public List<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
+    public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
 
@@ -233,5 +249,4 @@ public abstract class Recette {
             return false;
         return true;
     }
-
 }

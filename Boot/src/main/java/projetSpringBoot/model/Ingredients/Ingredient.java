@@ -6,18 +6,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 import com.fasterxml.jackson.annotation.JsonView;
 
 import projetSpringBoot.model.views.Views;
+
+import projetSpringBoot.model.imageModel.ImageModel;
+
 
 @Entity
 @Table(name = "ingredients")
@@ -25,31 +32,30 @@ import projetSpringBoot.model.views.Views;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Ingredient {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqIngredients")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqIngredients")
 	@Column(name = "id_ingredients")
 	private Integer id;
 	@JsonView(Views.RecetteWithAll.class)
 	@Column(name = "name_ingredients",length = 150)
 	private String nom;
-	@Column(name = "picture_ingredients")
-	private String photo;
+
+	@OneToOne
+	@JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "ingredient_pic_FK"))
+	private ImageModel picture;
+
 	@OneToMany(mappedBy = "id.recette")
 	private List<AssociationIngredientRecette> recettes;
+
 	@Column(name = "type", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Type type;
-	
+
 	public Ingredient() {
-		
+
 	}
 
-        public Ingredient(String nom) {
-            this.nom = nom;
-        }
-
-        public Ingredient(String nom, String photo) {
+	public Ingredient(String nom) {
 		this.nom = nom;
-		this.photo = photo;
 	}
 
 	public Integer getId() {
@@ -68,12 +74,12 @@ public class Ingredient {
 		this.nom = nom;
 	}
 
-	public String getPhoto() {
-		return photo;
+	public ImageModel getPicture() {
+		return picture;
 	}
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setPicture(ImageModel picture) {
+		this.picture = picture;
 	}
 
 	public List<AssociationIngredientRecette> getRecettes() {
@@ -116,7 +122,4 @@ public class Ingredient {
 			return false;
 		return true;
 	}
-	
-	
-
 }

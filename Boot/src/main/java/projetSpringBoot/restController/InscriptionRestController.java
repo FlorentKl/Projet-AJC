@@ -27,15 +27,15 @@ import projetSpringBoot.service.UtilisateurServiceImpl;
 @RequestMapping("/rest/inscription")
 @CrossOrigin(origins = "*")
 public class InscriptionRestController {
-	
+
 	@Autowired
 	private UtilisateurServiceImpl utilisateurService;
 	@Autowired
 	private UtilisateurRoleServiceImpl utilisateurRoleService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	@PostMapping({"", "/"})
+
+	@PostMapping({ "", "/" })
 	public ResponseEntity<Void> inscription(@Valid @RequestBody Utilisateur utilisateur, BindingResult br) {
 		if (br.hasErrors()) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -53,9 +53,9 @@ public class InscriptionRestController {
 		utilisateurRoleService.insert(role);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/{pseudo}")
-	public ResponseEntity<Boolean> loginDispo(@PathVariable("pseudo") String pseudo){
+	public ResponseEntity<Boolean> loginDispo(@PathVariable("pseudo") String pseudo) {
 		Optional<Utilisateur> opt = utilisateurService.findByPseudo(pseudo);
 		if (opt.isPresent()) {
 			return new ResponseEntity<Boolean>(false, HttpStatus.OK);

@@ -38,6 +38,21 @@ public class PlatRestController {
         return new ResponseEntity<List<Plat>>(platService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all" })
+    public ResponseEntity<List<Plat>> findAllRecetteWithAll() {
+        return new ResponseEntity<List<Plat>>(platService.findAll(), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all/{id}" })
+    public ResponseEntity<Plat> findByIdWithAll(@PathVariable("id") Integer id) {
+        Optional<Plat> opt = platService.findById(id);
+        return opt.map(plat -> {
+            return new ResponseEntity<>(plat, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.Common.class)
     @GetMapping("/{id}")
     public ResponseEntity<Plat> findById(@PathVariable("id") Integer id) {

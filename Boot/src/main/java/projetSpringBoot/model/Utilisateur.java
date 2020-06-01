@@ -1,5 +1,6 @@
 package projetSpringBoot.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -16,43 +17,62 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Recette;
+import projetSpringBoot.model.views.Views;
 
 @Entity
 @Table(name = "adherents")
 @SequenceGenerator(name = "seqUser", sequenceName = "seq_user", initialValue = 100, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Utilisateur {
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqUser")
     @Column(name = "id_adherent")
     private Integer id;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "username", length = 150, nullable = false)
     private String pseudo;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "password", length = 150, nullable = false)
     private String password;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @Column(name = "date_inscription")
+    @Temporal(TemporalType.DATE)
+    private Date dateInscription;
+
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Column(name = "enable")
     private Boolean enabled;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
-    private ImageModel picture;
+    private ImageModel imageProfil;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @OneToMany(mappedBy = "auteur")
     private List<Recette> recette;
 
+    @JsonView(value = { Views.Common.class })
     @OneToMany(mappedBy = "id.auteur")
-    private List<AssociationRecetteCommentaire> commentaires;
+    private List<Commentaire> commentaires;
 
+    @JsonView(value = { Views.Common.class })
     @OneToMany(mappedBy = "utilisateur")
     private Set<UtilisateurRole> roles;
 
+    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
     @Version
     private Integer version;
 
@@ -95,6 +115,14 @@ public class Utilisateur {
         this.password = password;
     }
 
+    public Date getDateInscription() {
+        return dateInscription;
+    }
+
+    public void setDateInscription(Date dateInscription) {
+        this.dateInscription = dateInscription;
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -104,11 +132,11 @@ public class Utilisateur {
     }
 
     public ImageModel getImgProfil() {
-        return picture;
+        return imageProfil;
     }
 
-    public void setImgProfil(ImageModel picture) {
-        this.picture = picture;
+    public void setImgProfil(ImageModel imageProfil) {
+        this.imageProfil = imageProfil;
     }
 
     public List<Recette> getRecette() {
@@ -119,11 +147,11 @@ public class Utilisateur {
         this.recette = recette;
     }
 
-    public List<AssociationRecetteCommentaire> getCommentaires() {
+    public List<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(List<AssociationRecetteCommentaire> commentaires) {
+    public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
 
@@ -167,4 +195,5 @@ public class Utilisateur {
             return false;
         return true;
     }
+
 }

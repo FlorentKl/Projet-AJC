@@ -1,30 +1,50 @@
 package projetSpringBoot.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
 
 @Entity
 @Table(name = "comment")
-public class AssociationRecetteCommentaire {
+public class Commentaire {
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "text")
     private String texte;
+
+    @JsonView(value = { Views.RecetteWithAll.class })
     @EmbeddedId
-    private AssociationRecetteCommentaireKey id;
+    private CommentaireKey id;
+
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Column(name = "notation")
     private Integer note;
+
+    @JsonView(value = { Views.RecetteWithAll.class })
+    @Column(name = "date_inscription")
+    @Temporal(TemporalType.DATE)
+    private Date dateCommentaire;
+
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Version
     private Integer version;
 
-    public AssociationRecetteCommentaire(String texte, AssociationRecetteCommentaireKey id, Integer note) {
+    public Commentaire(String texte, CommentaireKey id, Integer note) {
         this.texte = texte;
         this.id = id;
         this.note = note;
     }
 
-    public AssociationRecetteCommentaire() {
+    public Commentaire() {
 
     }
 
@@ -44,12 +64,20 @@ public class AssociationRecetteCommentaire {
         this.note = note;
     }
 
-    public AssociationRecetteCommentaireKey getId() {
+    public CommentaireKey getId() {
         return id;
     }
 
-    public void setId(AssociationRecetteCommentaireKey id) {
+    public void setId(CommentaireKey id) {
         this.id = id;
+    }
+
+    public Date getDateCommentaire() {
+        return dateCommentaire;
+    }
+
+    public void setDateCommentaire(Date dateCommentaire) {
+        this.dateCommentaire = dateCommentaire;
     }
 
     public Integer getVersion() {
@@ -76,7 +104,7 @@ public class AssociationRecetteCommentaire {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AssociationRecetteCommentaire other = (AssociationRecetteCommentaire) obj;
+        Commentaire other = (Commentaire) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -84,5 +112,4 @@ public class AssociationRecetteCommentaire {
             return false;
         return true;
     }
-
 }

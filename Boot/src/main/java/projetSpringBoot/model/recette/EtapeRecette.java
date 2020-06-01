@@ -46,7 +46,7 @@ public class EtapeRecette {
     @JoinColumn(name = "id_recette", foreignKey = @ForeignKey(name = "recette_etapeRecette_etapeRecette_fk"))
     private Recette id_recette;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class })
     @Version
     private Integer version;
 

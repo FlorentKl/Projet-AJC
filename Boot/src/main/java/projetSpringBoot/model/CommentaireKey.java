@@ -7,22 +7,28 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import projetSpringBoot.model.recette.Recette;
+import projetSpringBoot.model.views.Views;
 
 @Embeddable
-public class AssociationRecetteCommentaireKey implements Serializable {
+public class CommentaireKey implements Serializable {
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_comment_comment_fk"))
 	private Recette recette;
+
+	@JsonView(value = { Views.RecetteWithAll.class })
 	@ManyToOne
 	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "comment_auteur_fk"))
 	private Utilisateur auteur;
 
-	public AssociationRecetteCommentaireKey() {
+	public CommentaireKey() {
 
 	}
 
-	public AssociationRecetteCommentaireKey(Recette recette, Utilisateur auteur) {
+	public CommentaireKey(Recette recette, Utilisateur auteur) {
 		this.recette = recette;
 		this.auteur = auteur;
 	}
@@ -60,7 +66,7 @@ public class AssociationRecetteCommentaireKey implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AssociationRecetteCommentaireKey other = (AssociationRecetteCommentaireKey) obj;
+		CommentaireKey other = (CommentaireKey) obj;
 		if (auteur == null) {
 			if (other.auteur != null)
 				return false;

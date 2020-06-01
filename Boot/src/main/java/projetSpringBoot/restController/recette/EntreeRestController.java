@@ -38,6 +38,21 @@ public class EntreeRestController {
         return new ResponseEntity<List<Entree>>(entreeService.findAll(), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all" })
+    public ResponseEntity<List<Entree>> findAllRecetteWithAll() {
+        return new ResponseEntity<List<Entree>>(entreeService.findAll(), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping(value = { "/all/{id}" })
+    public ResponseEntity<Entree> findByIdWithAll(@PathVariable("id") Integer id) {
+        Optional<Entree> opt = entreeService.findById(id);
+        return opt.map(entree -> {
+            return new ResponseEntity<>(entree, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @JsonView(Views.Common.class)
     @GetMapping("/{id}")
     public ResponseEntity<Entree> findById(@PathVariable("id") Integer id) {
