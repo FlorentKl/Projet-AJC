@@ -1,3 +1,12 @@
 export class Commentaire {
-  constructor(){}
+  constructor(private _texte?: string){}
+
+
+  get texte(): string {
+    return this._texte;
+  }
+
+  set texte(value: string) {
+    this._texte = value;
+  }
 }

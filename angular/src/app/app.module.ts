@@ -13,7 +13,7 @@ import { MilestonesComponent } from './components/milestones/milestones.componen
 import { RecipeCardComponent } from './components/recipe-card/recipe-card.component';
 import { MontestComponent } from './components/montest/montest.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -23,20 +23,12 @@ import {HttpClientModule} from '@angular/common/http';
     ButtonsComponent,
     MilestonesComponent,
     RecipeCardComponent,
-<<<<<<< HEAD
     MontestComponent,
-    RecipeComponent
+    RecipeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule
-=======
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
->>>>>>> master
   ],
   providers: [],
   bootstrap: [AppComponent],

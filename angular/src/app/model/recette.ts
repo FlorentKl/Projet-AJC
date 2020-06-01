@@ -1,7 +1,15 @@
 import {Ingredient} from './ingredient';
 import {EtapeRecette} from './etape-recette';
+import {Commentaire} from './commentaire';
 
 export class Recette {
+  get commentaires(): Commentaire[] {
+    return this._commentaires;
+  }
+
+  set commentaires(value: Commentaire[]) {
+    this._commentaires = value;
+  }
   get type(): string {
     return this._type;
   }
@@ -14,11 +22,12 @@ export class Recette {
                private _type?: string,
                private _nbPersonne?: number,
                private _temps?: number,
-               private _cost?: string,
+               private _cout?: string,
                private _difficulte?: string,
                private _tags?: string[],
                private _ingredients?: Ingredient[],
                private _etapes?: EtapeRecette[],
+               private _commentaires?: Commentaire[],
                private _auteur?: string
                ) {
   }
@@ -56,12 +65,12 @@ export class Recette {
     this._temps = value;
   }
 
-  get cost(): string {
-    return this._cost;
+  get cout(): string {
+    return this._cout;
   }
 
-  set cost(value: string) {
-    this._cost = value;
+  set cout(value: string) {
+    this._cout = value;
   }
 
   get difficulte(): string {

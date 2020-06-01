@@ -79,14 +79,6 @@ public class RecetteRestController {
         }).orElseGet(() -> new ResponseEntity<Recette>(HttpStatus.NOT_FOUND));
     }
     
-    @JsonView(Views.RecetteWithAll.class)
-    @GetMapping("/all/{id}")
-    public ResponseEntity<Recette> findByIdWithAll(@PathVariable("id") Integer id) {
-        Optional<Recette> opt = recetteService.findById(id);
-        return opt.map(recette -> {
-            return new ResponseEntity<Recette>(recette, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<Recette>(HttpStatus.NOT_FOUND));
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {

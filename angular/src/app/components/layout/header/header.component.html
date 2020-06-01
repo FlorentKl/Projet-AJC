@@ -1,9 +1,6 @@
 <div>
     <span >Bonjour<br></span>
     <a class="btn btn-link" [routerLink]="['/home']" routerLinkActive="active">Home</a>
-    <a class="btn btn-link" [routerLink]="['/produits']" routerLinkActive="active">Produits</a>
-    <a class="btn btn-link" [routerLink]="['param', 'olivier']" routerLinkActive="active">Component avec paramètre</a>
-    <a class="btn btn-link" [routerLink]="['/formations']" routerLinkActive="active">Formations</a>
-    <a class="btn btn-link" [routerLink]="['/salles']" routerLinkActive="active">Salles</a>
+    <a class="btn btn-link" [routerLink]="['/produits']" [queryParams]="{id:1}" routerLinkActive="active">Produits</a>
     <button class="btn btn-link">Déconnexion</button>
 </div>

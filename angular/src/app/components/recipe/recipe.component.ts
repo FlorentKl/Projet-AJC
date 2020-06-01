@@ -27,6 +27,7 @@ export class RecipeComponent implements OnInit {
         this._id = params.id;
         this.recetteService.findById(this._id).subscribe(data => {
           this._recette = data;
+          console.log(this.recette);
         });
       }
     });
