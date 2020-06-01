@@ -60,7 +60,7 @@
           <div class="top-cta-content">
             <h3>Strawberry Cake</h3>
             <h6>Simple &amp; Delicios</h6>
-            <a [routerLink]="['/m']" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
+            <a [routerLink]="['/recettes', 1 ]" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
           <div class="top-cta-content">
             <h3>Chinesse Noodles</h3>
             <h6>Simple &amp; Delicios</h6>
-            <a [routerLink]="['/m']" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
+            <a [routerLink]="['/recettes', 4]" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
           </div>
         </div>
       </div>
@@ -87,121 +87,28 @@
     <div class="row">
       <div class="col-12">
         <div class="section-heading">
-          <h3>The best Receipies</h3>
+          <h3>Les meilleures recettes</h3>
         </div>
       </div>
     </div>
 
     <div class="row">
       <!-- Single Best Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-best-receipe-area mb-30">
-          <img src="assets/delicious/img/bg-img/r1.jpg" alt="">
-          <div class="receipe-content">
-            <a href="receipe-post.html">
-              <h5>Sushi Easy Receipy</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single Best Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-best-receipe-area mb-30">
-          <img src="assets/delicious/img/bg-img/r2.jpg" alt="">
-          <div class="receipe-content">
-            <a href="receipe-post.html">
-              <h5>Homemade Burger</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single Best Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-best-receipe-area mb-30">
-          <img src="assets/delicious/img/bg-img/r3.jpg" alt="">
-          <div class="receipe-content">
-            <a href="receipe-post.html">
-              <h5>Vegan Smoothie</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single Best Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-best-receipe-area mb-30">
-          <img src="assets/delicious/img/bg-img/r4.jpg" alt="">
-          <div class="receipe-content">
-            <a href="receipe-post.html">
-              <h5>Calabasa soup</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single Best Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-best-receipe-area mb-30">
-          <img src="assets/delicious/img/bg-img/r5.jpg" alt="">
-          <div class="receipe-content">
-            <a href="receipe-post.html">
-              <h5>Homemade Breakfast</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Single Best Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-best-receipe-area mb-30">
-          <img src="assets/delicious/img/bg-img/r6.jpg" alt="">
-          <div class="receipe-content">
-            <a href="receipe-post.html">
-              <h5>Healthy Fruit Desert</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
+      <div *ngFor = "let r of recettes ; let i = index" class="col-12 col-sm-6 col-lg-4">
+        <div *ngIf= " i < 3">
+          <div  class="single-best-receipe-area mb-30">
+            <img [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
+            <div class="receipe-content">
+              <a [routerLink]="['/recettes', r.id]" class="btn-outline-secondary">
+                <h5>{{r.nom}}</h5>
+              </a>
+              <div class="ratings">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -234,226 +141,21 @@
     <div class="row">
 
       <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
+      <div *ngFor="let r of recettes" class="col-12 col-sm-6 col-lg-4">
         <div class="single-small-receipe-area d-flex">
           <!-- Receipe Thumb -->
           <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr1.jpg" alt="">
+            <img  [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
           </div>
           <!-- Receipe Content -->
           <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Homemade italian pasta</h5>
+            <span>{{r.dateCreation|date:'dd/MM/yyyy'}}</span>
+            <a [routerLink]="['/recettes', r.id]" routerLinkActive="active">
+              <h5>{{r.nom}}</h5>
             </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr2.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Baked Bread</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr3.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Scalops on salt</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr4.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Fruits on plate</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr5.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Macaroons</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr6.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Chocolate tart</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr7.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Berry Desert</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr8.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Zucchini Grilled on peper</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Small Receipe Area -->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-small-receipe-area d-flex">
-          <!-- Receipe Thumb -->
-          <div class="receipe-thumb">
-            <img src="assets/delicious/img/bg-img/sr9.jpg" alt="">
-          </div>
-          <!-- Receipe Content -->
-          <div class="receipe-content">
-            <span>January 04, 2018</span>
-            <a href="receipe-post.html">
-              <h5>Chicken Salad</h5>
-            </a>
-            <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            </div>
-            <p>2 Comments</p>
+            <p>{{r.couts}}</p>
+            <p>{{r.difficulte}}</p>
+            <p>{{r.auteur}}</p>
           </div>
         </div>
       </div>
@@ -517,65 +219,11 @@
   <!-- Instagram Feeds -->
   <div class="insta-feeds d-flex flex-wrap">
     <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/delicious/img/bg-img/insta1.jpg" alt="">
+    <div *ngFor="let r of recettes" class="single-insta-feeds">
+      <img [src]="['data:image/jpeg;base64,'+ r.picture.image]"  alt="">
       <!-- Icon -->
       <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/delicious/img/bg-img/insta2.jpg" alt="">
-      <!-- Icon -->
-      <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/deliciousimg/bg-img/insta3.jpg" alt="">
-      <!-- Icon -->
-      <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/delicious/img/bg-img/insta4.jpg" alt="">
-      <!-- Icon -->
-      <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/delicious/img/bg-img/insta5.jpg" alt="">
-      <!-- Icon -->
-      <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/delicious/img/bg-img/insta6.jpg" alt="">
-      <!-- Icon -->
-      <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <!-- Single Insta Feeds -->
-    <div class="single-insta-feeds">
-      <img src="assets/delicious/img/bg-img/insta7.jpg" alt="">
-      <!-- Icon -->
-      <div class="insta-icon">
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        <a [routerLink]="['/recettes', r.id]" routerLinkActive="active"><i class="fa fa-instagram" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
