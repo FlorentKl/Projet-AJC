@@ -73,6 +73,18 @@ public class BoissonServiceImpl implements BoissonService {
         }
     }
 
+    // findByNom
+    @Override
+    public List<Boisson> findByNomContaining(String nom) {
+        return boissonRepository.findByNomContainingIgnoreCase(nom);
+    }
+
+    // findByNom
+    @Override
+    public List<Boisson> findByNomNotContaining(String nom) {
+        return boissonRepository.findByNomNotContainingIgnoreCase(nom);
+    }
+
     @Override
     public List<Boisson> findAllWithTags() {
         return boissonRepository.findAllWithTags();

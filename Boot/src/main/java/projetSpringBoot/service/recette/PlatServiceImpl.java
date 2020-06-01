@@ -73,6 +73,18 @@ public class PlatServiceImpl implements PlatService {
         }
     }
 
+    // findByNom
+    @Override
+    public List<Plat> findByNomContaining(String nom) {
+        return platRepository.findByNomContainingIgnoreCase(nom);
+    }
+
+    // findByNom
+    @Override
+    public List<Plat> findByNomNotContaining(String nom) {
+        return platRepository.findByNomNotContainingIgnoreCase(nom);
+    }
+
     @Override
     public List<Plat> findAllWithTags() {
         return platRepository.findAllWithTags();

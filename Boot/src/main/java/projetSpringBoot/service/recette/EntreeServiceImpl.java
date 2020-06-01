@@ -73,6 +73,18 @@ public class EntreeServiceImpl implements EntreeService {
         }
     }
 
+    // findByNom
+    @Override
+    public List<Entree> findByNomContaining(String nom) {
+        return entreeRepository.findByNomContainingIgnoreCase(nom);
+    }
+
+    // findByNom
+    @Override
+    public List<Entree> findByNomNotContaining(String nom) {
+        return entreeRepository.findByNomNotContainingIgnoreCase(nom);
+    }
+
     @Override
     public List<Entree> findAllWithTags() {
         return entreeRepository.findAllWithTags();

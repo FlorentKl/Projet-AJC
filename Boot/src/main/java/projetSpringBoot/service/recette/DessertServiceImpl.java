@@ -73,6 +73,18 @@ public class DessertServiceImpl implements DessertService {
         }
     }
 
+    // findByNom
+    @Override
+    public List<Dessert> findByNomContaining(String nom) {
+        return dessertRepository.findByNomContainingIgnoreCase(nom);
+    }
+
+    // findByNom
+    @Override
+    public List<Dessert> findByNomNotContaining(String nom) {
+        return dessertRepository.findByNomNotContainingIgnoreCase(nom);
+    }
+
     @Override
     public List<Dessert> findAllWithTags() {
         return dessertRepository.findAllWithTags();
