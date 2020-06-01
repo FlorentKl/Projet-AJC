@@ -32,7 +32,7 @@ public class EntreeRestController {
     @Autowired
     EntreeService entreeService;
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Entree>> findAllEntree() {
         return new ResponseEntity<List<Entree>>(entreeService.findAll(), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class EntreeRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping("/{id}")
     public ResponseEntity<Entree> findById(@PathVariable("id") Integer id) {
         Optional<Entree> opt = entreeService.findById(id);

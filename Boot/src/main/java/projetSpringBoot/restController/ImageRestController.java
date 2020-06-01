@@ -27,9 +27,7 @@ public class ImageRestController {
     ImageService imageService;
 
     @PostMapping(value = "/upload")
-    public ResponseEntity<ImageModel> postImage(@RequestParam("myFile") MultipartFile file) {
-        System.out.println("--------------------- TRUC -------------------");
-        System.out.println(file);
+    public ResponseEntity<ImageModel> postImage(@RequestParam("image") MultipartFile file) {
         if (file == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -14,19 +14,30 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
+
 @Entity
 @Table(name = "tag")
 @SequenceGenerator(name = "seqTag", sequenceName = "seq_tag", initialValue = 100, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tag {
+    @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqTag")
     @Column(name = "id_tag")
     private Integer id;
+
+    @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
     @Column(name = "tag", length = 150)
     private String tag;
+
+    @JsonView(value = { Views.TagView.class })
     @OneToMany(mappedBy = "id.tag")
     private List<AssociationTagRecette> recettes;
+
+    @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
     @Version
     private Integer version;
 

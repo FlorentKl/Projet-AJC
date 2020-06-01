@@ -4,9 +4,24 @@ public class Views {
     public static class Common {
     }
 
-    public static class RecetteWithAll {
+    public static class RecetteView {
     }
 
-    public static class UtilisateurWithAll {
+    public static class UtilisateurView {
+    }
+
+    public static class IngredientView {
+    }
+
+    public static class TagView {
+    }
+
+    public static class CommentaireView {
+    }
+
+    public static class RecetteWithAll extends RecetteView {
+    }
+
+    public static class UtilisateurWithAll extends UtilisateurView {
     }
 }

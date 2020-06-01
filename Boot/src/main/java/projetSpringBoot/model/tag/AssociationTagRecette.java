@@ -12,10 +12,11 @@ import projetSpringBoot.model.views.Views;
 @Entity
 @Table(name = "tag_recette")
 public class AssociationTagRecette {
-    @JsonView(value = { Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
     @EmbeddedId
     private AssociationTagRecetteKey id;
 
+    @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
     @Version
     private Integer version;
 

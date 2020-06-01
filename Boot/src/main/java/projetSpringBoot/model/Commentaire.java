@@ -17,24 +17,24 @@ import projetSpringBoot.model.views.Views;
 @Entity
 @Table(name = "comment")
 public class Commentaire {
-    @JsonView(value = { Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class })
     @Column(name = "text")
     private String texte;
 
-    @JsonView(value = { Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class })
     @EmbeddedId
     private CommentaireKey id;
 
-    @JsonView(value = { Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class })
     @Column(name = "notation")
     private Integer note;
 
-    @JsonView(value = { Views.RecetteWithAll.class })
-    @Column(name = "date_inscription")
+    @JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class })
+    @Column(name = "date_commentaire")
     @Temporal(TemporalType.DATE)
     private Date dateCommentaire;
 
-    @JsonView(value = { Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class })
     @Version
     private Integer version;
 

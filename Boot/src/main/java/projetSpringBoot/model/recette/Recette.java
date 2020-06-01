@@ -47,39 +47,48 @@ import projetSpringBoot.model.views.Views;
 @JsonSubTypes({ @Type(value = Entree.class), @Type(value = Plat.class), @Type(value = Dessert.class),
         @Type(value = Boisson.class) })
 public abstract class Recette {
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Column(name = "name_recipe", length = 150)
     private String nom;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqRecipe")
     private Integer id;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Column(name = "nbperson_recipe", length = 150)
     private Integer nbPersonne;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Column(name = "duration_recipe", length = 150)
     private Integer temps;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Column(name = "cost", length = 2)
     @Enumerated(EnumType.STRING)
     private Couts cout;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Column(name = "difficulte", length = 2)
     @Enumerated(EnumType.STRING)
     private Difficulte difficulte;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "recipe_pic_FK"))
     private ImageModel picture;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Column(name = "date_creation")
     @Temporal(TemporalType.DATE)
     private Date dateCreation;
@@ -100,12 +109,14 @@ public abstract class Recette {
     @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
     private List<Commentaire> commentaires;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @ManyToOne
     @JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "recette_auteur_fk"))
     private Utilisateur auteur;
 
-    @JsonView(value = { Views.Common.class, Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
+            Views.IngredientView.class, Views.CommentaireView.class })
     @Version
     private Integer version;
 

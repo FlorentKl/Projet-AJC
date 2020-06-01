@@ -49,7 +49,7 @@ public class RecetteRestController {
     @Autowired
     ImageService imageService;
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Recette>> findAllRecette() {
         return new ResponseEntity<List<Recette>>(recetteService.findAll(), HttpStatus.OK);
@@ -70,7 +70,7 @@ public class RecetteRestController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @JsonView(Views.Common.class)
+    @JsonView(Views.RecetteView.class)
     @GetMapping("/{id}")
     public ResponseEntity<Recette> findById(@PathVariable("id") Integer id) {
         Optional<Recette> opt = recetteService.findById(id);
