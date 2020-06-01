@@ -18,17 +18,17 @@ import projetSpringBoot.model.views.Views;
 @Table(name = "picture")
 @SequenceGenerator(name = "seqImage", sequenceName = "seq_picture", initialValue = 100, allocationSize = 1)
 public class ImageModel {
-    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqImage")
     @Column(name = "id_pic")
     private Integer id;
 
-    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Column(name = "pic_name")
     private String name;
 
-    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
+    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Column(name = "pic_type")
     private String type;
 

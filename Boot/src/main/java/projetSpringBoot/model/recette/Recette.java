@@ -53,46 +53,46 @@ import projetSpringBoot.model.views.Views;
 public abstract class Recette {
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Column(name = "name_recipe", length = 150)
     private String nom;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqRecipe")
     private Integer id;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Column(name = "nbperson_recipe", length = 150)
     private Integer nbPersonne;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Column(name = "duration_recipe", length = 150)
     private Integer temps;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Column(name = "cost", length = 2)
     @Enumerated(EnumType.STRING)
     private Couts cout;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Column(name = "difficulte", length = 2)
     @Enumerated(EnumType.STRING)
     private Difficulte difficulte;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "recipe_pic_FK"))
     private ImageModel picture;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Column(name = "date_creation")
     @Temporal(TemporalType.DATE)
     private Date dateCreation;
@@ -124,7 +124,7 @@ public abstract class Recette {
     private Utilisateur auteur;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
-            Views.IngredientView.class, Views.CommentaireView.class })
+            Views.IngredientView.class, Views.CommentaireView.class, Views.UtilisateurView.class })
     @Version
     private Integer version;
 

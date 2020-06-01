@@ -14,7 +14,7 @@ import projetSpringBoot.model.views.Views;
 
 @Embeddable
 public class CommentaireKey implements Serializable {
-	@JsonView(value = { Views.CommentaireView.class })
+	@JsonView(value = { Views.CommentaireView.class, Views.UtilisateurView.class })
 	@ManyToOne
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_comment_comment_fk"))
 	private Recette recette;

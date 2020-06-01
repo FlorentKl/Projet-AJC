@@ -13,21 +13,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
+
 @Entity
 @Table(name = "adherents_role")
 @SequenceGenerator(name = "seqLoginRole", sequenceName = "seq_login_role", initialValue = 50, allocationSize = 1)
 public class UtilisateurRole {
-	
+	@JsonView(Views.UtilisateurView.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqLoginRole")
 	private Integer id;
+
 	@ManyToOne
 	@JoinColumn(name = "username", foreignKey = @ForeignKey(name = "login_role_username_fk"))
 	private Utilisateur utilisateur;
+
+	@JsonView(Views.UtilisateurView.class)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", length = 30)
 	private Roles role;
-	
+
 	public UtilisateurRole() {
 	}
 
@@ -79,5 +86,5 @@ public class UtilisateurRole {
 			return false;
 		return true;
 	}
-	
+
 }
