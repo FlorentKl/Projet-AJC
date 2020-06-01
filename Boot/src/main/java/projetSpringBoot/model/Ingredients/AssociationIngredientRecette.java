@@ -7,15 +7,23 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
+
 @Entity
 @Table(name = "recipe_ingredients")
 public class AssociationIngredientRecette {
+	@JsonView(Views.RecetteWithAll.class)
 	private Integer quantite;
 	@EmbeddedId
+	@JsonView(Views.RecetteWithAll.class)
 	private AssociationIngredientRecetteKey id;
+	@JsonView(Views.RecetteWithAll.class)
 	@Column(name = "mesure_liquide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Volume mesure_liquide;
+	@JsonView(Views.RecetteWithAll.class)
 	@Column(name = "mesure_solide", length = 2)
 	@Enumerated(EnumType.STRING)
 	private Masse mesure_solide;

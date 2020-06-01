@@ -15,6 +15,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import projetSpringBoot.model.views.Views;
+
 @Entity
 @Table(name = "ingredients")
 @SequenceGenerator(name = "seqIngredients", sequenceName = "seq_ingredients", initialValue = 100, allocationSize = 1)
@@ -24,6 +28,7 @@ public class Ingredient {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqIngredients")
 	@Column(name = "id_ingredients")
 	private Integer id;
+	@JsonView(Views.RecetteWithAll.class)
 	@Column(name = "name_ingredients",length = 150)
 	private String nom;
 	@Column(name = "picture_ingredients")

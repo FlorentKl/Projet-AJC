@@ -10,6 +10,9 @@ import {RouterModule} from '@angular/router';
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { MilestonesComponent } from './components/milestones/milestones.component';
 import { RecipeCardComponent } from './components/recipe-card/recipe-card.component';
+import { MontestComponent } from './components/montest/montest.component';
+import { RecipeComponent } from './components/recipe/recipe.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,10 +21,12 @@ import { RecipeCardComponent } from './components/recipe-card/recipe-card.compon
     FooterComponent,
     ButtonsComponent,
     MilestonesComponent,
-    RecipeCardComponent
+    RecipeCardComponent,
+    MontestComponent,
+    RecipeComponent
   ],
   imports: [
-    BrowserModule, FormsModule, RouterModule.forRoot(routes)
+    BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

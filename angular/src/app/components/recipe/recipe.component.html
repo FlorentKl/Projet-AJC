@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <img src="/assets/delicious/img/bg-img/bg5.jpg" alt="">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      <div class="receipe-headline my-5">
+        <span>April 05, 2018</span>
+        <h2>{{recette.nom}}</h2>
+        <div class="receipe-duration">
+          <h6>Durée: {{recette.temps}} mins</h6>
+          <h6>Difficulté : {{recette.difficulte}}</h6>
+        </div>
+      </div>
+
+      <div class="single-preparation-step d-flex"  *ngFor="let etape of recette.etapes">
+        <h4>{{etape.numEtape}}.</h4>
+        <p>{{etape.texte}}</p>
+      </div>
+
+    </div>
+
+
+  <div class="col-12 col-lg-4">
+    <div class="ingredients my-5">
+      <h4>Ingredients</h4>
+
+      <!-- Custom Checkbox -->
+      <div class="custom-control custom-checkbox" *ngFor="let ingredient of recette.ingredients">
+        <input type="checkbox" class="custom-control-input">
+        <label class="custom-control-label">{{ingredient.quantite}} Tbsp (57 gr) {{ingredient.id.ingredient.nom}}</label>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+</div>
+{{recette.nom}}
+

@@ -7,7 +7,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import projetSpringBoot.model.recette.Recette;
+import projetSpringBoot.model.views.Views;
 
 @Embeddable
 public class AssociationIngredientRecetteKey implements Serializable{
@@ -16,6 +19,7 @@ public class AssociationIngredientRecetteKey implements Serializable{
 	private Recette recette;
 	@ManyToOne
 	@JoinColumn(name = "ingredient", foreignKey = @ForeignKey(name = "recette_ingredient_ingredient_fk"))
+	@JsonView(Views.RecetteWithAll.class)
 	private Ingredient ingredient;
 	
 	public AssociationIngredientRecetteKey() {
