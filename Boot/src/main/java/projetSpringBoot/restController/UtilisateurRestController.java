@@ -33,10 +33,13 @@ public class UtilisateurRestController {
     @Autowired
     UtilisateurService utilisateurService;
 
+    /*
+     * Get Mapping
+     */
+
     @JsonView(Views.UtilisateurView.class)
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<Utilisateur>> findAll() {
-
         return new ResponseEntity<List<Utilisateur>>(utilisateurService.findAll(), HttpStatus.OK);
     }
 
@@ -44,12 +47,23 @@ public class UtilisateurRestController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Utilisateur> findById(@PathVariable("id") Integer id) {
         Optional<Utilisateur> opt = utilisateurService.findById(id);
-        if (opt.isPresent()) {
+        return opt.map(user -> {
             return new ResponseEntity<>(opt.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @JsonView(Views.UtilisateurView.class)
+    @GetMapping(value = "/nom/{nom}")
+    public ResponseEntity<Utilisateur> findByNom(@PathVariable("nom") String nom) {
+        Optional<Utilisateur> opt = utilisateurService.findByPseudo(nom);
+        return opt.map(user -> {
+            return new ResponseEntity<>(opt.get(), HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /*
+     * Post Mapping
+     */
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Void> postUtilisateur(@RequestBody Utilisateur utilisateur, BindingResult br,
@@ -64,6 +78,10 @@ public class UtilisateurRestController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
+    /*
+     * Delete Mapping
+     */
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteUtilisateur(@PathVariable Integer id) {
         Optional<Utilisateur> opt = utilisateurService.findById(id);
@@ -73,6 +91,10 @@ public class UtilisateurRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    /*
+     * Put Mapping
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Utilisateur arc, @PathVariable("id") Integer id) {
