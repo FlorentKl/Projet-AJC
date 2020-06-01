@@ -10,6 +10,7 @@ import {RouterModule} from '@angular/router';
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { MilestonesComponent } from './components/milestones/milestones.component';
 import { RecipeCardComponent } from './components/recipe-card/recipe-card.component';
+import { IndexComponent } from './components/index/index.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RecipeCardComponent } from './components/recipe-card/recipe-card.compon
     FooterComponent,
     ButtonsComponent,
     MilestonesComponent,
-    RecipeCardComponent
+    RecipeCardComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(routes)
