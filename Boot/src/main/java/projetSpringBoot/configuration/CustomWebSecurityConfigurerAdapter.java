@@ -22,7 +22,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	// Règles d'accès aux url
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		// @formatter:off
 		http
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -30,15 +30,12 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 			.authorizeRequests().antMatchers(HttpMethod.OPTIONS).anonymous()
 			.and()
 			.csrf().disable()
-			.authorizeRequests().antMatchers("/rest/inscription","/rest/inscription/**").permitAll()
-			.and()
-			.authorizeRequests().antMatchers("/rest/**").authenticated().and().httpBasic()
-			.and()
 			.authorizeRequests().anyRequest().permitAll();
-			
-			
-			//TODO
-//			.authorizeRequests().antMatchers("/**").permitAll();
+			// .authorizeRequests().antMatchers("/rest/inscription","/rest/inscription/**").permitAll()
+			// .and()
+			// .authorizeRequests().antMatchers("/rest/**").authenticated().and().httpBasic()
+			// .and()
+			//
 		// @formatter:on
 	}
 
