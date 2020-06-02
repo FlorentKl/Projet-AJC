@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Plat;
 import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.recette.PlatService;
@@ -88,6 +89,30 @@ public class PlatRestController {
     @GetMapping("/all/notnom/{nom}")
     public ResponseEntity<List<Plat>> findAllByNomNotLike(@PathVariable("nom") String nom) {
         return new ResponseEntity<>(platService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    // Renvoie recettes en fonction de la difficulté voulue
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/difficulte/{difficulte}")
+    public ResponseEntity<List<Plat>> findByDifficulte(@PathVariable("difficulte") String difficulte) {
+        Difficulte diff;
+        switch (difficulte) {
+            case "F":
+                diff = Difficulte.F;
+                break;
+            case "M":
+                diff = Difficulte.M;
+                break;
+            case "D":
+                diff = Difficulte.D;
+                break;
+            case "E":
+                diff = Difficulte.E;
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(platService.findByDifficulte(diff), HttpStatus.OK);
     }
 
     // Check si nom recette existe déjà
