@@ -89,6 +89,17 @@ public class EntreeRestController {
     public ResponseEntity<List<Entree>> findAllByNomNotLike(@PathVariable("nom") String nom) {
         return new ResponseEntity<>(entreeService.findByNomNotContaining(nom), HttpStatus.OK);
     }
+
+    // Check si nom recette existe déjà
+    @GetMapping("/check/{string}")
+    public ResponseEntity<Boolean> checkNom(@PathVariable("string") String string) {
+        Optional<Entree> opt = entreeService.findByNom(string);
+        if (opt.isPresent()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
     /*
      * Post Mapping
      */

@@ -1,6 +1,7 @@
 package projetSpringBoot.service.recette;
 
 import java.util.List;
+import java.util.Optional;
 
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.Ingredient;
@@ -10,6 +11,8 @@ import projetSpringBoot.model.tag.Tag;
 
 public interface GenericRecetteService<T> {
     // findByNom
+    Optional<T> findByNom(String nom);
+
     List<T> findByNomContaining(String nom);
 
     List<T> findByNomNotContaining(String nom);

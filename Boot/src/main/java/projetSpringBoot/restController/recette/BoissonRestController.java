@@ -91,6 +91,16 @@ public class BoissonRestController {
         return new ResponseEntity<>(boissonService.findByNomNotContaining(nom), HttpStatus.OK);
     }
 
+    // Check si nom recette existe déjà
+    @GetMapping("/check/{string}")
+    public ResponseEntity<Boolean> checkNom(@PathVariable("string") String string) {
+        Optional<Boisson> opt = boissonService.findByNom(string);
+        if (opt.isPresent()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
     /*
      * Post Mapping
      */

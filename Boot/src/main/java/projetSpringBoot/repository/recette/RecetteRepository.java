@@ -20,7 +20,7 @@ public interface RecetteRepository<T extends Recette> extends JpaRepository<T, I
 
     List<T> findAll();
 
-    List<T> findByNom(String nom);
+    Optional<T> findByNom(String nom);
 
     @Transactional
     List<T> findByNomContainingIgnoreCase(String nom);

@@ -90,6 +90,16 @@ public class PlatRestController {
         return new ResponseEntity<>(platService.findByNomNotContaining(nom), HttpStatus.OK);
     }
 
+    // Check si nom recette existe déjà
+    @GetMapping("/check/{string}")
+    public ResponseEntity<Boolean> checkNom(@PathVariable("string") String string) {
+        Optional<Plat> opt = platService.findByNom(string);
+        if (opt.isPresent()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
     /*
      * Post Mapping
      */

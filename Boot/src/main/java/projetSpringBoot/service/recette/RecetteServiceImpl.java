@@ -79,6 +79,12 @@ public class RecetteServiceImpl implements RecetteService {
 
     // findByNom
     @Override
+    public Optional<Recette> findByNom(String nom) {
+        return recetteRepository.findByNom(nom);
+    }
+
+    // findByNom
+    @Override
     public List<Recette> findByNomContaining(String nom) {
         return recetteRepository.findByNomContainingIgnoreCase(nom);
     }
