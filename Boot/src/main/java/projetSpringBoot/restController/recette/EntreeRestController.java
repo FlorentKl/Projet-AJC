@@ -152,14 +152,14 @@ public class EntreeRestController {
      */
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> addEntree(@RequestBody Entree entree, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Entree> addEntree(@RequestBody Entree entree, BindingResult br, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        entreeService.insert(entree);
+        Entree entreeNew = entreeService.insert(entree);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/entree/{id}").buildAndExpand(entree.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(entreeNew, headers, HttpStatus.CREATED);
     }
 
     /*

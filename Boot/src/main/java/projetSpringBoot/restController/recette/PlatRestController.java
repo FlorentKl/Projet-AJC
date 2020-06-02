@@ -152,14 +152,14 @@ public class PlatRestController {
      */
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        platService.insert(plat);
+        Plat platNew = platService.insert(plat);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/plat/{id}").buildAndExpand(plat.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(platNew, headers, HttpStatus.CREATED);
     }
 
     /*

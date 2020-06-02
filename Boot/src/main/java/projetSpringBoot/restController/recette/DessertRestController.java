@@ -152,14 +152,15 @@ public class DessertRestController {
      */
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> addDessert(@RequestBody Dessert dessert, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Dessert> addDessert(@RequestBody Dessert dessert, BindingResult br,
+            UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        dessertService.insert(dessert);
+        Dessert dessertNew = dessertService.insert(dessert);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/dessert/{id}").buildAndExpand(dessert.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(dessertNew, headers, HttpStatus.CREATED);
     }
 
     /*

@@ -153,14 +153,15 @@ public class BoissonRestController {
      */
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> addBoisson(@RequestBody Boisson boisson, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Boisson> addBoisson(@RequestBody Boisson boisson, BindingResult br,
+            UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        boissonService.insert(boisson);
+        Boisson boissonNew = boissonService.insert(boisson);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/boisson/{id}").buildAndExpand(boisson.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(boissonNew, headers, HttpStatus.CREATED);
     }
 
     /*
