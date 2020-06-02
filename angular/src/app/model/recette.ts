@@ -7,20 +7,7 @@ import {ImageModel} from './image-model';
 import {Utilisateur} from './utilisateur';
 
 export class Recette {
-  get commentaires(): Commentaire[] {
-    return this._commentaires;
-  }
 
-  set commentaires(value: Commentaire[]) {
-    this._commentaires = value;
-  }
-  get type(): string {
-    return this._type;
-  }
-
-  set type(value: string) {
-    this._type = value;
-  }
   constructor(private _id?: number,
                private _nom?: string,
                private _type?: string,
@@ -37,7 +24,6 @@ export class Recette {
                private _auteur?: Utilisateur
                ) {
   }
-
 
   get id(): number {
     return this._id;
@@ -134,6 +120,21 @@ export class Recette {
 
   set dateCreation(value: Date) {
     this._dateCreation = value;
+  }
+
+  get commentaires(): Commentaire[] {
+    return this._commentaires;
+  }
+
+  set commentaires(value: Commentaire[]) {
+    this._commentaires = value;
+  }
+  get type(): string {
+    return this._type;
+  }
+
+  set type(value: string) {
+    this._type = value;
   }
 
 }
