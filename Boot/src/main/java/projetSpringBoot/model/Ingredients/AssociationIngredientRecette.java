@@ -28,20 +28,13 @@ public class AssociationIngredientRecette {
 	private AssociationIngredientRecetteKey id;
 
 	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
-	@Column(name = "mesure_liquide", length = 2)
+	@Column(name = "units", length = 2)
 	@Enumerated(EnumType.STRING)
-	private Volume mesure_liquide;
-
-	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
-	@Column(name = "mesure_solide", length = 2)
-	@Enumerated(EnumType.STRING)
-	private Masse mesure_solide;
+	private Unite unite;
 
 	@JsonView(value = { Views.RecetteWithAll.class, Views.IngredientView.class })
 	@Version
 	private Integer version;
-
-	// TODO gerer l'aspect Masse Type et Volume
 
 	public AssociationIngredientRecette() {
 
@@ -59,28 +52,20 @@ public class AssociationIngredientRecette {
 		this.quantite = quantite;
 	}
 
+	public Unite getUnite() {
+		return unite;
+	}
+
+	public void setUnite(Unite unite) {
+		this.unite = unite;
+	}
+
 	public AssociationIngredientRecetteKey getId() {
 		return id;
 	}
 
 	public void setId(AssociationIngredientRecetteKey id) {
 		this.id = id;
-	}
-
-	public Volume getMesure_liquide() {
-		return mesure_liquide;
-	}
-
-	public void setMesure_liquide(Volume mesure_liquide) {
-		this.mesure_liquide = mesure_liquide;
-	}
-
-	public Masse getMesure_solide() {
-		return mesure_solide;
-	}
-
-	public void setMesure_solide(Masse mesure_solide) {
-		this.mesure_solide = mesure_solide;
 	}
 
 	public Integer getVersion() {

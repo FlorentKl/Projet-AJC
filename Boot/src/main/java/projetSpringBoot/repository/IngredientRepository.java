@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import projetSpringBoot.model.Ingredients.Ingredient;
-import projetSpringBoot.model.Ingredients.Type;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
     Optional<Ingredient> findById(Integer id);
@@ -16,7 +15,4 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Integer>
     List<Ingredient> findByNomLike(String nom);
 
     List<Ingredient> findByNomNotLike(String nom);
-
-    List<Ingredient> findByType(Type type);
-
 }

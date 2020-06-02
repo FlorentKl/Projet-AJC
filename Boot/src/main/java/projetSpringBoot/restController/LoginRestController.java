@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 public class LoginRestController {
 
-	@GetMapping({"", "/"})
+	@GetMapping(value = { "", "/" })
 	public ResponseEntity<Void> login() {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 }

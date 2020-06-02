@@ -1,7 +1,9 @@
 package projetSpringBoot.restController.recette;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -18,10 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.recette.Boisson;
+import projetSpringBoot.model.recette.Couts;
+import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.recette.BoissonService;
 
@@ -91,19 +96,72 @@ public class BoissonRestController {
         return new ResponseEntity<>(boissonService.findByNomNotContaining(nom), HttpStatus.OK);
     }
 
+    @JsonView(Views.RecetteWithAll.class)
+    @GetMapping("/search")
+    public ResponseEntity<List<Boisson>> test(@RequestParam(required = false) String namelike,
+            @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
+            @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
+
+        List<Boisson> listeFinale = new ArrayList<Boisson>();
+        Boolean premiereListe = true;
+        if (namelike != null && premiereListe) {
+            listeFinale = filterNameLike(listeFinale, namelike);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (diff != null && premiereListe) {
+            listeFinale = filterDiff(listeFinale, diff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nodiff != null && premiereListe) {
+            listeFinale = filterDiffNot(listeFinale, nodiff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (cout != null && premiereListe) {
+            listeFinale = filterCout(listeFinale, cout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nocout != null && premiereListe) {
+            listeFinale = filterCoutNot(listeFinale, nocout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+
+        return new ResponseEntity<>(listeFinale, HttpStatus.OK);
+    }
+
+    // Check si nom recette existe déjà
+    @GetMapping("/check/{string}")
+    public ResponseEntity<Boolean> checkNom(@PathVariable("string") String string) {
+        Optional<Boisson> opt = boissonService.findByNom(string);
+        if (opt.isPresent()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
     /*
      * Post Mapping
      */
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Void> addBoisson(@RequestBody Boisson boisson, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Boisson> addBoisson(@RequestBody Boisson boisson, BindingResult br,
+            UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        boissonService.insert(boisson);
+        Boisson boissonNew = boissonService.insert(boisson);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/boisson/{id}").buildAndExpand(boisson.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(boissonNew, headers, HttpStatus.CREATED);
     }
 
     /*
@@ -132,5 +190,68 @@ public class BoissonRestController {
             boissonService.update(boisson);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+    }
+
+    private List<Boisson> filterNameLike(List<Boisson> listeFinale, String namelike) {
+        List<Boisson> listeFiltrante = boissonService.findByNomContaining(namelike);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Boisson> filterDiff(List<Boisson> listeFinale, Difficulte diff) {
+        List<Boisson> listeFiltrante = boissonService.findByDifficulte(diff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Boisson> filterDiffNot(List<Boisson> listeFinale, Difficulte nodiff) {
+        List<Boisson> listeFiltrante = boissonService.findByDifficulteNot(nodiff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Boisson> filterCout(List<Boisson> listeFinale, Couts cout) {
+        List<Boisson> listeFiltrante = boissonService.findByCout(cout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Boisson> filterCoutNot(List<Boisson> listeFinale, Couts nocout) {
+        List<Boisson> listeFiltrante = boissonService.findByCoutNot(nocout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
     }
 }

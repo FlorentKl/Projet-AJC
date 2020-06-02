@@ -9,17 +9,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import projetSpringBoot.model.Utilisateur;
-import projetSpringBoot.repository.UtilisateurRepository;
 
 @Service
-public class AuthService implements UserDetailsService{
+public class AuthService implements UserDetailsService {
 
 	@Autowired
-	private UtilisateurRepository utilisateurRepository;
-	
+	UtilisateurService utilisateurService;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Utilisateur> opt = utilisateurRepository.findByUsernameWithRoles(username);
+		Optional<Utilisateur> opt = utilisateurService.findByUsernameWithRoles(username);
 		if (!opt.isPresent()) {
 			throw new UsernameNotFoundException("Utilisateur inconnu");
 		}
@@ -27,6 +26,4 @@ public class AuthService implements UserDetailsService{
 		return user;
 	}
 
-	
-	
 }

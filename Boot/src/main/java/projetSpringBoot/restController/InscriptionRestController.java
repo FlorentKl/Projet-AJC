@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import projetSpringBoot.model.Roles;
 import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.UtilisateurRole;
-import projetSpringBoot.service.UtilisateurRoleServiceImpl;
-import projetSpringBoot.service.UtilisateurServiceImpl;
+import projetSpringBoot.service.UtilisateurRoleService;
+import projetSpringBoot.service.UtilisateurService;
 
 @RestController
 @RequestMapping("/rest/inscription")
@@ -29,28 +29,34 @@ import projetSpringBoot.service.UtilisateurServiceImpl;
 public class InscriptionRestController {
 
 	@Autowired
-	private UtilisateurServiceImpl utilisateurService;
+	UtilisateurService utilisateurService;
+
 	@Autowired
-	private UtilisateurRoleServiceImpl utilisateurRoleService;
+	UtilisateurRoleService utilisateurRoleService;
+
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
 
 	@PostMapping({ "", "/" })
 	public ResponseEntity<Void> inscription(@Valid @RequestBody Utilisateur utilisateur, BindingResult br) {
 		if (br.hasErrors()) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
+
 		Optional<Utilisateur> opt = utilisateurService.findByPseudo(utilisateur.getPseudo());
 		if (opt.isPresent()) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
+
 		utilisateur.setEnabled(true);
 		utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
 		utilisateurService.insert(utilisateur);
+
 		UtilisateurRole role = new UtilisateurRole();
 		role.setUtilisateur(utilisateur);
 		role.setRole(Roles.ROLE_USER);
 		utilisateurRoleService.insert(role);
+
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 

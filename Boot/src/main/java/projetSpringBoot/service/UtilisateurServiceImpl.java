@@ -15,6 +15,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
+	@Override
 	public Utilisateur insert(Utilisateur utilisateur) {
 		Optional<Utilisateur> opt = utilisateurRepository.findByPseudo(utilisateur.getPseudo());
 		if (!opt.isPresent()) {
@@ -23,6 +24,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateur;
 	}
 
+	@Override
 	public Utilisateur update(Utilisateur utilisateur) {
 		Optional<Utilisateur> opt = utilisateurRepository.findById(utilisateur.getId());
 		if (opt.isPresent()) {
@@ -42,24 +44,34 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 	}
 
+	@Override
 	public Optional<Utilisateur> findById(Integer id) {
 		return utilisateurRepository.findById(id);
 	}
 
+	@Override
 	public Optional<Utilisateur> findByPseudo(String pseudo) {
 		return utilisateurRepository.findByPseudo(pseudo);
 	}
 
+	@Override
 	public List<Utilisateur> findAll() {
 		return utilisateurRepository.findAll();
 	}
 
+	@Override
 	public void delete(Utilisateur utilisateur) {
 		utilisateurRepository.delete(utilisateur);
 	}
 
+	@Override
 	public void deleteById(Integer id) {
 		utilisateurRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Utilisateur> findByUsernameWithRoles(String pseudo) {
+		return utilisateurRepository.findByUsernameWithRoles(pseudo);
 	}
 
 }

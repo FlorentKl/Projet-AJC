@@ -17,17 +17,8 @@ public class AssociationIngredientRecetteServiceImpl implements AssociationIngre
 	private AssociationIngredientRecetteRepository associationIngredientRecetteRepository;
 
 	public AssociationIngredientRecette insert(AssociationIngredientRecette t) {
-
 		if (t.getQuantite() < 0) {
-			return t;
-		}
-
-		if (t.getMesure_liquide() == null && t.getMesure_solide() == null) {
-			return t;
-		}
-
-		if (t.getMesure_liquide() != null && t.getMesure_solide() != null) {
-			return t;
+			t.setQuantite(0);
 		}
 		return associationIngredientRecetteRepository.save(t);
 
@@ -37,17 +28,8 @@ public class AssociationIngredientRecetteServiceImpl implements AssociationIngre
 		Optional<AssociationIngredientRecette> opt = associationIngredientRecetteRepository
 				.findById(associationIngredientRecette.getId());
 		if (opt.isPresent()) {
-			AssociationIngredientRecette ingredientRecette = opt.get();
-			if (associationIngredientRecette.getMesure_liquide() != null) {
-				ingredientRecette.setQuantite(associationIngredientRecette.getQuantite());
-			}
-			if (associationIngredientRecette.getMesure_solide() != null) {
-				ingredientRecette.setQuantite(associationIngredientRecette.getQuantite());
-			}
-			associationIngredientRecetteRepository.save(associationIngredientRecette);
-			return ingredientRecette;
+			return associationIngredientRecetteRepository.save(opt.get());
 		} else {
-			// salleRepository.save(salle);// on insert
 			return null;
 		}
 	}

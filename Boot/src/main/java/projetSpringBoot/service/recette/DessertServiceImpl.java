@@ -75,6 +75,12 @@ public class DessertServiceImpl implements DessertService {
 
     // findByNom
     @Override
+    public Optional<Dessert> findByNom(String nom) {
+        return dessertRepository.findByNom(nom);
+    }
+
+    // findByNom
+    @Override
     public List<Dessert> findByNomContaining(String nom) {
         return dessertRepository.findByNomContainingIgnoreCase(nom);
     }

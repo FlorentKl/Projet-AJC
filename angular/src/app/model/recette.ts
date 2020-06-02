@@ -2,6 +2,9 @@ import {Ingredient} from './ingredient';
 import {EtapeRecette} from './etape-recette';
 import {Commentaire} from './commentaire';
 import {Cout} from './cout.enum';
+import { Difficulte } from './difficulte.enum';
+import {ImageModel} from './image-model';
+import {Utilisateur} from './utilisateur';
 
 export class Recette {
   get commentaires(): Commentaire[] {
@@ -24,12 +27,14 @@ export class Recette {
                private _nbPersonne?: number,
                private _temps?: number,
                private _cout?: Cout,
-               private _difficulte?: string,
+               private _difficulte?: Difficulte,
+               private _picture?: ImageModel,
+               private _dateCreation?: Date,
                private _tags?: string[],
                private _ingredients?: Ingredient[],
                private _etapes?: EtapeRecette[],
                private _commentaires?: Commentaire[],
-               private _auteur?: string
+               private _auteur?: Utilisateur
                ) {
   }
 
@@ -56,6 +61,7 @@ export class Recette {
 
   set nbPersonne(value: number) {
     this._nbPersonne = value;
+
   }
 
   get temps(): number {
@@ -72,14 +78,6 @@ export class Recette {
 
   set cout(value: Cout) {
     this._cout = value;
-  }
-
-  get difficulte(): string {
-    return this._difficulte;
-  }
-
-  set difficulte(value: string) {
-    this._difficulte = value;
   }
 
   get tags(): string[] {
@@ -106,11 +104,36 @@ export class Recette {
     this._etapes = value;
   }
 
-  get auteur(): string {
+  get picture(): ImageModel {
+    return this._picture;
+  }
+
+  set picture(value: ImageModel) {
+    this._picture = value;
+  }
+
+  get auteur(): Utilisateur {
     return this._auteur;
   }
 
-  set auteur(value: string) {
+  set auteur(value: Utilisateur) {
     this._auteur = value;
   }
+
+  get difficulte(): Difficulte {
+    return this._difficulte;
+  }
+
+  set difficulte(value: Difficulte) {
+    this._difficulte = value;
+  }
+
+  get dateCreation(): Date {
+    return this._dateCreation;
+  }
+
+  set dateCreation(value: Date) {
+    this._dateCreation = value;
+  }
+
 }
