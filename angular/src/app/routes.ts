@@ -19,7 +19,7 @@ export const routes: Routes = [
   {path: 'boissons', component: BoissonComponent},
   {path: 'entrees', component: EntreeComponent},
   {path: 'plats', component: PlatComponent},
-  {path: 'desserts', component: DessertComponent}
+  {path: 'desserts', component: DessertComponent},
   {path: 'recette', component: RecipeComponent},
   {path: 'recette/edit', component: FormRecetteComponent},
   {path: 'recette/edit/ingredients', component: FormIngredientRecetteComponent},
