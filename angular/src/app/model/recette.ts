@@ -1,6 +1,7 @@
 import {Ingredient} from './ingredient';
 import {EtapeRecette} from './etape-recette';
 import {Commentaire} from './commentaire';
+import {Cout} from './cout.enum';
 
 export class Recette {
   get commentaires(): Commentaire[] {
@@ -22,7 +23,7 @@ export class Recette {
                private _type?: string,
                private _nbPersonne?: number,
                private _temps?: number,
-               private _cout?: string,
+               private _cout?: Cout,
                private _difficulte?: string,
                private _tags?: string[],
                private _ingredients?: Ingredient[],
@@ -65,11 +66,11 @@ export class Recette {
     this._temps = value;
   }
 
-  get cout(): string {
+  get cout(): Cout {
     return this._cout;
   }
 
-  set cout(value: string) {
+  set cout(value: Cout) {
     this._cout = value;
   }
 

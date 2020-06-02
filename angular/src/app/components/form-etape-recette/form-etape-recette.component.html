@@ -1,0 +1,14 @@
+<div class="container">
+  <h6>Préparation</h6>
+  <div class="form-group" *ngFor="let e of etapes">
+    <label>Etape {{e + 1}}</label>
+    <textarea class="form-control" [(ngModel)]="etapesRecette[e].texte"></textarea>
+  </div>
+
+  <button class="btn btn-outline-success" type="button" (click)="ajouterEtape()">+
+  </button>
+  <button class="btn btn-outline-warning" type="button" (click)="supprimerEtape()">-
+  </button>
+  <button class="btn btn-outline-info" type="button" (click)="changement()">test</button>
+
+</div>

@@ -1,0 +1,124 @@
+FOOOORRRMMMM COMPONENT
+
+<div class="container">
+
+<!--  Informations générales-->
+  <h6>Informations générales</h6>
+  <form (ngSubmit)="save()" [formGroup]="formRecette">
+
+    <div class="form-row">
+      <div class="form-group col-12 col-lg-6">
+        <label>Nom de la recette</label>
+        <input [(ngModel)]="recette.nom" class="form-control" formControlName="nom">
+      </div>
+
+      <div class="form-group col-12 col-lg-6">
+        <label>Type de préparation</label>
+        <select class="custom-select" [(ngModel)]="recette.type" formControlName="type">
+          <option value="Entree">Entrée</option>
+          <option value="Plat">Plat</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Boisson">Boisson</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-12 col-lg-6">
+        <label>Niveau de difficulté</label>
+        <select class="custom-select" [(ngModel)]="recette.difficulte" formControlName="difficulte">
+          <option value="F">Facile</option>
+          <option value="M">Medium</option>
+          <option value="D">Difficile</option>
+          <option value="E">Expert</option>
+        </select>
+      </div>
+
+      <div class="form-group col-12 col-lg-6">
+        <label>Coût</label>
+        <select class="custom-select" [(ngModel)]="recette.cout" formControlName="cout">
+          <option value="L">Bon marché</option>
+          <option value="M">Moyen</option>
+          <option value="E">Cher</option>
+          <option value="VE">Très cher</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-12 col-lg-6">
+        <label>Pour combien de personnes</label>
+        <input [(ngModel)]="recette.nbPersonne" class="form-control" type="number" min="0" formControlName="nbPersonne">
+      </div>
+
+      <div class="form-group col-12 col-lg-6">
+        <label>Durée de préparation (en minutes)</label>
+        <input [(ngModel)]="recette.temps" class="form-control" type="number" min="0" formControlName="nbPersonne">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Photo principale</label>
+      <input class="form-control" placeholder="TODO Photo">
+    </div>
+
+
+<!--    <app-form-ingredient-recette></app-form-ingredient-recette>-->
+    <h6>Ingrédients</h6>
+    <div class="form-row" *ngFor="let i of ingredients">
+      <div class="form-group col-12 col-lg-4">
+        <label>Ingrédient {{i + 1}} </label>
+        <input class="form-control" [formControlName]="'ingredientNom' + i">
+      </div>
+      <div class="form-group col-12 col-lg-4">
+        <label>Quantité </label>
+        <input class="form-control" type="number" [formControlName]="'ingredientQuantite' + i">
+      </div>
+      <div class="form-group col-12 col-lg-4">
+        <label>Unité </label>
+        <select class="custom-select"  [formControlName]="'ingredientUnite' + i">
+          <option value="MG">Milligrammes</option>
+          <option value="G">Grammes</option>
+          <option value="KG">Kilogrammes</option>
+          <option value="ML">Millilitres</option>
+          <option value="CL">Centilitres</option>
+          <option value="L">Litres</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-success" type="button" (click)="ajouterIngredient()">+
+    </button>
+    <button class="btn btn-outline-warning" type="button" (click)="supprimerIngredient()">-
+    </button>
+
+    <!--<app-form-etape-recette></app-form-etape-recette>-->
+    <h6>Préparation</h6>
+    <div class="form-group" *ngFor="let e of etapes">
+      <label>Etape {{e + 1}}</label>
+      <textarea class="form-control" [formControlName]="'etapeRecette' + e"></textarea>
+    </div>
+
+    <button class="btn btn-outline-success" type="button" (click)="ajouterEtape()">+
+    </button>
+    <button class="btn btn-outline-warning" type="button" (click)="supprimerEtape()">-
+    </button>
+    <button class="btn btn-outline-info" type="button" (click)="changement()">test</button>
+
+    <!--bouton validation -->
+    <div>
+    <button class="btn btn-outline-success" type="submit">Enregistrer</button>
+    <a [routerLink]="['/index']" routerLinkActive="active" class="btn btn-outline-danger">annuler</a>
+    </div>
+  </form>
+</div>
+<!-- nbPersonne
+temps
+cout
+difficulte
+picture
+tags
+etapes
+-->
+
+
