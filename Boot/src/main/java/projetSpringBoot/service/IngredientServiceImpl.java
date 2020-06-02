@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import projetSpringBoot.model.Ingredients.Ingredient;
-import projetSpringBoot.model.Ingredients.Type;
 import projetSpringBoot.repository.IngredientRepository;
 
 @Service
@@ -67,9 +66,5 @@ public class IngredientServiceImpl implements IngredientService {
 
     public List<Ingredient> findByNomNotLike(String nom) {
         return ingredientRepository.findByNomNotLike(nom);
-    }
-
-    public List<Ingredient> findByType(Type type) {
-        return ingredientRepository.findByType(type);
     }
 }

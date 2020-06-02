@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonView;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.views.Views;
@@ -45,13 +47,9 @@ public class Ingredient {
 	private ImageModel picture;
 
 	@JsonView(value = { Views.IngredientView.class })
-	@OneToMany(mappedBy = "id.recette")
+	@OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<AssociationIngredientRecette> recettes;
-
-	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
-	@Column(name = "type", length = 2)
-	@Enumerated(EnumType.STRING)
-	private Type type;
 
 	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
 	@Version
@@ -95,14 +93,6 @@ public class Ingredient {
 
 	public void setRecettes(List<AssociationIngredientRecette> recettes) {
 		this.recettes = recettes;
-	}
-
-	public Type getType() {
-		return type;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
 	}
 
 	public Integer getVersion() {
