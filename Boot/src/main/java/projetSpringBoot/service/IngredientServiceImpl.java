@@ -56,7 +56,7 @@ public class IngredientServiceImpl implements IngredientService {
         return ingredientRepository.findById(id);
     }
 
-    public List<Ingredient> findByNom(String nom) {
+    public Optional<Ingredient> findByNom(String nom) {
         return ingredientRepository.findByNom(nom);
     }
 

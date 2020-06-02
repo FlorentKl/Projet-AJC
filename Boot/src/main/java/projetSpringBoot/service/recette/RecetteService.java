@@ -10,6 +10,7 @@ public interface RecetteService extends GenericInterfaceService<Recette, Integer
     Recette insert(Recette recette);
 
     // Find All
+    @Transactional
     List<Recette> findAll();
 
     // findById

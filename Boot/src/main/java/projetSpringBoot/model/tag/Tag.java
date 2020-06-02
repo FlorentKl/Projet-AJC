@@ -17,6 +17,9 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import projetSpringBoot.model.views.Views;
 
 @Entity
@@ -36,6 +39,7 @@ public class Tag {
 
     @JsonView(value = { Views.TagView.class })
     @OneToMany(mappedBy = "id.tag", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<AssociationTagRecette> recettes;
 
     @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
