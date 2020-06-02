@@ -38,12 +38,8 @@ export class RecetteService {
     let type: string = recette.type.toString().toLowerCase();
     console.log(o);
     this.httpClient.post(`${this.URL}/${type}`, o).subscribe(res => {
-      id = res.id;
+      console.log(res);
     });
-
-    //gestion des étapes
-
-
 
     return null;
   }

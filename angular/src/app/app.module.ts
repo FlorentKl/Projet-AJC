@@ -18,6 +18,10 @@ import { IndexComponent } from './components/index/index.component';
 import { FormRecetteComponent } from './components/form-recette/form-recette.component';
 import { FormEtapeRecetteComponent } from './components/form-etape-recette/form-etape-recette.component';
 import { FormIngredientRecetteComponent } from './components/form-ingredient-recette/form-ingredient-recette.component';
+import {BoissonComponent} from './components/boisson/boisson.component';
+import {EntreeComponent} from './components/entree/entree.component';
+import {PlatComponent} from './components/plat/plat.component';
+import {DessertComponent} from './components/dessert/dessert.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { FormIngredientRecetteComponent } from './components/form-ingredient-rec
     IndexComponent,
     FormRecetteComponent,
     FormEtapeRecetteComponent,
-    FormIngredientRecetteComponent
+    FormIngredientRecetteComponent,
+    BoissonComponent,
+    EntreeComponent,
+    PlatComponent,
+    DessertComponent
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule, ReactiveFormsModule
