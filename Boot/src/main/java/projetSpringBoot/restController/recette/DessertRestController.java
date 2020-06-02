@@ -1,7 +1,9 @@
 package projetSpringBoot.restController.recette;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Dessert;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.views.Views;
@@ -91,11 +95,46 @@ public class DessertRestController {
         return new ResponseEntity<>(dessertService.findByNomNotContaining(nom), HttpStatus.OK);
     }
 
-    // Renvoie recettes en fonction de la difficulté voulue
     @JsonView(Views.RecetteWithAll.class)
-    @GetMapping("/difficulte/{difficulte}")
-    public ResponseEntity<List<Dessert>> findByDifficulte(@PathVariable("difficulte") Difficulte difficulte) {
-        return new ResponseEntity<>(dessertService.findByDifficulte(difficulte), HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<List<Dessert>> test(@RequestParam(required = false) String namelike,
+            @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
+            @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
+
+        List<Dessert> listeFinale = new ArrayList<Dessert>();
+        Boolean premiereListe = true;
+        if (namelike != null && premiereListe) {
+            listeFinale = filterNameLike(listeFinale, namelike);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (diff != null && premiereListe) {
+            listeFinale = filterDiff(listeFinale, diff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nodiff != null && premiereListe) {
+            listeFinale = filterDiffNot(listeFinale, nodiff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (cout != null && premiereListe) {
+            listeFinale = filterCout(listeFinale, cout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nocout != null && premiereListe) {
+            listeFinale = filterCoutNot(listeFinale, nocout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+
+        return new ResponseEntity<>(listeFinale, HttpStatus.OK);
     }
 
     // Check si nom recette existe déjà
@@ -149,5 +188,68 @@ public class DessertRestController {
             dessertService.update(dessert);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+    }
+
+    private List<Dessert> filterNameLike(List<Dessert> listeFinale, String namelike) {
+        List<Dessert> listeFiltrante = dessertService.findByNomContaining(namelike);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Dessert> filterDiff(List<Dessert> listeFinale, Difficulte diff) {
+        List<Dessert> listeFiltrante = dessertService.findByDifficulte(diff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Dessert> filterDiffNot(List<Dessert> listeFinale, Difficulte nodiff) {
+        List<Dessert> listeFiltrante = dessertService.findByDifficulteNot(nodiff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Dessert> filterCout(List<Dessert> listeFinale, Couts cout) {
+        List<Dessert> listeFiltrante = dessertService.findByCout(cout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Dessert> filterCoutNot(List<Dessert> listeFinale, Couts nocout) {
+        List<Dessert> listeFiltrante = dessertService.findByCoutNot(nocout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
     }
 }

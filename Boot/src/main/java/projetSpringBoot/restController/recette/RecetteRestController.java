@@ -1,7 +1,9 @@
 package projetSpringBoot.restController.recette;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.model.views.Views;
@@ -85,11 +89,46 @@ public class RecetteRestController {
         return new ResponseEntity<>(recetteService.findByNomNotContaining(nom), HttpStatus.OK);
     }
 
-    // Renvoie recettes en fonction de la difficulté voulue
     @JsonView(Views.RecetteWithAll.class)
-    @GetMapping("/difficulte/{difficulte}")
-    public ResponseEntity<List<Recette>> findByDifficulte(@PathVariable("difficulte") Difficulte difficulte) {
-        return new ResponseEntity<>(recetteService.findByDifficulte(difficulte), HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<List<Recette>> test(@RequestParam(required = false) String namelike,
+            @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
+            @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
+
+        List<Recette> listeFinale = new ArrayList<Recette>();
+        Boolean premiereListe = true;
+        if (namelike != null && premiereListe) {
+            listeFinale = filterNameLike(listeFinale, namelike);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (diff != null && premiereListe) {
+            listeFinale = filterDiff(listeFinale, diff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nodiff != null && premiereListe) {
+            listeFinale = filterDiffNot(listeFinale, nodiff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (cout != null && premiereListe) {
+            listeFinale = filterCout(listeFinale, cout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nocout != null && premiereListe) {
+            listeFinale = filterCoutNot(listeFinale, nocout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+
+        return new ResponseEntity<>(listeFinale, HttpStatus.OK);
     }
 
     // Check si nom recette existe déjà
@@ -114,5 +153,68 @@ public class RecetteRestController {
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
+    }
+
+    private List<Recette> filterNameLike(List<Recette> listeFinale, String namelike) {
+        List<Recette> listeFiltrante = recetteService.findByNomContaining(namelike);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Recette> filterDiff(List<Recette> listeFinale, Difficulte diff) {
+        List<Recette> listeFiltrante = recetteService.findByDifficulte(diff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Recette> filterDiffNot(List<Recette> listeFinale, Difficulte nodiff) {
+        List<Recette> listeFiltrante = recetteService.findByDifficulteNot(nodiff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Recette> filterCout(List<Recette> listeFinale, Couts cout) {
+        List<Recette> listeFiltrante = recetteService.findByCout(cout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Recette> filterCoutNot(List<Recette> listeFinale, Couts nocout) {
+        List<Recette> listeFiltrante = recetteService.findByCoutNot(nocout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
     }
 }

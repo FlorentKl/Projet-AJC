@@ -1,7 +1,9 @@
 package projetSpringBoot.restController.recette;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Plat;
 import projetSpringBoot.model.views.Views;
@@ -91,11 +95,46 @@ public class PlatRestController {
         return new ResponseEntity<>(platService.findByNomNotContaining(nom), HttpStatus.OK);
     }
 
-    // Renvoie recettes en fonction de la difficulté voulue
     @JsonView(Views.RecetteWithAll.class)
-    @GetMapping("/difficulte/{difficulte}")
-    public ResponseEntity<List<Plat>> findByDifficulte(@PathVariable("difficulte") Difficulte difficulte) {
-        return new ResponseEntity<>(platService.findByDifficulte(difficulte), HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<List<Plat>> test(@RequestParam(required = false) String namelike,
+            @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
+            @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
+
+        List<Plat> listeFinale = new ArrayList<Plat>();
+        Boolean premiereListe = true;
+        if (namelike != null && premiereListe) {
+            listeFinale = filterNameLike(listeFinale, namelike);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (diff != null && premiereListe) {
+            listeFinale = filterDiff(listeFinale, diff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nodiff != null && premiereListe) {
+            listeFinale = filterDiffNot(listeFinale, nodiff);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (cout != null && premiereListe) {
+            listeFinale = filterCout(listeFinale, cout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (nocout != null && premiereListe) {
+            listeFinale = filterCoutNot(listeFinale, nocout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+
+        return new ResponseEntity<>(listeFinale, HttpStatus.OK);
     }
 
     // Check si nom recette existe déjà
@@ -149,5 +188,68 @@ public class PlatRestController {
             platService.update(plat);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+    }
+
+    private List<Plat> filterNameLike(List<Plat> listeFinale, String namelike) {
+        List<Plat> listeFiltrante = platService.findByNomContaining(namelike);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Plat> filterDiff(List<Plat> listeFinale, Difficulte diff) {
+        List<Plat> listeFiltrante = platService.findByDifficulte(diff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        } else if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Plat> filterDiffNot(List<Plat> listeFinale, Difficulte nodiff) {
+        List<Plat> listeFiltrante = platService.findByDifficulteNot(nodiff);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Plat> filterCout(List<Plat> listeFinale, Couts cout) {
+        List<Plat> listeFiltrante = platService.findByCout(cout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Plat> filterCoutNot(List<Plat> listeFinale, Couts nocout) {
+        List<Plat> listeFiltrante = platService.findByCoutNot(nocout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
     }
 }
