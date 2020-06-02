@@ -17,14 +17,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
 import com.fasterxml.jackson.annotation.JsonView;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.views.Views;
+
 
 @Entity
 @Table(name = "ingredients")

@@ -1,0 +1,20 @@
+<h6>Ingrédients</h6>
+<div class="form-row" *ngFor="let i of ingredients">
+  <div class="form-group col-12 col-lg-4">
+    <label>Ingrédient {{i + 1}} </label>
+    <input class="form-control">
+  </div>
+  <div class="form-group col-12 col-lg-4">
+    <label>Quantité </label>
+    <input class="form-control" type="number">
+  </div>
+  <div class="form-group col-12 col-lg-4">
+    <label>Unité </label>
+    <input class="form-control">
+  </div>
+</div>
+
+<button class="btn btn-outline-success" type="button" (click)="ajouterEtape()">+
+</button>
+<button class="btn btn-outline-warning" type="button" (click)="supprimerEtape()">-
+</button>

@@ -1,14 +1,37 @@
-import {Couts} from './couts.enum';
-import {Difficulte} from './difficulte.enum';
+import {Ingredient} from './ingredient';
+import {EtapeRecette} from './etape-recette';
+import {Commentaire} from './commentaire';
+import {Cout} from './cout.enum';
+import { Difficulte } from './difficulte.enum';
 import {ImageModel} from './image-model';
 import {Utilisateur} from './utilisateur';
 
 export class Recette {
-  constructor(private _nom?: string, private _id?: number, private _nbPersonnes?: number,
-              private _temps?: number, private _couts?: Couts, private _difficulte?: Difficulte,
-              private _picture?: ImageModel, private _dateCreation?: Date, private _auteur?: Utilisateur) {
+
+  constructor(private _id?: number,
+               private _nom?: string,
+               private _type?: string,
+               private _nbPersonne?: number,
+               private _temps?: number,
+               private _cout?: Cout,
+               private _difficulte?: Difficulte,
+               private _picture?: ImageModel,
+               private _dateCreation?: Date,
+               private _tags?: string[],
+               private _ingredients?: Ingredient[],
+               private _etapes?: EtapeRecette[],
+               private _commentaires?: Commentaire[],
+               private _auteur?: Utilisateur
+               ) {
   }
 
+  get id(): number {
+    return this._id;
+  }
+
+  set id(value: number) {
+    this._id = value;
+  }
 
   get nom(): string {
     return this._nom;
@@ -18,12 +41,13 @@ export class Recette {
     this._nom = value;
   }
 
-  get nbPersonnes(): number {
-    return this._nbPersonnes;
+  get nbPersonne(): number {
+    return this._nbPersonne;
   }
 
-  set nbPersonnes(value: number) {
-    this._nbPersonnes = value;
+  set nbPersonne(value: number) {
+    this._nbPersonne = value;
+
   }
 
   get temps(): number {
@@ -34,12 +58,36 @@ export class Recette {
     this._temps = value;
   }
 
-  get couts(): Couts {
-    return this._couts;
+  get cout(): Cout {
+    return this._cout;
   }
 
-  set couts(value: Couts) {
-    this._couts = value;
+  set cout(value: Cout) {
+    this._cout = value;
+  }
+
+  get tags(): string[] {
+    return this._tags;
+  }
+
+  set tags(value: string[]) {
+    this._tags = value;
+  }
+
+  get ingredients(): Ingredient[] {
+    return this._ingredients;
+  }
+
+  set ingredients(value: Ingredient[]) {
+    this._ingredients = value;
+  }
+
+  get etapes(): EtapeRecette[] {
+    return this._etapes;
+  }
+
+  set etapes(value: EtapeRecette[]) {
+    this._etapes = value;
   }
 
   get picture(): ImageModel {
@@ -58,14 +106,6 @@ export class Recette {
     this._auteur = value;
   }
 
-  get id(): number {
-    return this._id;
-  }
-
-  set id(value: number) {
-    this._id = value;
-  }
-
   get difficulte(): Difficulte {
     return this._difficulte;
   }
@@ -81,4 +121,20 @@ export class Recette {
   set dateCreation(value: Date) {
     this._dateCreation = value;
   }
+
+  get commentaires(): Commentaire[] {
+    return this._commentaires;
+  }
+
+  set commentaires(value: Commentaire[]) {
+    this._commentaires = value;
+  }
+  get type(): string {
+    return this._type;
+  }
+
+  set type(value: string) {
+    this._type = value;
+  }
+
 }

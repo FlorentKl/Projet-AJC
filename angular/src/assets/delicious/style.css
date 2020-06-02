@@ -22,6 +22,11 @@
   margin: 0;
   padding: 0; }
 
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 14px; }
@@ -1013,7 +1018,7 @@ textarea:focus {
       font-size: 24px; } }
 .receipe-headline .receipe-duration {
   border-left: 3px solid #40ba37;
-  padding: 15px; }
+  padding: 10px 15px 10px 15px; }
   .receipe-headline .receipe-duration h6 {
     font-size: 15px;
     margin-bottom: 5px; }
