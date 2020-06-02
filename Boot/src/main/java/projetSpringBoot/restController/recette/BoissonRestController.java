@@ -95,25 +95,8 @@ public class BoissonRestController {
     // Renvoie recettes en fonction de la difficulté voulue
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping("/difficulte/{difficulte}")
-    public ResponseEntity<List<Boisson>> findByDifficulte(@PathVariable("difficulte") String difficulte) {
-        Difficulte diff;
-        switch (difficulte) {
-            case "F":
-                diff = Difficulte.F;
-                break;
-            case "M":
-                diff = Difficulte.M;
-                break;
-            case "D":
-                diff = Difficulte.D;
-                break;
-            case "E":
-                diff = Difficulte.E;
-                break;
-            default:
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(boissonService.findByDifficulte(diff), HttpStatus.OK);
+    public ResponseEntity<List<Boisson>> findByDifficulte(@PathVariable("difficulte") Difficulte difficulte) {
+        return new ResponseEntity<>(boissonService.findByDifficulte(difficulte), HttpStatus.OK);
     }
 
     // Check si nom recette existe déjà
