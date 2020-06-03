@@ -110,6 +110,7 @@ export class RecetteService {
                 );
                 tableau.push(createIngredient);
               }
+              console.log(tableau);
               return forkJoin(tableau);
             })
           );

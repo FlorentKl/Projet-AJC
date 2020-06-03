@@ -102,12 +102,6 @@ export class FormRecetteComponent implements OnInit {
     }
   }
 
-  static imageType(control: FormControl)  {
-    console.log(control);
-    return null;
-  }
-
-
   public onFileChanged(event) {
     console.log(event);
     this.selectedFile = event.target.files[0];
@@ -154,6 +148,8 @@ export class FormRecetteComponent implements OnInit {
     this.recetteService
       .create(this.recette, this.selectedFile)
       .subscribe((res) => {
+        console.log('res');
+        console.log(res);
         //TODO - redirigier vers la page de recette plutot que l'index
         //this.router.navigate(['index']);
       });
@@ -211,27 +207,6 @@ export class FormRecetteComponent implements OnInit {
       this.ingredients.pop();
     }
     console.log(this.ingredients);
-  }
-
-  public changement() {
-    for (const etape of this.etapesRecette) {
-      const et = 'etapeRecette' + etape.numEtape;
-      // console.log(this.formRecette.get(et).value);
-      etape.texte = this.formRecette.get(et).value;
-      // console.log(etape);
-    }
-    // console.log(this.etapesRecette);
-    let i = 0;
-    for (const ingredient of this.ingredientsArray) {
-      const ingNom = 'ingredientNom' + i;
-      const ingQte = 'ingredientQuantite' + i;
-      const ingUnite = 'ingredientUnite' + i;
-      ingredient.nom = this.formRecette.get(ingNom).value;
-      ingredient.quantite = this.formRecette.get(ingQte).value;
-      ingredient.unite = this.formRecette.get(ingUnite).value;
-      i++;
-    }
-    console.log(this.ingredientsArray);
   }
 
   // Getters and setters
