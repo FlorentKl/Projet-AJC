@@ -67,6 +67,7 @@ public class PlatServiceImpl implements PlatService {
             recetteEnBase.setTemps(t.getTemps());
             recetteEnBase.setCommentaires(t.getCommentaires());
             recetteEnBase.setEtapes(t.getEtapes());
+
             return platRepository.save(recetteEnBase);
         } else {
             return null;
