@@ -140,4 +140,10 @@ public class DessertServiceImpl implements DessertService {
     public List<Dessert> findByTagsNot(Tag tag) {
         return dessertRepository.findByTagsNot(tag);
     }
+
+    @Override
+    public List<Dessert> findByNote(Double note) {
+        return dessertRepository.findByNote(note);
+    }
+
 }

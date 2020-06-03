@@ -42,5 +42,6 @@ public interface GenericRecetteService<T> {
 
     List<T> findByCoutNot(Couts cout);
 
-    // TODO - findByNote
+    // findByNote
+    List<T> findByNote(Double note);
 }

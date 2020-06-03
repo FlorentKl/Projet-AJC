@@ -141,4 +141,9 @@ public class EntreeServiceImpl implements EntreeService {
         return entreeRepository.findByTagsNot(tag);
     }
 
+    @Override
+    public List<Entree> findByNote(Double note) {
+        return entreeRepository.findByNote(note);
+    }
+
 }
