@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.recette.EtapeRecette;
-<<<<<<< HEAD
-import projetSpringBoot.repository.recette.RecetteRepository;
-=======
 import projetSpringBoot.model.recette.Recette;
->>>>>>> master
 import projetSpringBoot.service.EtapeRecetteService;
 import projetSpringBoot.service.recette.RecetteService;
 
@@ -29,14 +25,10 @@ public class EtapeRestController {
     @Autowired
     RecetteService recetteService;
 
-    @Autowired
-    RecetteService recetteService;
-
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Void> addEtapes(@RequestBody EtapeRecette[] etapes, BindingResult br,
             UriComponentsBuilder uCB) {
     	System.out.println("APPEL FONCTION §§§§§§§");
-//    	System.out.println(etapes);
     	for (EtapeRecette etape: etapes) {
     		etape.setId_recette(recetteService.findById(etape.getId_recette().getId()).get());
     	}
