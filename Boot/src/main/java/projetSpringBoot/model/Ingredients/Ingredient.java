@@ -1,6 +1,6 @@
 package projetSpringBoot.model.Ingredients;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,14 +17,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
 import com.fasterxml.jackson.annotation.JsonView;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.views.Views;
-
 
 @Entity
 @Table(name = "ingredients")
@@ -47,9 +47,8 @@ public class Ingredient {
 	private ImageModel picture;
 
 	@JsonView(value = { Views.IngredientView.class })
-	@OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<AssociationIngredientRecette> recettes;
+	@OneToMany(mappedBy = "id.recette")
+	private Set<AssociationIngredientRecette> recettes;
 
 	@JsonView(value = { Views.IngredientView.class, Views.RecetteWithAll.class })
 	@Version
@@ -87,11 +86,11 @@ public class Ingredient {
 		this.picture = picture;
 	}
 
-	public List<AssociationIngredientRecette> getRecettes() {
+	public Set<AssociationIngredientRecette> getRecettes() {
 		return recettes;
 	}
 
-	public void setRecettes(List<AssociationIngredientRecette> recettes) {
+	public void setRecettes(Set<AssociationIngredientRecette> recettes) {
 		this.recettes = recettes;
 	}
 
