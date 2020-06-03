@@ -23,6 +23,7 @@ import { EntreeComponent } from './components/entree/entree.component';
 import { PlatComponent } from './components/plat/plat.component';
 import { DessertComponent } from './components/dessert/dessert.component';
 import { UserModule } from 'src/app/user/user.module';
+import {RechercheComponent} from './components/recherche/recherche.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UserModule } from 'src/app/user/user.module';
     EntreeComponent,
     PlatComponent,
     DessertComponent,
+    RechercheComponent
   ],
   imports: [
     BrowserModule,

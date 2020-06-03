@@ -6,33 +6,30 @@
       <input class="form-control" id="exampleFormControlInput1" placeholder="Rechercher">
     </div>
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Type</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Type</option>
-        <option>Boisson</option>
-        <option>Entree</option>
-        <option>Plat</option>
-        <option>Dessert</option>
+      <label>Type</label>
+      <select class="form-control" [(ngModel)]="recette.type">
+        <option value="boisson">Boisson</option>
+        <option value="entree">Entree</option>
+        <option value="plat">Plat</option>
+        <option type="dessert">Dessert</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Difficulté</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Difficulte</option>
-        <option>Facile</option>
-        <option>Moyen</option>
-        <option>Difficile</option>
-        <option>Expert</option>
+      <label>Difficulté</label>
+      <select class="form-control" [(ngModel)]="recette.difficulte">
+        <option value="F">Facile</option>
+        <option value="M">Medium</option>
+        <option value="D">Difficile</option>
+        <option value="E">Expert</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Coût</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Coût</option>
-        <option>Faible</option>
-        <option>Moyen</option>
-        <option>Élevé</option>
-        <option>Très Élevé</option>
+      <label>Coût</label>
+      <select class="form-control" [(ngModel)]="recette.cout">
+        <option value="L">Bon marché</option>
+        <option value="M">Moyen</option>
+        <option value="E">Cher</option>
+        <option value="VE">Très cher</option>
       </select>
     </div>
     <div>
