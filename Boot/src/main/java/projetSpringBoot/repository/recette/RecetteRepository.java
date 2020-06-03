@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import projetSpringBoot.model.Utilisateur;
@@ -56,8 +57,13 @@ public interface RecetteRepository<T extends Recette> extends JpaRepository<T, I
     List<T> findByCoutNot(Couts cout);
 
     // ADDED
-    @Query("select distinct r from Recette r left join fetch r.tags")
+    @Query("SELECT DISTINCT r FROM Recette r LEFT JOIN FETCH r.tags")
     List<T> findAllWithTags();
 
-    // TODO List<T> findByNote()
+    // @Query(value = "SELECT * FROM Public.recipe as r WHERE EXISTS (SELECT
+    // recette, AVG(notation) as truc FROM Public.comment c WHERE r.id=c.recette
+    // GROUP BY recette HAVING Avg(notation)>=5)", nativeQuery = true)
+    @Transactional
+    @Query("SELECT r FROM #{#entityName} r WHERE EXISTS (SELECT c.id.recette, AVG(c.note) FROM Commentaire c WHERE c.id.recette=r GROUP BY c.id.recette HAVING AVG(c.note) >=:note)")
+    List<T> findByNote(@Param("note") Double note);
 }

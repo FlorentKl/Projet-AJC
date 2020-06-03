@@ -142,4 +142,9 @@ public class PlatServiceImpl implements PlatService {
         return platRepository.findByTagsNot(tag);
     }
 
+    @Override
+    public List<Plat> findByNote(Double note) {
+        return platRepository.findByNote(note);
+    }
+
 }

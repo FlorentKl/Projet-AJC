@@ -141,4 +141,9 @@ public class BoissonServiceImpl implements BoissonService {
         return boissonRepository.findByTagsNot(tag);
     }
 
+    @Override
+    public List<Boisson> findByNote(Double note) {
+        return boissonRepository.findByNote(note);
+    }
+
 }

@@ -103,7 +103,8 @@ public class EntreeRestController {
     @GetMapping("/search")
     public ResponseEntity<List<Entree>> search(@RequestParam(required = false) String namelike,
             @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
-            @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
+            @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout,
+            @RequestParam(required = false) Double note) {
 
         List<Entree> listeFinale = new ArrayList<Entree>();
         Boolean premiereListe = true;
@@ -133,6 +134,12 @@ public class EntreeRestController {
         }
         if (nocout != null && premiereListe) {
             listeFinale = filterCoutNot(listeFinale, nocout);
+            if (listeFinale.isEmpty()) {
+                premiereListe = false;
+            }
+        }
+        if (note != null && premiereListe) {
+            listeFinale = filterNote(listeFinale, note);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
@@ -250,6 +257,19 @@ public class EntreeRestController {
 
     private List<Entree> filterCoutNot(List<Entree> listeFinale, Couts nocout) {
         List<Entree> listeFiltrante = entreeService.findByCoutNot(nocout);
+        if (listeFiltrante.isEmpty()) {
+            listeFinale.clear();
+        }
+        if (listeFinale.isEmpty()) {
+            listeFinale = listeFiltrante.stream().collect(Collectors.toList());
+        } else {
+            listeFinale = listeFinale.stream().filter(listeFiltrante::contains).collect(Collectors.toList());
+        }
+        return listeFinale;
+    }
+
+    private List<Entree> filterNote(List<Entree> listeFinale, Double note) {
+        List<Entree> listeFiltrante = entreeService.findByNote(note);
         if (listeFiltrante.isEmpty()) {
             listeFinale.clear();
         }

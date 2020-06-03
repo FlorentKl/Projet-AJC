@@ -147,4 +147,9 @@ public class RecetteServiceImpl implements RecetteService {
         return recetteRepository.findByCoutNot(cout);
     }
 
+    @Override
+    public List<Recette> findByNote(Double note) {
+        return recetteRepository.findByNote(note);
+    }
+
 }
