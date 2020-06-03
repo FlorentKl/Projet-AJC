@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Recette} from '../model/recette';
+import {Difficulte} from '../model/difficulte.enum';
+import {Couts} from '../model/couts.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,15 @@ export class RecetteService {
 
     return null;
   }
-
+  public findByNomDiffAndCout(nom?: string, diff?: Difficulte, cout?: Couts, nodiff?: Difficulte, nocout?: Couts): Observable<Array<Recette>>{
+    const params = new HttpParams();
+    params.append('namelike', nom );
+    params.append('diff', diff);
+    params.append('cout', cout);
+    params.append('nodiff', nodiff);
+    params.append('nocout', nocout);
+    console.log(`${this.URL}/search`, {params: params});
+    return this.httpClient.get<Array<Recette>>(`${this.URL}/search`, {params: params});
+  }
 
 }

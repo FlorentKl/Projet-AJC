@@ -53,26 +53,14 @@
   <div class="container">
     <div class="row">
       <!-- Top Catagory Area -->
-      <div class="col-12 col-lg-6">
+      <div *ngFor="let f of recettesBis" class="col-12 col-lg-6">
         <div class="single-top-catagory">
-          <img src="assets/delicious/img/bg-img/bg2.jpg" alt="">
+          <img [src]="['data:image/jpeg;base64,'+ f.picture.image]" alt="">
           <!-- Content -->
           <div class="top-cta-content">
-            <h3>Strawberry Cake</h3>
-            <h6>Simple &amp; Delicios</h6>
-            <a [routerLink]="['/recettes', 1 ]" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
-          </div>
-        </div>
-      </div>
-      <!-- Top Catagory Area -->
-      <div class="col-12 col-lg-6">
-        <div class="single-top-catagory">
-          <img src="assets/delicious/img/bg-img/bg3.jpg" alt="">
-          <!-- Content -->
-          <div class="top-cta-content">
-            <h3>Chinesse Noodles</h3>
-            <h6>Simple &amp; Delicios</h6>
-            <a [routerLink]="['/recettes', 4]" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
+            <h3>{{f.nom}}</h3>
+            <h6>simple et delicieux</h6>
+            <a [routerLink]="['/recettes', f.id ]" routerLinkActive="active" class="btn delicious-btn">Recette complète</a>
           </div>
         </div>
       </div>
