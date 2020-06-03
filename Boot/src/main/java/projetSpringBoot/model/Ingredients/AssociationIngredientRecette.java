@@ -12,10 +12,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import projetSpringBoot.model.views.Views;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
-import projetSpringBoot.model.views.Views;
-
 @Entity
 @Table(name = "recipe_ingredients")
 public class AssociationIngredientRecette {

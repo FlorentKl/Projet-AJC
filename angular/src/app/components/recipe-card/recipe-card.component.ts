@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RecetteServiceService} from '../../services/recette-service.service';
 import {Recette} from '../../model/recette';
+import {RecetteService} from '../../services/recette.service';
 
 @Component({
   selector: 'app-recipe-card',
@@ -12,7 +12,7 @@ export class RecipeCardComponent implements OnInit {
   private _recette: Recette = new Recette();
   private _erreur: boolean = false;
   private _id: number;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private recetteService: RecetteServiceService ) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private recetteService: RecetteService ) { }
 
   ngOnInit(){
     this._erreur = false;

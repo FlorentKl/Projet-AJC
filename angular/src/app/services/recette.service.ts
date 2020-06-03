@@ -3,6 +3,9 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {forkJoin, ObjectUnsubscribedError, Observable, Subscription} from 'rxjs';
 import {Recette} from '../model/recette';
 import {debounceTime, map, mergeMap} from 'rxjs/operators';
+import {Difficulte} from '../model/difficulte.enum';
+import {Cout} from '../model/cout.enum';
+
 
 @Injectable({
   providedIn: 'root'
@@ -124,6 +127,15 @@ export class RecetteService {
     }
     return this.httpClient.post(`${this.URL}/etape`, objetEtapes);
   }
-
+  public findByNomDiffAndCout(nom?: string, diff?: Difficulte, cout?: Cout, nodiff?: Difficulte, nocout?: Cout): Observable<Array<Recette>>{
+    const params = new HttpParams();
+    params.append('namelike', nom );
+    params.append('diff', diff);
+    params.append('cout', cout);
+    params.append('nodiff', nodiff);
+    params.append('nocout', nocout);
+    console.log(`${this.URL}/search`, {params: params});
+    return this.httpClient.get<Array<Recette>>(`${this.URL}/search`, {params: params});
+  }
 
 }

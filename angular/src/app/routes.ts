@@ -10,6 +10,7 @@ import {BoissonComponent} from './components/boisson/boisson.component';
 import {EntreeComponent} from './components/entree/entree.component';
 import {PlatComponent} from './components/plat/plat.component';
 import {DessertComponent} from './components/dessert/dessert.component';
+import {RechercheComponent} from './components/recherche/recherche.component';
 
 export const routes: Routes = [
   {path: 'index', component: IndexComponent},
@@ -24,5 +25,7 @@ export const routes: Routes = [
   {path: 'recette/edit', component: FormRecetteComponent},
   {path: 'recette/edit/ingredients', component: FormIngredientRecetteComponent},
   {path: 'recette/edit/etapes', component: FormEtapeRecetteComponent},
+  {path: 'recherche', component: RechercheComponent},
+  {path: 'recherche', component: RechercheComponent}
 
 ];
