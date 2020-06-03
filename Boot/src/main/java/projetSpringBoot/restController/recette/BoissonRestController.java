@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Boisson;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.views.Views;
+import projetSpringBoot.service.ImageService;
 import projetSpringBoot.service.recette.BoissonService;
 
 @RestController
@@ -37,6 +39,8 @@ public class BoissonRestController {
     @Autowired
     BoissonService boissonService;
 
+    @Autowired
+    ImageService imageService;
     /*
      * Get Mapping
      */
@@ -98,7 +102,7 @@ public class BoissonRestController {
 
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping("/search")
-    public ResponseEntity<List<Boisson>> test(@RequestParam(required = false) String namelike,
+    public ResponseEntity<List<Boisson>> search(@RequestParam(required = false) String namelike,
             @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
             @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
 
@@ -157,6 +161,10 @@ public class BoissonRestController {
             UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<ImageModel> optImg = imageService.findById(boisson.getImgRecette().getId());
+        if (optImg.isPresent()) {
+            boisson.setImgRecette(optImg.get());
         }
         Boisson boissonNew = boissonService.insert(boisson);
         HttpHeaders headers = new HttpHeaders();

@@ -93,11 +93,10 @@ public class RecetteRestController {
     public ResponseEntity<List<Recette>> findAllByNomNotLike(@PathVariable("nom") String nom) {
         return new ResponseEntity<>(recetteService.findByNomNotContaining(nom), HttpStatus.OK);
     }
-    
 
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping("/search")
-    public ResponseEntity<List<Recette>> test(@RequestParam(required = false) String namelike,
+    public ResponseEntity<List<Recette>> search(@RequestParam(required = false) String namelike,
             @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
             @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
 

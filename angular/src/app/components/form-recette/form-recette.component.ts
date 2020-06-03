@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import {Recette} from '../../model/recette';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {RecetteService} from '../../services/recette.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EtapeRecette} from '../../model/etape-recette';
-import {Ingredient} from '../../model/ingredient';
+import { Recette } from '../../model/recette';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { RecetteService } from '../../services/recette.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EtapeRecette } from '../../model/etape-recette';
+import { Ingredient } from '../../model/ingredient';
+import { HttpClient } from '@angular/common/http';
+import { ImageModel } from 'src/app/model/image-model';
 
 @Component({
   selector: 'app-form-recette',
   templateUrl: './form-recette.component.html',
-  styleUrls: ['./form-recette.component.css']
+  styleUrls: ['./form-recette.component.css'],
 })
 export class FormRecetteComponent implements OnInit {
+  //Image
+  public selectedFile;
+  public event1;
+  imgURL: any;
 
   // Form control
   private _recette: Recette = new Recette();
@@ -33,27 +39,62 @@ export class FormRecetteComponent implements OnInit {
   private _ingredients: Array<number> = new Array();
   private _ingredientsArray: Array<Ingredient> = new Array<Ingredient>();
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private recetteService: RecetteService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private recetteService: RecetteService,
+    private router: Router,
+    private httpClient: HttpClient
+  ) {
     this.formRecette = fb.group({
-      nom: this.nomCtrl, nbPersonne: this.nbPersonneCtrl, temps: this.tempsCtrl, difficulte: this.difficulteCtrl, type: this.typeCtrl, cout: this.coutCtrl
+      nom: this.nomCtrl,
+      nbPersonne: this.nbPersonneCtrl,
+      temps: this.tempsCtrl,
+      difficulte: this.difficulteCtrl,
+      type: this.typeCtrl,
+      cout: this.coutCtrl,
     });
   }
 
   ngOnInit(): void {
     this._nbEtapes = 0;
     this._etapes = [0];
-    this.formRecette.addControl('etapeRecette' + this.nbEtapes, this.fb.control(''));
+    this.formRecette.addControl(
+      'etapeRecette' + this.nbEtapes,
+      this.fb.control('')
+    );
     this.etapesRecette.push(new EtapeRecette('', this.nbEtapes));
 
     this.nbIngredients = 0;
     this.ingredients = [0];
-    this.formRecette.addControl('ingredientNom' + this.nbIngredients, this.fb.control(''));
-    this.formRecette.addControl('ingredientQuantite' + this.nbIngredients, this.fb.control(''));
-    this.formRecette.addControl('ingredientUnite' + this.nbIngredients, this.fb.control(''));
+    this.formRecette.addControl(
+      'ingredientNom' + this.nbIngredients,
+      this.fb.control('')
+    );
+    this.formRecette.addControl(
+      'ingredientQuantite' + this.nbIngredients,
+      this.fb.control('')
+    );
+    this.formRecette.addControl(
+      'ingredientUnite' + this.nbIngredients,
+      this.fb.control('')
+    );
     this.ingredientsArray.push(new Ingredient());
   }
 
-  public save(){
+  public onFileChanged(event) {
+    console.log(event);
+    this.selectedFile = event.target.files[0];
+
+    // Below part is used to display the selected image
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL = reader.result;
+    };
+  }
+
+  public save() {
     // récupérer toutes les étapes et injecter l'array dans la recette
     for (const etape of this.etapesRecette) {
       const et = 'etapeRecette' + etape.numEtape;
@@ -74,22 +115,30 @@ export class FormRecetteComponent implements OnInit {
     }
     this.recette.ingredients = this.ingredientsArray;
 
-    this.recetteService.create(this.recette).subscribe(res => {
-      //TODO - redirigier vers la page de recette plutot que l'index
-      this.router.navigate(['index']);
-    });
+    console.log('onUpload pressé');
+    console.log(this.selectedFile);
+
+    this.recetteService
+      .create(this.recette, this.selectedFile)
+      .subscribe((res) => {
+        //TODO - redirigier vers la page de recette plutot que l'index
+        //this.router.navigate(['index']);
+      });
   }
 
-  public ajouterEtape(){
+  public ajouterEtape() {
     this.nbEtapes++;
     this.etapesRecette.push(new EtapeRecette('', this.nbEtapes));
-    this.formRecette.addControl('etapeRecette' + this.nbEtapes, this.fb.control(''));
+    this.formRecette.addControl(
+      'etapeRecette' + this.nbEtapes,
+      this.fb.control('')
+    );
     this.etapes.push(this.nbEtapes);
     // console.log(this.etapes);
     console.log(this.etapesRecette);
   }
 
-  public supprimerEtape(){
+  public supprimerEtape() {
     if (this.nbEtapes > 0) {
       this.etapesRecette.pop();
       this.formRecette.removeControl('etapeRecette' + this.nbEtapes);
@@ -99,18 +148,27 @@ export class FormRecetteComponent implements OnInit {
     console.log(this.etapes);
   }
 
-  public ajouterIngredient(){
+  public ajouterIngredient() {
     this.nbIngredients++;
     this.ingredientsArray.push(new Ingredient(''));
-    this.formRecette.addControl('ingredientNom' + this.nbIngredients, this.fb.control(''));
-    this.formRecette.addControl('ingredientQuantite' + this.nbIngredients, this.fb.control(''));
-    this.formRecette.addControl('ingredientUnite' + this.nbIngredients, this.fb.control(''));
+    this.formRecette.addControl(
+      'ingredientNom' + this.nbIngredients,
+      this.fb.control('')
+    );
+    this.formRecette.addControl(
+      'ingredientQuantite' + this.nbIngredients,
+      this.fb.control('')
+    );
+    this.formRecette.addControl(
+      'ingredientUnite' + this.nbIngredients,
+      this.fb.control('')
+    );
     this.ingredients.push(this.nbIngredients);
     // console.log(this.ingredients);
     console.log(this.ingredientsArray);
   }
 
-  public supprimerIngredient(){
+  public supprimerIngredient() {
     if (this.nbIngredients > 0) {
       this.nbIngredients--;
       this.ingredients.pop();
@@ -118,7 +176,7 @@ export class FormRecetteComponent implements OnInit {
     console.log(this.ingredients);
   }
 
-  public changement(){
+  public changement() {
     for (const etape of this.etapesRecette) {
       const et = 'etapeRecette' + etape.numEtape;
       // console.log(this.formRecette.get(et).value);
@@ -137,9 +195,7 @@ export class FormRecetteComponent implements OnInit {
       i++;
     }
     console.log(this.ingredientsArray);
-
   }
-
 
   // Getters and setters
   get recette(): Recette {

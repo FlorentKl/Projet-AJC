@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Dessert;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.views.Views;
+import projetSpringBoot.service.ImageService;
 import projetSpringBoot.service.recette.DessertService;
 
 @RestController
@@ -37,6 +39,8 @@ public class DessertRestController {
     @Autowired
     DessertService dessertService;
 
+    @Autowired
+    ImageService imageService;
     /*
      * Get Mapping
      */
@@ -97,7 +101,7 @@ public class DessertRestController {
 
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping("/search")
-    public ResponseEntity<List<Dessert>> test(@RequestParam(required = false) String namelike,
+    public ResponseEntity<List<Dessert>> search(@RequestParam(required = false) String namelike,
             @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
             @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
 
@@ -156,6 +160,10 @@ public class DessertRestController {
             UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<ImageModel> optImg = imageService.findById(dessert.getImgRecette().getId());
+        if (optImg.isPresent()) {
+            dessert.setImgRecette(optImg.get());
         }
         Dessert dessertNew = dessertService.insert(dessert);
         HttpHeaders headers = new HttpHeaders();

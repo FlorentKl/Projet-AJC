@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Plat;
 import projetSpringBoot.model.views.Views;
+import projetSpringBoot.service.ImageService;
 import projetSpringBoot.service.recette.PlatService;
 
 @RestController
@@ -37,6 +39,8 @@ public class PlatRestController {
     @Autowired
     PlatService platService;
 
+    @Autowired
+    ImageService imageService;
     /*
      * Get Mapping
      */
@@ -97,7 +101,7 @@ public class PlatRestController {
 
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping("/search")
-    public ResponseEntity<List<Plat>> test(@RequestParam(required = false) String namelike,
+    public ResponseEntity<List<Plat>> search(@RequestParam(required = false) String namelike,
             @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
             @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
 
@@ -153,9 +157,12 @@ public class PlatRestController {
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
-    	
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<ImageModel> optImg = imageService.findById(plat.getImgRecette().getId());
+        if (optImg.isPresent()) {
+            plat.setImgRecette(optImg.get());
         }
         Plat platNew = platService.insert(plat);
         HttpHeaders headers = new HttpHeaders();
@@ -184,8 +191,11 @@ public class PlatRestController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Plat plat, @PathVariable("id") Integer id) {
         Optional<Plat> opt = platService.findById(id);
+        System.out.println(plat.getImgRecette().getId());
 
         return opt.map(temp -> {
+
+            plat.setId(id);
             platService.update(plat);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<Void>(HttpStatus.NOT_FOUND));

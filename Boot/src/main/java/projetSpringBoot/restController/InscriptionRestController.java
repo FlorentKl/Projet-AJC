@@ -1,6 +1,5 @@
 package projetSpringBoot.restController;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -49,8 +48,6 @@ public class InscriptionRestController {
 		if (opt.isPresent()) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
 
 		utilisateur.setEnabled(true);

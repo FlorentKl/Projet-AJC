@@ -26,7 +26,7 @@ public class ImageModel {
 
     @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Column(name = "pic_name")
-    private String name;
+    private String nom;
 
     @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class, Views.UtilisateurView.class })
     @Column(name = "pic_type")
@@ -44,8 +44,8 @@ public class ImageModel {
     public ImageModel() {
     }
 
-    public ImageModel(String name, String type, byte[] image) {
-        this.name = name;
+    public ImageModel(String nom, String type, byte[] image) {
+        this.nom = nom;
         this.type = type;
         this.image = image;
     }
@@ -59,11 +59,11 @@ public class ImageModel {
     }
 
     public String getName() {
-        return name;
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nom) {
+        this.nom = nom;
     }
 
     public String getType() {

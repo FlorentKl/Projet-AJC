@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Entree;
 import projetSpringBoot.model.views.Views;
+import projetSpringBoot.service.ImageService;
 import projetSpringBoot.service.recette.EntreeService;
 
 @RestController
@@ -37,6 +39,8 @@ public class EntreeRestController {
     @Autowired
     EntreeService entreeService;
 
+    @Autowired
+    ImageService imageService;
     /*
      * Get Mapping
      */
@@ -97,7 +101,7 @@ public class EntreeRestController {
 
     @JsonView(Views.RecetteWithAll.class)
     @GetMapping("/search")
-    public ResponseEntity<List<Entree>> test(@RequestParam(required = false) String namelike,
+    public ResponseEntity<List<Entree>> search(@RequestParam(required = false) String namelike,
             @RequestParam(required = false) Difficulte diff, @RequestParam(required = false) Difficulte nodiff,
             @RequestParam(required = false) Couts cout, @RequestParam(required = false) Couts nocout) {
 
@@ -155,6 +159,10 @@ public class EntreeRestController {
     public ResponseEntity<Entree> addEntree(@RequestBody Entree entree, BindingResult br, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<ImageModel> optImg = imageService.findById(entree.getImgRecette().getId());
+        if (optImg.isPresent()) {
+            entree.setImgRecette(optImg.get());
         }
         Entree entreeNew = entreeService.insert(entree);
         HttpHeaders headers = new HttpHeaders();

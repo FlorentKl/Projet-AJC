@@ -2,7 +2,7 @@ FOOOORRRMMMM COMPONENT
 
 <div class="container">
 
-<!--  Informations générales-->
+  <!--  Informations générales-->
   <h6>Informations générales</h6>
   <form (ngSubmit)="save()" [formGroup]="formRecette">
 
@@ -65,12 +65,10 @@ FOOOORRRMMMM COMPONENT
         <img [src]="imgURL" height="200" *ngIf="imgURL">
       </div>
 
-      <input type="button" (click)="onUpload()" value="upload">
-
     </div>
 
 
-<!--    <app-form-ingredient-recette></app-form-ingredient-recette>-->
+    <!--    <app-form-ingredient-recette></app-form-ingredient-recette>-->
     <h6>Ingrédients</h6>
     <div class="form-row" *ngFor="let i of ingredients">
       <div class="form-group col-12 col-lg-4">
@@ -83,7 +81,7 @@ FOOOORRRMMMM COMPONENT
       </div>
       <div class="form-group col-12 col-lg-4">
         <label>Unité </label>
-        <select class="custom-select"  [formControlName]="'ingredientUnite' + i">
+        <select class="custom-select" [formControlName]="'ingredientUnite' + i">
           <option value="MG">Milligrammes</option>
           <option value="G">Grammes</option>
           <option value="KG">Kilogrammes</option>
@@ -114,8 +112,8 @@ FOOOORRRMMMM COMPONENT
 
     <!--bouton validation -->
     <div>
-    <button class="btn btn-outline-success" type="submit">Enregistrer</button>
-    <a [routerLink]="['/index']" routerLinkActive="active" class="btn btn-outline-danger">annuler</a>
+      <button class="btn btn-outline-success" type="submit">Enregistrer</button>
+      <a [routerLink]="['/index']" routerLinkActive="active" class="btn btn-outline-danger">annuler</a>
     </div>
   </form>
 </div>
@@ -127,5 +125,3 @@ picture
 tags
 etapes
 -->
-
-

@@ -1,10 +1,7 @@
-
-import {Component, OnInit} from '@angular/core';
-import {Recette} from '../../model/recette';
-import {Difficulte} from '../../model/difficulte.enum';
-import {RecetteService} from '../../services/recette.service';
-
-
+import { Component, OnInit } from '@angular/core';
+import { Recette } from '../../model/recette';
+import { Difficulte } from '../../model/difficulte.enum';
+import { RecetteService } from '../../services/recette.service';
 
 @Component({
   selector: 'app-index',
@@ -16,8 +13,7 @@ export class IndexComponent implements OnInit {
 
   private _recettesBis: Recette[];
 
-
-  constructor(private recetteService: RecetteService) { }
+  constructor(private recetteService: RecetteService) {}
 
   ngOnInit() {
     this.initRecettes();
@@ -29,10 +25,18 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  private initRecettesFaciles(){
-    this.recetteService.findByNomDiffAndCout( undefined, Difficulte[Difficulte.F], undefined , undefined , undefined ).subscribe( res => {
-      console.log(res);
-    });
+  private initRecettesFaciles() {
+    this.recetteService
+      .findByNomDiffAndCout(
+        undefined,
+        Difficulte[Difficulte.F],
+        undefined,
+        undefined,
+        undefined
+      )
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
   get recettes(): Recette[] {
     return this._recettes;
