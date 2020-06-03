@@ -127,6 +127,7 @@ export class RecetteService {
     }
     return this.httpClient.post(`${this.URL}/etape`, objetEtapes);
   }
+  
   public findByNomDiffAndCout(nom?: string, diff?: Difficulte, cout?: Cout, nodiff?: Difficulte, nocout?: Cout): Observable<Array<Recette>>{
     const params = new HttpParams();
     params.append('namelike', nom );
