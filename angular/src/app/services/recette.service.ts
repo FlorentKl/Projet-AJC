@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {forkJoin, ObjectUnsubscribedError, Observable, Subscription} from 'rxjs';
 import {Recette} from '../model/recette';
 import {debounceTime, map, mergeMap} from 'rxjs/operators';
@@ -40,6 +40,12 @@ export class RecetteService {
     let recetteNew: Recette = new Recette();
     let type: string = recette.type.toString().toLowerCase();
     return this.httpClient.post(`${this.URL}/${type}`, o).pipe(mergeMap(res => {
+
+
+
+
+
+
       recetteNew = res as Recette;
       id = recetteNew.id;
       console.log('PARTIE create Etapes');
@@ -58,6 +64,20 @@ export class RecetteService {
           });
       }
       let createEtapes = this.httpClient.post(`${this.URL}/etape`, objetEtapes);
+
+
+      for (let ing of recette.ingredients) {
+        console.log(ing.nom + " / " + ing.quantite + " / " + ing.unite);
+        let parametres = new HttpParams();
+        parametres = parametres.append('idr', id.toString());
+        parametres = parametres.append('nom', ing.nom);
+        parametres = parametres.append('quantite', ing.quantite.toString());
+        parametres = parametres.append('unite', ing.unite);
+        this.httpClient.post(`${this.URL}/ingredient/assoc`, {params: parametres});
+      }
+
+
+
       return forkJoin([createEtapes]);
 
       // let createIngredients = this.httpClient.post(url, OBJET);
