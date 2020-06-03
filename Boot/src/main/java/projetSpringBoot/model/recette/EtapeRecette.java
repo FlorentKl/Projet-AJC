@@ -37,7 +37,7 @@ public class EtapeRecette {
     @Column(name = "recipe_step_number")
     private Integer numEtape;
 
-    // @JsonView(value = { Views.RecetteWithAll.class })
+    @JsonView(value = { Views.RecetteWithAll.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
     private ImageModel picture;
