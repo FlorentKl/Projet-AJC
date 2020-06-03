@@ -1,7 +1,5 @@
-FOOOORRRMMMM COMPONENT
-
 <div class="container">
-
+  <p>Veuillez remplit l'intégralité des champs de ce formulaire afin d'enregistrer une nouvelle recette.</p>
   <!--  Informations générales-->
   <h6>Informations générales</h6>
   <form (ngSubmit)="save()" [formGroup]="formRecette">
@@ -10,6 +8,9 @@ FOOOORRRMMMM COMPONENT
       <div class="form-group col-12 col-lg-6">
         <label>Nom de la recette</label>
         <input [(ngModel)]="recette.nom" class="form-control" formControlName="nom">
+        <div *ngIf="nomCtrl.hasError('required')&&nomCtrl.dirty" class="alert alert-danger">
+          Donnée manquante
+        </div>
       </div>
 
       <div class="form-group col-12 col-lg-6">
@@ -20,6 +21,9 @@ FOOOORRRMMMM COMPONENT
           <option value="Dessert">Dessert</option>
           <option value="Boisson">Boisson</option>
         </select>
+        <div *ngIf="typeCtrl.hasError('required')&&typeCtrl.dirty" class="alert alert-danger">
+          Donnée manquante
+        </div>
       </div>
     </div>
 
@@ -53,14 +57,14 @@ FOOOORRRMMMM COMPONENT
 
       <div class="form-group col-12 col-lg-6">
         <label>Durée de préparation (en minutes)</label>
-        <input [(ngModel)]="recette.temps" class="form-control" type="number" min="0" formControlName="nbPersonne">
+        <input [(ngModel)]="recette.temps" class="form-control" type="number" min="0" formControlName="temps">
       </div>
     </div>
 
     <div class="form-group">
       <label>Photo principale</label>
       <div>
-        <input type="file" (change)="onFileChanged($event)">
+        <input type="file" (change)="onFileChanged($event)" formControlName="image">
 
         <img [src]="imgURL" height="200" *ngIf="imgURL">
       </div>
@@ -77,7 +81,7 @@ FOOOORRRMMMM COMPONENT
       </div>
       <div class="form-group col-12 col-lg-4">
         <label>Quantité </label>
-        <input class="form-control" type="number" [formControlName]="'ingredientQuantite' + i">
+        <input class="form-control" type="number" min="0" [formControlName]="'ingredientQuantite' + i">
       </div>
       <div class="form-group col-12 col-lg-4">
         <label>Unité </label>
@@ -90,6 +94,7 @@ FOOOORRRMMMM COMPONENT
           <option value="L">Litres</option>
         </select>
       </div>
+
     </div>
 
     <button class="btn btn-outline-success" type="button" (click)="ajouterIngredient()">+
@@ -112,7 +117,7 @@ FOOOORRRMMMM COMPONENT
 
     <!--bouton validation -->
     <div>
-      <button class="btn btn-outline-success" type="submit">Enregistrer</button>
+      <button class="btn btn-outline-success" type="submit" [disabled]="!formRecette.valid">Enregistrer</button>
       <a [routerLink]="['/index']" routerLinkActive="active" class="btn btn-outline-danger">annuler</a>
     </div>
   </form>

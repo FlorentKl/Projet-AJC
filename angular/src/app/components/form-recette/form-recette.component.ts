@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Recette } from '../../model/recette';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { RecetteService } from '../../services/recette.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EtapeRecette } from '../../model/etape-recette';
 import { Ingredient } from '../../model/ingredient';
 import { HttpClient } from '@angular/common/http';
 import { ImageModel } from 'src/app/model/image-model';
+import {debounceTime, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-recette',
@@ -28,6 +29,8 @@ export class FormRecetteComponent implements OnInit {
   private _difficulteCtrl: FormControl;
   private _typeCtrl: FormControl;
   private _coutCtrl: FormControl;
+  private _imageCtrl: FormControl;
+
 
   // Etapes Recettes
   private _nbEtapes = 0;
@@ -46,6 +49,13 @@ export class FormRecetteComponent implements OnInit {
     private router: Router,
     private httpClient: HttpClient
   ) {
+    this.nomCtrl = fb.control('', Validators.required);
+    this.typeCtrl = fb.control('', Validators.required);
+    this.nbPersonneCtrl = fb.control('', Validators.compose([Validators.required, FormRecetteComponent.positive]));
+    this.tempsCtrl = fb.control('', Validators.compose([Validators.required, FormRecetteComponent.positive]));
+    this.difficulteCtrl = fb.control('', Validators.required);
+    this.coutCtrl = fb.control('', Validators.required);
+    this.imageCtrl = fb.control('', Validators.required);
     this.formRecette = fb.group({
       nom: this.nomCtrl,
       nbPersonne: this.nbPersonneCtrl,
@@ -53,6 +63,7 @@ export class FormRecetteComponent implements OnInit {
       difficulte: this.difficulteCtrl,
       type: this.typeCtrl,
       cout: this.coutCtrl,
+      image: this.imageCtrl
     });
   }
 
@@ -61,7 +72,7 @@ export class FormRecetteComponent implements OnInit {
     this._etapes = [0];
     this.formRecette.addControl(
       'etapeRecette' + this.nbEtapes,
-      this.fb.control('')
+      this.fb.control('', Validators.required)
     );
     this.etapesRecette.push(new EtapeRecette('', this.nbEtapes));
 
@@ -69,18 +80,28 @@ export class FormRecetteComponent implements OnInit {
     this.ingredients = [0];
     this.formRecette.addControl(
       'ingredientNom' + this.nbIngredients,
-      this.fb.control('')
+      this.fb.control('', Validators.required)
     );
     this.formRecette.addControl(
       'ingredientQuantite' + this.nbIngredients,
-      this.fb.control('')
+      this.fb.control('', Validators.required)
     );
     this.formRecette.addControl(
       'ingredientUnite' + this.nbIngredients,
-      this.fb.control('')
+      this.fb.control('', Validators.required)
     );
     this.ingredientsArray.push(new Ingredient());
   }
+
+  static positive(control: FormControl):{ [key: string]: any; } {
+    if (Number(control.value) < 0) {
+      return {positive: true};
+    } else {
+      return null;
+    }
+  }
+
+
 
   public onFileChanged(event) {
     console.log(event);
@@ -153,15 +174,15 @@ export class FormRecetteComponent implements OnInit {
     this.ingredientsArray.push(new Ingredient(''));
     this.formRecette.addControl(
       'ingredientNom' + this.nbIngredients,
-      this.fb.control('')
+      this.fb.control('', Validators.required)
     );
     this.formRecette.addControl(
       'ingredientQuantite' + this.nbIngredients,
-      this.fb.control('')
+      this.fb.control('', Validators.compose([Validators.required, FormRecetteComponent.positive]))
     );
     this.formRecette.addControl(
       'ingredientUnite' + this.nbIngredients,
-      this.fb.control('')
+      this.fb.control('', Validators.required)
     );
     this.ingredients.push(this.nbIngredients);
     // console.log(this.ingredients);
@@ -170,6 +191,10 @@ export class FormRecetteComponent implements OnInit {
 
   public supprimerIngredient() {
     if (this.nbIngredients > 0) {
+      this.ingredientsArray.pop();
+      this.formRecette.removeControl('ingredientNom' + this.nbIngredients);
+      this.formRecette.removeControl('ingredientQuantite' + this.nbIngredients);
+      this.formRecette.removeControl('ingredientUnite' + this.nbIngredients);
       this.nbIngredients--;
       this.ingredients.pop();
     }
@@ -308,5 +333,14 @@ export class FormRecetteComponent implements OnInit {
 
   set ingredientsArray(value: Array<Ingredient>) {
     this._ingredientsArray = value;
+  }
+
+
+  get imageCtrl(): FormControl {
+    return this._imageCtrl;
+  }
+
+  set imageCtrl(value: FormControl) {
+    this._imageCtrl = value;
   }
 }

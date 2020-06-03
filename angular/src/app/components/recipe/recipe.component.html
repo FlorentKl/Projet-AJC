@@ -23,7 +23,7 @@
       <div  *ngFor="let etape of recette.etapes">
         <img *ngIf="etape.picture != null" class="rounded mx-auto d-block" style="max-height: 170px" [src]="['data:image/jpeg;base64,'+ etape.picture.image]" alt="">
         <div class="single-preparation-step d-flex">
-        <h4>{{etape.numEtape}}.</h4>
+        <h4>{{etape.numEtape+1}}.</h4>
         <p>{{etape.texte}}</p>
         </div>
       </div>
@@ -57,6 +57,11 @@
           <h6>{{commentaire.id.auteur.pseudo}}</h6>
           <p>{{commentaire.texte}}</p>
         </div>
+      </div>
+      <div>
+
+        <textarea class="form-control"></textarea>
+        <button class="btn btn-outline-success">Ajouter un commentaire</button>
       </div>
     </div>
   </div>
