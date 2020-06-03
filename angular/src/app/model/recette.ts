@@ -1,29 +1,28 @@
-import {Ingredient} from './ingredient';
-import {EtapeRecette} from './etape-recette';
-import {Commentaire} from './commentaire';
-import {Cout} from './cout.enum';
+import { Ingredient } from './ingredient';
+import { EtapeRecette } from './etape-recette';
+import { Commentaire } from './commentaire';
+import { Cout } from './cout.enum';
 import { Difficulte } from './difficulte.enum';
-import {ImageModel} from './image-model';
-import {Utilisateur} from './utilisateur';
+import { ImageModel } from './image-model';
+import { Utilisateur } from '../user/model/utilisateur';
 
 export class Recette {
-
-  constructor(private _id?: number,
-               private _nom?: string,
-               private _type?: string,
-               private _nbPersonne?: number,
-               private _temps?: number,
-               private _cout?: Cout,
-               private _difficulte?: Difficulte,
-               private _picture?: ImageModel,
-               private _dateCreation?: Date,
-               private _tags?: string[],
-               private _ingredients?: Ingredient[],
-               private _etapes?: EtapeRecette[],
-               private _commentaires?: Commentaire[],
-               private _auteur?: Utilisateur
-               ) {
-  }
+  constructor(
+    private _id?: number,
+    private _nom?: string,
+    private _type?: string,
+    private _nbPersonne?: number,
+    private _temps?: number,
+    private _cout?: Cout,
+    private _difficulte?: Difficulte,
+    private _picture?: ImageModel,
+    private _dateCreation?: Date,
+    private _tags?: string[],
+    private _ingredients?: Ingredient[],
+    private _etapes?: EtapeRecette[],
+    private _commentaires?: Commentaire[],
+    private _auteur?: Utilisateur
+  ) {}
 
   get id(): number {
     return this._id;
@@ -47,7 +46,6 @@ export class Recette {
 
   set nbPersonne(value: number) {
     this._nbPersonne = value;
-
   }
 
   get temps(): number {
@@ -136,5 +134,4 @@ export class Recette {
   set type(value: string) {
     this._type = value;
   }
-
 }

@@ -1,6 +1,7 @@
 package projetSpringBoot.model.tag;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonView;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import projetSpringBoot.model.views.Views;
 
@@ -35,8 +39,8 @@ public class Tag {
     private String tag;
 
     @JsonView(value = { Views.TagView.class })
-    @OneToMany(mappedBy = "id.tag", fetch = FetchType.EAGER)
-    private List<AssociationTagRecette> recettes;
+    @OneToMany(mappedBy = "id.tag")
+    private Set<AssociationTagRecette> recettes;
 
     @JsonView(value = { Views.RecetteWithAll.class, Views.TagView.class })
     @Version
@@ -71,11 +75,11 @@ public class Tag {
         this.tag = tag;
     }
 
-    public List<AssociationTagRecette> getRecettes() {
+    public Set<AssociationTagRecette> getRecettes() {
         return recettes;
     }
 
-    public void setRecettes(List<AssociationTagRecette> recettes) {
+    public void setRecettes(Set<AssociationTagRecette> recettes) {
         this.recettes = recettes;
     }
 

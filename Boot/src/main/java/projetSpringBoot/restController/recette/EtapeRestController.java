@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import projetSpringBoot.model.recette.EtapeRecette;
+<<<<<<< HEAD
 import projetSpringBoot.repository.recette.RecetteRepository;
+=======
+import projetSpringBoot.model.recette.Recette;
+>>>>>>> master
 import projetSpringBoot.service.EtapeRecetteService;
 import projetSpringBoot.service.recette.RecetteService;
 
@@ -22,6 +26,9 @@ import projetSpringBoot.service.recette.RecetteService;
 public class EtapeRestController {
     @Autowired
     EtapeRecetteService etapeService;
+    @Autowired
+    RecetteService recetteService;
+
     @Autowired
     RecetteService recetteService;
 
@@ -38,7 +45,11 @@ public class EtapeRestController {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        System.out.println(etapes);
         for (EtapeRecette etape : etapes) {
+            Recette recette = recetteService.findById(etape.getId_recette().getId()).get();
+            etape.setId_recette(recette);
             etapeService.insert(etape);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);

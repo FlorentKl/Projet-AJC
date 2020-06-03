@@ -1,5 +1,6 @@
 package projetSpringBoot.model.recette;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -36,7 +37,7 @@ public class EtapeRecette {
     @Column(name = "recipe_step_number")
     private Integer numEtape;
 
-    @JsonView(value = { Views.RecetteWithAll.class })
+    // @JsonView(value = { Views.RecetteWithAll.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
     private ImageModel picture;

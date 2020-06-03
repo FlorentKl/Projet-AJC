@@ -2,6 +2,7 @@ package projetSpringBoot.model.recette;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -98,24 +99,20 @@ public abstract class Recette {
     private Date dateCreation;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<AssociationTagRecette> tags;
+    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    private Set<AssociationTagRecette> tags;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<AssociationIngredientRecette> ingredients;
+    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    private Set<AssociationIngredientRecette> ingredients;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id_recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<EtapeRecette> etapes;
+    @OneToMany(mappedBy = "id_recette", cascade = CascadeType.REMOVE)
+    private Set<EtapeRecette> etapes;
 
     @JsonView(value = { Views.RecetteWithAll.class })
-    @OneToMany(mappedBy = "id.recette", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Commentaire> commentaires;
+    @OneToMany(mappedBy = "id.recette", cascade = CascadeType.REMOVE)
+    private Set<Commentaire> commentaires;
 
     @JsonView(value = { Views.RecetteView.class, Views.RecetteWithAll.class, Views.TagView.class,
             Views.IngredientView.class, Views.CommentaireView.class })
@@ -180,35 +177,35 @@ public abstract class Recette {
         this.dateCreation = dateCreation;
     }
 
-    public List<AssociationTagRecette> getTags() {
+    public Set<AssociationTagRecette> getTags() {
         return tags;
     }
 
-    public void setTags(List<AssociationTagRecette> tags) {
+    public void setTags(Set<AssociationTagRecette> tags) {
         this.tags = tags;
     }
 
-    public List<AssociationIngredientRecette> getIngredients() {
+    public Set<AssociationIngredientRecette> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<AssociationIngredientRecette> ingredients) {
+    public void setIngredients(Set<AssociationIngredientRecette> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<EtapeRecette> getEtapes() {
+    public Set<EtapeRecette> getEtapes() {
         return etapes;
     }
 
-    public void setEtapes(List<EtapeRecette> etapes) {
+    public void setEtapes(Set<EtapeRecette> etapes) {
         this.etapes = etapes;
     }
 
-    public List<Commentaire> getCommentaires() {
+    public Set<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(List<Commentaire> commentaires) {
+    public void setCommentaires(Set<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
 

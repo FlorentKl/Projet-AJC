@@ -7,7 +7,9 @@
           <div class="col-12 col-md-9 col-lg-7 col-xl-6">
             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
               <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-              <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
+              <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu
+                varius.</p>
               <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
             </div>
           </div>
@@ -22,7 +24,9 @@
           <div class="col-12 col-md-9 col-lg-7 col-xl-6">
             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
               <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-              <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
+              <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu
+                varius.</p>
               <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
             </div>
           </div>
@@ -37,7 +41,9 @@
           <div class="col-12 col-md-9 col-lg-7 col-xl-6">
             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
               <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-              <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
+              <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu
+                varius.</p>
               <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
             </div>
           </div>
@@ -94,9 +100,9 @@
 
     <div class="row">
       <!-- Single Best Receipe Area -->
-      <div *ngFor = "let r of recettes ; let i = index" class="col-12 col-sm-6 col-lg-4">
-        <div *ngIf= " i < 3">
-          <div  class="single-best-receipe-area mb-30">
+      <div *ngFor="let r of recettes ; let i = index" class="col-12 col-sm-6 col-lg-4">
+        <div *ngIf=" i < 3">
+          <div class="single-best-receipe-area mb-30">
             <img [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
             <div class="receipe-content">
               <a [routerLink]="['/recettes', r.id]" class="btn-outline-secondary">
@@ -126,7 +132,9 @@
         <!-- Cta Content -->
         <div class="cta-content text-center">
           <h2>Gluten Free Receipies</h2>
-          <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh</p>
+          <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum
+            primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate,
+            lectus vel aliquam congue, risus leo elementum nibh</p>
           <a href="#" class="btn delicious-btn">Discover all the receipies</a>
         </div>
       </div>
@@ -145,7 +153,7 @@
         <div class="single-small-receipe-area d-flex">
           <!-- Receipe Thumb -->
           <div class="receipe-thumb">
-            <img  [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
+            <img [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
           </div>
           <!-- Receipe Content -->
           <div class="receipe-content">
@@ -153,7 +161,7 @@
             <a [routerLink]="['/recettes', r.id]" routerLinkActive="active">
               <h5>{{r.nom}}</h5>
             </a>
-            <p>{{r.couts}}</p>
+            <p>{{r.cout}}</p>
             <p>{{r.difficulte}}</p>
             <p>{{r.auteur}}</p>
           </div>
@@ -186,12 +194,14 @@
         <div class="newsletter-area">
           <h4>Subscribe to our newsletter</h4>
           <!-- Form -->
-          <div class="newsletter-form bg-img bg-overlay" style="background-image: url(assets/delicious/img/bg-img/bg1.jpg);">
+          <div class="newsletter-form bg-img bg-overlay"
+            style="background-image: url(assets/delicious/img/bg-img/bg1.jpg);">
             <form action="#" method="post">
               <input type="email" name="email" placeholder="Subscribe to newsletter">
               <button type="submit" class="btn delicious-btn w-100">Subscribe</button>
             </form>
-            <p>Fusce nec ante vitae lacus aliquet vulputate. Donec sceleri sque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
+            <p>Fusce nec ante vitae lacus aliquet vulputate. Donec sceleri sque accumsan molestie. Vestibulum ante ipsum
+              primis in faucibus orci luctus et ultrices posuere cubilia.</p>
           </div>
         </div>
       </div>
@@ -220,10 +230,11 @@
   <div class="insta-feeds d-flex flex-wrap">
     <!-- Single Insta Feeds -->
     <div *ngFor="let r of recettes" class="single-insta-feeds">
-      <img [src]="['data:image/jpeg;base64,'+ r.picture.image]"  alt="">
+      <img [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
       <!-- Icon -->
       <div class="insta-icon">
-        <a [routerLink]="['/recettes', r.id]" routerLinkActive="active"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        <a [routerLink]="['/recettes', r.id]" routerLinkActive="active"><i class="fa fa-instagram"
+            aria-hidden="true"></i></a>
       </div>
     </div>
   </div>

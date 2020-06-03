@@ -32,7 +32,7 @@ public class ImageModel {
     @Column(name = "pic_type")
     private String type;
 
-    @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
+    // @JsonView(value = { Views.RecetteWithAll.class, Views.RecetteView.class })
     @Lob
     @Column(name = "pic")
     private byte[] image;
