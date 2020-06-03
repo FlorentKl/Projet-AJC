@@ -59,7 +59,14 @@ FOOOORRRMMMM COMPONENT
 
     <div class="form-group">
       <label>Photo principale</label>
-      <input class="form-control" placeholder="TODO Photo">
+      <div>
+        <input type="file" (change)="onFileChanged($event)">
+
+        <img [src]="imgURL" height="200" *ngIf="imgURL">
+      </div>
+
+      <input type="button" (click)="onUpload()" value="upload">
+
     </div>
 
 

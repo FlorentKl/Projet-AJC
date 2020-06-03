@@ -5,6 +5,7 @@ import {Recette} from '../model/recette';
 import {debounceTime, map, mergeMap} from 'rxjs/operators';
 import {Difficulte} from '../model/difficulte.enum';
 import {Cout} from '../model/cout.enum';
+import {Ingredient} from '../model/ingredient';
 
 
 @Injectable({
@@ -44,11 +45,6 @@ export class RecetteService {
     let type: string = recette.type.toString().toLowerCase();
     return this.httpClient.post(`${this.URL}/${type}`, o).pipe(mergeMap(res => {
 
-
-
-
-
-
       recetteNew = res as Recette;
       id = recetteNew.id;
       console.log('PARTIE create Etapes');
@@ -67,67 +63,25 @@ export class RecetteService {
           });
       }
       let createEtapes = this.httpClient.post(`${this.URL}/etape`, objetEtapes);
-
+      let tableau: any[] = [];
+      tableau.push(createEtapes);
 
       for (let ing of recette.ingredients) {
-        console.log(ing.nom + " / " + ing.quantite + " / " + ing.unite);
+        let objetIng: object = {
+          'nom': ing.nom
+        };
         let parametres = new HttpParams();
         parametres = parametres.append('idr', id.toString());
-        parametres = parametres.append('nom', ing.nom);
         parametres = parametres.append('quantite', ing.quantite.toString());
         parametres = parametres.append('unite', ing.unite);
-        this.httpClient.post(`${this.URL}/ingredient/assoc`, {params: parametres});
+        let createIngredient = this.httpClient.post(`${this.URL}/ingredient/assoc`, objetIng, {params: parametres});
+        tableau.push(createIngredient);
       }
-
-
-
-      return forkJoin([createEtapes]);
-
-      // let createIngredients = this.httpClient.post(url, OBJET);
-      // return forkJoin([createEtapes, createIngredients]);
-
+      return forkJoin(tableau);
       })
     );
   }
 
-
-
-  public createa(recette: Recette): Observable<any> {
-    let id: number;
-    const o: object = {
-      'nom': recette.nom,
-      'type': recette.type,
-      'nbPersonne': recette.nbPersonne,
-      'temps': recette.temps,
-      'difficulte': recette.difficulte,
-      'cout': recette.cout
-    };
-
-    let recetteNew;
-    let type: string = recette.type.toString().toLowerCase();
-    this.httpClient.post(`${this.URL}/${type}`, o).subscribe(res => {
-      recetteNew = res as Recette;
-      id = recetteNew.id;
-      console.log("1");
-      console.log(recetteNew);
-    });
-
-    console.log("2");
-    console.log(recetteNew);
-
-    let etapes = recette.etapes;
-    let objetEtapes = [];
-    for (let etape of etapes) {
-      objetEtapes.push(
-        {
-          'texte': etape.texte,
-          'numEtape': etape.numEtape,
-          'id_recette': recetteNew
-        });
-    }
-    return this.httpClient.post(`${this.URL}/etape`, objetEtapes);
-  }
-  
   public findByNomDiffAndCout(nom?: string, diff?: Difficulte, cout?: Cout, nodiff?: Difficulte, nocout?: Cout): Observable<Array<Recette>>{
     const params = new HttpParams();
     params.append('namelike', nom );

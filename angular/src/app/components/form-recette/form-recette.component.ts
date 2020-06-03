@@ -23,7 +23,6 @@ export class FormRecetteComponent implements OnInit {
   private _typeCtrl: FormControl;
   private _coutCtrl: FormControl;
 
-
   // Etapes Recettes
   private _nbEtapes = 0;
   private _etapes: Array<number> = new Array();
@@ -33,9 +32,6 @@ export class FormRecetteComponent implements OnInit {
   private _nbIngredients = 0;
   private _ingredients: Array<number> = new Array();
   private _ingredientsArray: Array<Ingredient> = new Array<Ingredient>();
-
-
-
 
   constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private recetteService: RecetteService, private router: Router) {
     this.formRecette = fb.group({
@@ -58,7 +54,6 @@ export class FormRecetteComponent implements OnInit {
   }
 
   public save(){
-
     // récupérer toutes les étapes et injecter l'array dans la recette
     for (const etape of this.etapesRecette) {
       const et = 'etapeRecette' + etape.numEtape;
@@ -78,8 +73,6 @@ export class FormRecetteComponent implements OnInit {
       i++;
     }
     this.recette.ingredients = this.ingredientsArray;
-
-    //console.log(this.recette);
 
     this.recetteService.create(this.recette).subscribe(res => {
       //TODO - redirigier vers la page de recette plutot que l'index
@@ -146,6 +139,7 @@ export class FormRecetteComponent implements OnInit {
     console.log(this.ingredientsArray);
 
   }
+
 
   // Getters and setters
   get recette(): Recette {
