@@ -8,18 +8,6 @@
         <div class="col-12 col-sm-6">
           <h6>Bonjour!</h6>
         </div>
-
-        <!-- Top Social Info -->
-        <div class="col-12 col-sm-6">
-          <div class="top-social-info text-right">
-            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -41,72 +29,20 @@
           <!-- Menu -->
           <div class="classy-menu">
 
-            <!-- close btn -->
-            <div class="classycloseIcon">
-              <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-            </div>
-
             <!-- Nav Start -->
-            <div class="classynav">
-              <ul>
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="#">Pages</a>
-                  <ul class="dropdown">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="blog-post.html">Blog Post</a></li>
-                    <li><a href="receipe-post.html">Receipe Post</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="elements.html">Elements</a></li>
-                    <li><a href="#">Dropdown</a>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="#">Mega Menu</a>
-                  <div class="megamenu">
-                    <ul class="single-mega cn-col-4">
-                      <li class="title">Catagory</li>
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="about.html">About Us</a></li>
-                      <li><a href="blog-post.html">Blog Post</a></li>
-                      <li><a href="receipe-post.html">Receipe Post</a></li>
-                      <li><a href="contact.html">Contact</a></li>
-                      <li><a href="elements.html">Elements</a></li>
-                    </ul>
-                    <ul class="single-mega cn-col-4">
-                      <li class="title">Catagory</li>
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="about.html">About Us</a></li>
-                      <li><a href="blog-post.html">Blog Post</a></li>
-                      <li><a href="receipe-post.html">Receipe Post</a></li>
-                      <li><a href="contact.html">Contact</a></li>
-                      <li><a href="elements.html">Elements</a></li>
-                    </ul>
-                    <ul class="single-mega cn-col-4">
-                      <li class="title">Catagory</li>
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="about.html">About Us</a></li>
-                      <li><a href="blog-post.html">Blog Post</a></li>
-                      <li><a href="receipe-post.html">Receipe Post</a></li>
-                      <li><a href="contact.html">Contact</a></li>
-                      <li><a href="elements.html">Elements</a></li>
-                    </ul>
-                    <div class="single-mega cn-col-4">
-                      <div class="receipe-slider owl-carousel">
-                        <a href="#"><img src="assets/delicious/img/bg-img/bg1.jpg" alt=""></a>
-                        <a href="#"><img src="assets/delicious/img/bg-img/bg6.jpg" alt=""></a>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li><a href="receipe-post.html">Receipies</a></li>
-                <li><a href="receipe-post.html">4 Vegans</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a [routerLink]="['/inscription']" routerLinkActive="active">Inscription</a></li>
-                <li><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
-                <li><a>Logout</a></li>
-              </ul>
 
+            <div class="classynav">
+              <ng-container *ngIf="login;else nonConnecte">
+                <ul>
+                  <li><a class="btn btn-link" (click)="logout()">Logout</a></li>
+                </ul>
+              </ng-container>
+              <ng-template #nonConnecte>
+                <ul>
+                  <li><a [routerLink]="['/inscription']" routerLinkActive="active">Inscription</a></li>
+                  <li><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
+                </ul>
+              </ng-template>
               <!-- Newsletter Form -->
               <div class="search-btn">
                 <i class="fa fa-search" aria-hidden="true"></i>
