@@ -1,5 +1,5 @@
 <div class="container">
-  <p>Veuillez remplit l'intégralité des champs de ce formulaire afin d'enregistrer une nouvelle recette.</p>
+  <p>Veuillez remplir l'intégralité des champs de ce formulaire afin d'enregistrer une nouvelle recette.</p>
   <!--  Informations générales-->
   <h6>Informations générales</h6>
   <form (ngSubmit)="save()" [formGroup]="formRecette">
@@ -63,12 +63,14 @@
 
     <div class="form-group">
       <label>Photo principale</label>
-      <div>
-        <input type="file" (change)="onFileChanged($event)" formControlName="image">
-
-        <img [src]="imgURL" height="200" *ngIf="imgURL">
+      <div class="custom-file">
+        <input type="file" accept=".jpg, .jpeg"(change)="onFileChanged($event)" formControlName="image" class="custom-file-input" id="inputGroupFile01">
+        <label class="custom-file-label" for="inputGroupFile01">Choisissez une image au format .jpeg ou .jpg et d'une taille inférieure à 1MB</label>
+        <div *ngIf="!imageCtrl.valid&&imageCtrl.dirty" class="alert alert-danger">
+          Image invalide
+        </div>
       </div>
-
+      <img [src]="imgURL" height="200" class="rounded mx-auto d-block" style="max-height: 500px" *ngIf="imgURL">
     </div>
 
 

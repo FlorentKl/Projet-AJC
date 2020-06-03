@@ -47,7 +47,7 @@ export class FormRecetteComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private recetteService: RecetteService,
     private router: Router,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {
     this.nomCtrl = fb.control('', Validators.required);
     this.typeCtrl = fb.control('', Validators.required);
@@ -94,6 +94,7 @@ export class FormRecetteComponent implements OnInit {
   }
 
   static positive(control: FormControl):{ [key: string]: any; } {
+    console.log(control.value);
     if (Number(control.value) < 0) {
       return {positive: true};
     } else {
@@ -101,11 +102,22 @@ export class FormRecetteComponent implements OnInit {
     }
   }
 
+  static imageType(control: FormControl)  {
+    console.log(control);
+    return null;
+  }
 
 
   public onFileChanged(event) {
     console.log(event);
     this.selectedFile = event.target.files[0];
+
+    //validation du format et de la taille d'image
+    if (event.target.files[0].type != "image/jpeg" || event.target.files[0].size > 1048575){
+      this.imageCtrl.setErrors({ 'invalid': true });
+    } else {
+      this.imageCtrl.setErrors(null);
+    }
 
     // Below part is used to display the selected image
     let reader = new FileReader();
