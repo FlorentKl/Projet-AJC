@@ -1,0 +1,44 @@
+<div>
+    <div *ngIf="erreur" class="alert alert-danger">donnees incorrectes</div>
+    <form (ngSubmit)="inscription()" [formGroup]="formGroup">
+        <div class="form-group">
+            <label>login:</label>
+            <input [(ngModel)]="user.username" class="form-control" formControlName="login" placeholder="Pseudonyme">
+            <div *ngIf="loginCtrl.dirty&&loginCtrl.hasError('required')" class="alert alert-danger">
+                login obligatoire
+            </div>
+            <div *ngIf="loginCtrl.dirty&&loginCtrl.hasError('notAvailable')" class="alert alert-danger">
+                login deja utilisé
+            </div>
+        </div>
+        <div class="form-group">
+            <label>mot de passe:</label>
+            <input [type]="show1 ? 'text' : 'password'" [(ngModel)]="user.password" class="form-control"
+                formControlName="password" placeholder="Mot de passe">
+            <button (click)="password1()">Show</button>
+            <div *ngIf="passwordCtrl.dirty&&passwordCtrl.hasError('required')" class="alert alert-danger">
+                mot de passe obligatoire
+            </div>
+            <div *ngIf="passwordCtrl.dirty&&passwordCtrl.hasError('minlength')" class="alert alert-danger">
+                le mot de passe doit faire au moins 4 caractere
+            </div>
+        </div>
+        <div class="form-group">
+            <label>confirmer votre mot de passe:</label>
+            <input [type]="show2 ? 'text' : 'password'" class="form-control" formControlName="confirme"
+                placeholder="Vérifier le mot de passe">
+            <button (click)="password2()">Show</button>
+            <div *ngIf="confirmeCtrl.dirty&&confirmeCtrl.hasError('required')" class="alert alert-danger">
+                confirmation obligatoire
+            </div>
+            <div *ngIf="confirmeCtrl.dirty&&formGroup.hasError('mustMatch')" class="alert alert-danger">
+                les mots de passe ne sont pas identiques
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-outline-success" [disabled]="formGroup.invalid">enregistrer
+            </button>
+            <a [routerLink]="['/home']" routerLinkActive="active" class="btn btn-outline-warning">annuler</a>
+        </div>
+    </form>
+</div>

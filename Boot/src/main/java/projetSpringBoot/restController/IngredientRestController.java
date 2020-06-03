@@ -95,7 +95,6 @@ public class IngredientRestController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/ingredient/{id}").buildAndExpand(ingredient.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
-        // return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping(value = { "", "/" })
