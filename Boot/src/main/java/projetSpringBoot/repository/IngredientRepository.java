@@ -10,7 +10,7 @@ import projetSpringBoot.model.Ingredients.Ingredient;
 public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
     Optional<Ingredient> findById(Integer id);
 
-    List<Ingredient> findByNom(String nom);
+    Optional<Ingredient> findByNom(String nom);
 
     List<Ingredient> findByNomLike(String nom);
 

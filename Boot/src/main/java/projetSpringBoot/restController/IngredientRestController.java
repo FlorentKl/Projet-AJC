@@ -19,12 +19,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.Ingredients.AssociationIngredientRecette;
+import projetSpringBoot.model.Ingredients.AssociationIngredientRecetteKey;
 import projetSpringBoot.model.Ingredients.Ingredient;
+import projetSpringBoot.model.Ingredients.Unite;
+import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.model.views.Views;
+import projetSpringBoot.service.AssociationIngredientRecetteService;
 import projetSpringBoot.service.IngredientService;
+import projetSpringBoot.service.recette.RecetteService;
 
 @RestController
 @RequestMapping("/rest/ingredient")
@@ -32,6 +39,12 @@ import projetSpringBoot.service.IngredientService;
 public class IngredientRestController {
     @Autowired
     IngredientService ingredientService;
+
+    @Autowired
+    AssociationIngredientRecetteService airService;
+
+    @Autowired
+    RecetteService recetteService;
 
     @JsonView(value = { Views.IngredientView.class })
     @GetMapping(value = { "", "/" })
@@ -48,6 +61,40 @@ public class IngredientRestController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/assoc")
+    public ResponseEntity<Void> assocIngreRecette(@RequestBody Ingredient ingr, BindingResult br,
+            @RequestParam(name = "idr", required = false) Integer idRecette,
+            @RequestParam(required = false) Integer quantite, @RequestParam(required = false) Unite unite,
+            UriComponentsBuilder uCB) {
+        if (br.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<Ingredient> optIngr = ingredientService.findByNom(ingr.getNom());
+
+        Ingredient ingredient;
+        if (optIngr.isPresent()) {
+            ingredient = optIngr.get();
+        } else {
+            ingredient = ingredientService.insert(ingr);
+        }
+
+        Optional<Recette> optRecette = recetteService.findById(idRecette);
+        if (!optRecette.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        AssociationIngredientRecette assoc = new AssociationIngredientRecette();
+        assoc.setQuantite(quantite);
+        assoc.setUnite(unite);
+        assoc.setId(new AssociationIngredientRecetteKey(optRecette.get(), ingredient));
+
+        assoc = airService.insert(assoc);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(uCB.path("/rest/ingredient/{id}").buildAndExpand(ingredient.getId()).toUri());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PostMapping(value = { "", "/" })

@@ -1,12 +1,10 @@
 package projetSpringBoot.model;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +21,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonView;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Recette;
@@ -70,18 +65,15 @@ public class Utilisateur {
     private ImageModel imageProfil;
 
     @JsonView(value = { Views.UtilisateurView.class })
-    @OneToMany(mappedBy = "auteur", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Recette> recette;
+    @OneToMany(mappedBy = "auteur")
+    private Set<Recette> recette;
 
     @JsonView(value = { Views.UtilisateurView.class })
-    @OneToMany(mappedBy = "id.auteur", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Commentaire> commentaires;
+    @OneToMany(mappedBy = "id.auteur")
+    private Set<Commentaire> commentaires;
 
     @JsonView(value = { Views.UtilisateurView.class })
-    @OneToMany(mappedBy = "utilisateur", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "utilisateur")
     private Set<UtilisateurRole> roles;
 
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
@@ -152,19 +144,19 @@ public class Utilisateur {
         this.imageProfil = imageProfil;
     }
 
-    public List<Recette> getRecette() {
+    public Set<Recette> getRecette() {
         return recette;
     }
 
-    public void setRecette(List<Recette> recette) {
+    public void setRecette(Set<Recette> recette) {
         this.recette = recette;
     }
 
-    public List<Commentaire> getCommentaires() {
+    public Set<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(List<Commentaire> commentaires) {
+    public void setCommentaires(Set<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
 

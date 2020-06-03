@@ -9,7 +9,7 @@
         <div class="single-small-receipe-area d-flex">
           <!-- Receipe Thumb -->
           <div class="receipe-thumb">
-            <img  [src]="['data:image/jpeg;base64,'+ b.picture.image]" alt="">
+            <img [src]="['data:image/jpeg;base64,'+ b.picture.image]" alt="">
           </div>
           <!-- Receipe Content -->
           <div class="receipe-content">
@@ -17,7 +17,7 @@
             <a [routerLink]="['/recettes', b.id]" routerLinkActive="active">
               <h5>{{b.nom}}</h5>
             </a>
-            <p>{{b.couts}}</p>
+            <p>{{b.cout}}</p>
             <p>{{b.difficulte}}</p>
             <p>{{b.auteur}}</p>
           </div>

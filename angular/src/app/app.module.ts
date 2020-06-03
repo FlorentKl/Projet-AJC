@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { MilestonesComponent } from './components/milestones/milestones.component';
@@ -18,10 +18,11 @@ import { IndexComponent } from './components/index/index.component';
 import { FormRecetteComponent } from './components/form-recette/form-recette.component';
 import { FormEtapeRecetteComponent } from './components/form-etape-recette/form-etape-recette.component';
 import { FormIngredientRecetteComponent } from './components/form-ingredient-recette/form-ingredient-recette.component';
-import {BoissonComponent} from './components/boisson/boisson.component';
-import {EntreeComponent} from './components/entree/entree.component';
-import {PlatComponent} from './components/plat/plat.component';
-import {DessertComponent} from './components/dessert/dessert.component';
+import { BoissonComponent } from './components/boisson/boisson.component';
+import { EntreeComponent } from './components/entree/entree.component';
+import { PlatComponent } from './components/plat/plat.component';
+import { DessertComponent } from './components/dessert/dessert.component';
+import { UserModule } from 'src/app/user/user.module';
 
 @NgModule({
   declarations: [
@@ -41,12 +42,17 @@ import {DessertComponent} from './components/dessert/dessert.component';
     BoissonComponent,
     EntreeComponent,
     PlatComponent,
-    DessertComponent
+    DessertComponent,
   ],
   imports: [
-    BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule, ReactiveFormsModule
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    ReactiveFormsModule,
+    UserModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,7 @@
 package projetSpringBoot.restController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -48,8 +50,12 @@ public class InscriptionRestController {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+
 		utilisateur.setEnabled(true);
 		utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
+		utilisateur.setDateInscription(now);
 		utilisateurService.insert(utilisateur);
 
 		UtilisateurRole role = new UtilisateurRole();
@@ -60,7 +66,7 @@ public class InscriptionRestController {
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{pseudo}")
+	@GetMapping("/check/{pseudo}")
 	public ResponseEntity<Boolean> loginDispo(@PathVariable("pseudo") String pseudo) {
 		Optional<Utilisateur> opt = utilisateurService.findByPseudo(pseudo);
 		if (opt.isPresent()) {

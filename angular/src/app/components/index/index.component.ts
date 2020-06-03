@@ -1,15 +1,19 @@
+
 import {Component, OnInit} from '@angular/core';
 import {Recette} from '../../model/recette';
 import {Difficulte} from '../../model/difficulte.enum';
 import {RecetteService} from '../../services/recette.service';
 
+
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
   private _recettes: Recette[];
+
   private _recettesBis: Recette[];
 
 
@@ -19,8 +23,8 @@ export class IndexComponent implements OnInit {
     this.initRecettes();
     this.initRecettesFaciles();
   }
-  private initRecettes(){
-    this.recetteService.findAll().subscribe( res => {
+  private initRecettes() {
+    this.recetteService.findAll().subscribe((res) => {
       this._recettes = res;
     });
   }

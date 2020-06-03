@@ -18,6 +18,7 @@ public class EtapeRecetteServiceImpl implements EtapeRecetteService {
 
 	@Override
 	public EtapeRecette insert(EtapeRecette etapeRecette) {
+		System.out.println(etapeRecette.getTexte());
 		if (etapeRecette.getTexte().isEmpty()) {
 			return etapeRecette;
 		}
