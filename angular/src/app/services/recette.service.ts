@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {forkJoin, ObjectUnsubscribedError, Observable, Subscription} from 'rxjs';
 import {Recette} from '../model/recette';
+import {debounceTime, map, mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -35,13 +36,73 @@ export class RecetteService {
       'difficulte': recette.difficulte,
       'cout': recette.cout
     };
+
+    let recetteNew: Recette = new Recette();
     let type: string = recette.type.toString().toLowerCase();
-    console.log(o);
+    return this.httpClient.post(`${this.URL}/${type}`, o).pipe(mergeMap(res => {
+      recetteNew = res as Recette;
+      id = recetteNew.id;
+      console.log('PARTIE create Etapes');
+
+      let etapes = recette.etapes;
+      let objetEtapes = [];
+      for (let etape of etapes) {
+        objetEtapes.push(
+          {
+            'texte': etape.texte,
+            'numEtape': etape.numEtape,
+            'id_recette': {
+              'id': id,
+              'type': recette.type
+            }
+          });
+      }
+      let createEtapes = this.httpClient.post(`${this.URL}/etape`, objetEtapes);
+      return forkJoin([createEtapes]);
+
+      // let createIngredients = this.httpClient.post(url, OBJET);
+      // return forkJoin([createEtapes, createIngredients]);
+
+      })
+    );
+  }
+
+
+
+  public createa(recette: Recette): Observable<any> {
+    let id: number;
+    const o: object = {
+      'nom': recette.nom,
+      'type': recette.type,
+      'nbPersonne': recette.nbPersonne,
+      'temps': recette.temps,
+      'difficulte': recette.difficulte,
+      'cout': recette.cout
+    };
+
+    let recetteNew;
+    let type: string = recette.type.toString().toLowerCase();
     this.httpClient.post(`${this.URL}/${type}`, o).subscribe(res => {
-      console.log(res);
+      recetteNew = res as Recette;
+      id = recetteNew.id;
+      console.log("1");
+      console.log(recetteNew);
     });
 
-    return null;
+    console.log("2");
+    console.log(recetteNew);
+
+    let etapes = recette.etapes;
+    let objetEtapes = [];
+    for (let etape of etapes) {
+      objetEtapes.push(
+        {
+          'texte': etape.texte,
+          'numEtape': etape.numEtape,
+          'id_recette': recetteNew
+        });
+    }
+    return this.httpClient.post(`${this.URL}/etape`, objetEtapes);
   }
 
 

@@ -153,6 +153,7 @@ public class PlatRestController {
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
+    	
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

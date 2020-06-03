@@ -79,7 +79,7 @@ export class FormRecetteComponent implements OnInit {
     }
     this.recette.ingredients = this.ingredientsArray;
 
-    console.log(this.recette);
+    //console.log(this.recette);
 
     this.recetteService.create(this.recette).subscribe(res => {
       //TODO - redirigier vers la page de recette plutot que l'index
