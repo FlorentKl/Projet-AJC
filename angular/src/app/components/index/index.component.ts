@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recette } from '../../model/recette';
 import { Difficulte } from '../../model/difficulte.enum';
 import { RecetteService } from '../../services/recette.service';
-import {Cout} from '../../model/cout.enum';
+import { Cout } from '../../model/cout.enum';
 
 @Component({
   selector: 'app-index',
@@ -11,6 +11,7 @@ import {Cout} from '../../model/cout.enum';
 })
 export class IndexComponent implements OnInit {
   private _recettes: Recette[];
+  private _bestRecettes;
 
   private _recettesBis: Recette[];
 
@@ -27,6 +28,9 @@ export class IndexComponent implements OnInit {
         recette.difficulte = 'Difficulte : ' + Difficulte[recette.difficulte];
         recette.cout = 'Cout : ' + Cout[recette.cout];
       }
+    });
+    this.recetteService.findBest().subscribe((res) => {
+      this.bestRecettes = res;
     });
   }
 
@@ -57,5 +61,13 @@ export class IndexComponent implements OnInit {
 
   set recettesBis(value: Recette[]) {
     this._recettesBis = value;
+  }
+
+  public get bestRecettes(): Recette[] {
+    return this._bestRecettes;
+  }
+
+  public set bestRecettes(v: Recette[]) {
+    this._bestRecettes = v;
   }
 }

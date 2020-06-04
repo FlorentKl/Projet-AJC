@@ -27,6 +27,13 @@ export class RecetteService {
     return this.httpClient.get(`${this.URL}/recette/nom/${nom}`);
   }
 
+  public findBest(): Observable<Array<Recette>> {
+    let note: number = 5;
+    let params = new HttpParams().set('note', note.toString());
+    return this.httpClient.get<Array<Recette>>(`${this.URL}/recette/search`, {
+      params: params,
+    });
+  }
   public findAll(): Observable<Array<Recette>> {
     return this.httpClient.get<Array<Recette>>(`${this.URL}/recette/all`);
   }
