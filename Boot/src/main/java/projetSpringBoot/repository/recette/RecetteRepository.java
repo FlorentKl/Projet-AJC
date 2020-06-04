@@ -17,10 +17,13 @@ import projetSpringBoot.model.tag.Tag;
 
 public interface RecetteRepository<T extends Recette> extends JpaRepository<T, Integer> {
 
+    @Transactional
     Optional<T> findById(Integer id);
 
+    @Transactional
     List<T> findAll();
 
+    @Transactional
     Optional<T> findByNom(String nom);
 
     @Transactional

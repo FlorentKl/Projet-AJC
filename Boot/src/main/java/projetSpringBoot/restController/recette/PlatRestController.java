@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Plat;
 import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.ImageService;
+import projetSpringBoot.service.UtilisateurService;
 import projetSpringBoot.service.recette.PlatService;
 
 @RestController
@@ -41,6 +44,9 @@ public class PlatRestController {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    UtilisateurService utilisateurService;
     /*
      * Get Mapping
      */
@@ -173,19 +179,29 @@ public class PlatRestController {
      * Post Mapping
      */
 
+    @JsonView(Views.RecetteWithAll.class)
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br,
+            @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        // Cherche utilisateur et ajoute comme auteur si présent
+        Optional<Utilisateur> optUser = utilisateurService.findByPseudo(auteur);
+        if (optUser.isPresent()) {
+            plat.setAuteur(optUser.get());
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Optional<ImageModel> optImg = imageService.findById(plat.getImgRecette().getId());
         if (optImg.isPresent()) {
             plat.setImgRecette(optImg.get());
         }
-        Plat platNew = platService.insert(plat);
+        plat = platService.insert(plat);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/plat/{id}").buildAndExpand(plat.getId()).toUri());
-        return new ResponseEntity<>(platNew, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(plat, headers, HttpStatus.CREATED);
     }
 
     /*

@@ -24,12 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Entree;
 import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.ImageService;
+import projetSpringBoot.service.UtilisateurService;
 import projetSpringBoot.service.recette.EntreeService;
 
 @RestController
@@ -41,6 +43,10 @@ public class EntreeRestController {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    UtilisateurService utilisateurService;
+
     /*
      * Get Mapping
      */
@@ -172,19 +178,30 @@ public class EntreeRestController {
      * Post Mapping
      */
 
+    @JsonView(Views.RecetteWithAll.class)
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Entree> addEntree(@RequestBody Entree entree, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Entree> addEntree(@RequestBody Entree entree, BindingResult br,
+            @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        // Cherche utilisateur et ajoute comme auteur si présent
+        Optional<Utilisateur> optUser = utilisateurService.findByPseudo(auteur);
+        if (optUser.isPresent()) {
+            entree.setAuteur(optUser.get());
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Optional<ImageModel> optImg = imageService.findById(entree.getImgRecette().getId());
         if (optImg.isPresent()) {
             entree.setImgRecette(optImg.get());
         }
-        Entree entreeNew = entreeService.insert(entree);
+        entree = entreeService.insert(entree);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/entree/{id}").buildAndExpand(entree.getId()).toUri());
-        return new ResponseEntity<>(entreeNew, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(entree, headers, HttpStatus.CREATED);
     }
 
     /*
