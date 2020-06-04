@@ -8,6 +8,7 @@ import { Unite } from '../../model/unite.enum';
 import { EtapeRecette } from '../../model/etape-recette';
 import { CommentaireService } from 'src/app/services/commentaire.service';
 import { Commentaire } from 'src/app/model/commentaire';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-recipe',
@@ -24,17 +25,29 @@ export class RecipeComponent implements OnInit {
   private _newCommentaire: Commentaire;
   private _newCommentaireAuteur: string;
 
+  private _formCommentaire: FormGroup;
+  private _noteCtrl: FormControl;
+  private _texteCtrl: FormControl;
+
   constructor(
+    private fb : FormBuilder,
     private activatedRoute: ActivatedRoute,
     private recetteService: RecetteService,
     private commService: CommentaireService,
     private router: Router
-  ) {}
+  ) {
+    this._noteCtrl = fb.control('', Validators.required);
+    this._texteCtrl = fb.control('', Validators.required);
+    this._formCommentaire = fb.group({
+      note: this._noteCtrl ,
+      texte: this._texteCtrl
+    });
+  }
 
   ngOnInit(): void {
     this.initRecette();
     this.newCommentaire = new Commentaire();
-    this.newCommentaire.note = 3;
+    this.newCommentaire.note = 0;
     this.commService.finAllFromRecette(this.id).subscribe(
       (res) => {
         this.commentaires = res;
@@ -60,6 +73,7 @@ export class RecipeComponent implements OnInit {
           data.etapes.sort(function (a, b) {
             return a.numEtape - b.numEtape;
           });
+          console.log(this.recette.commentaires);
         });
       }
     });
@@ -78,6 +92,10 @@ export class RecipeComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  public disable(): boolean {
+    return !this.formCommentaire.valid||!this.noteCtrl.dirty;
   }
 
   public get login() {
@@ -146,5 +164,30 @@ export class RecipeComponent implements OnInit {
 
   public set commentaires(v: any) {
     this._commentaires = v;
+  }
+
+
+  get formCommentaire(): FormGroup {
+    return this._formCommentaire;
+  }
+
+  set formCommentaire(value: FormGroup) {
+    this._formCommentaire = value;
+  }
+
+  get noteCtrl(): FormControl {
+    return this._noteCtrl;
+  }
+
+  set noteCtrl(value: FormControl) {
+    this._noteCtrl = value;
+  }
+
+  get texteCtrl(): FormControl {
+    return this._texteCtrl;
+  }
+
+  set texteCtrl(value: FormControl) {
+    this._texteCtrl = value;
   }
 }
