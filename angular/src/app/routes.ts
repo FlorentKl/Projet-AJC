@@ -5,7 +5,6 @@ import { RecipeCardComponent } from './components/recipe-card/recipe-card.compon
 import { FormRecetteComponent } from './components/form-recette/form-recette.component';
 import { FormIngredientRecetteComponent } from './components/form-ingredient-recette/form-ingredient-recette.component';
 import { FormEtapeRecetteComponent } from './components/form-etape-recette/form-etape-recette.component';
-import { ImagesComponent } from './images/images.component';
 import { BoissonComponent } from './components/boisson/boisson.component';
 import { EntreeComponent } from './components/entree/entree.component';
 import { PlatComponent } from './components/plat/plat.component';
@@ -16,7 +15,6 @@ import { ListeRecetteComponent } from 'src/app/components/liste-recette/liste-re
 export const routes: Routes = [
   { path: 'index', component: IndexComponent },
   { path: '', redirectTo: 'index', pathMatch: 'full' },
-  { path: 'images', component: ImagesComponent },
   { path: 'recettes/:id', component: RecipeCardComponent },
   { path: 'boissons', component: BoissonComponent },
   { path: 'entrees', component: EntreeComponent },
