@@ -74,8 +74,6 @@ export class RecetteService {
               mergeMap((res) => {
                 recetteNew = res as Recette;
                 id = recetteNew.id;
-                console.log('PARTIE create Etapes');
-                console.log(res);
 
                 let etapes = recette.etapes;
                 let objetEtapes = [];
@@ -107,6 +105,7 @@ export class RecetteService {
                     ing.quantite.toString()
                   );
                   parametres = parametres.append('unite', ing.unite);
+
                   let createIngredient = this.httpClient.post(
                     `${this.URL}/ingredient/assoc`,
                     objetIng,
@@ -114,7 +113,8 @@ export class RecetteService {
                   );
                   tableau.push(createIngredient);
                 }
-                return [res, forkJoin(tableau)];
+
+                return forkJoin(tableau);
               })
             );
         })
