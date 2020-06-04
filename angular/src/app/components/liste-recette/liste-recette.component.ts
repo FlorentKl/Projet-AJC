@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Recette } from 'src/app/model/recette';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {Difficulte} from '../../model/difficulte.enum';
-import {Cout} from '../../model/cout.enum';
+import { Difficulte } from '../../model/difficulte.enum';
+import { Cout } from '../../model/cout.enum';
 
 @Component({
   selector: 'app-liste-recette',
@@ -14,15 +14,14 @@ export class ListeRecetteComponent implements OnInit {
   private _recettes: Recette[];
 
   private _namelike: string = '';
-  private _note: number = null;
-  private _type: any = '';
+  private _note: Number = new Number();
+  private _type: any = 'recette';
   private _difficulte: any = '';
-  private _cout: any='';
+  private _cout: any = '';
   private _nodifficulte: any = '';
   private _nocout: any = '';
 
-
-  private _searchUrl = 'http://localhost:8080/web/rest/recette/search';
+  private _searchUrl = 'http://localhost:8080/web/rest';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,49 +34,52 @@ export class ListeRecetteComponent implements OnInit {
 
   private initListe() {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (params.namelike){
+      if (params.namelike) {
         this.namelike = params.namelike;
       }
-      if (params.note){
+      if (params.note) {
         this.note = params.note;
       }
-      if (params.type){
+      if (params.type) {
         this.type = params.type;
       }
-      if (params.difficulte){
+      if (params.difficulte) {
         this.difficulte = params.difficulte;
       }
-      if (params.cout){
+      if (params.cout) {
         this.cout = params.cout;
       }
-      if (params.nodifficulte){
+      if (params.nodifficulte) {
         this.nodifficulte = params.nodifficulte;
       }
-      if (params.nocout){
+      if (params.nocout) {
         this.nocout = params.nocout;
       }
+      console.log(this.type);
       const paramsget = new HttpParams()
         .set('namelike', this._namelike)
         .set('note', this._note.toString())
-        .set('type', this._type)
         .set('difficulte', this._difficulte)
         .set('cout', this._cout)
         .set('nodifficulte', this._nodifficulte)
         .set('nocout', this._nocout);
 
-      this.httpClient.get(this._searchUrl, { params: paramsget}).subscribe(
-        (res) => {
-          console.log(res);
-          this.recettes = res as Recette[];
-          for (const recette of this.recettes) {
-            recette.difficulte = 'Difficulte : ' + Difficulte[recette.difficulte];
-            recette.cout = 'Cout : ' + Cout[recette.cout];
+      this.httpClient
+        .get(`${this._searchUrl}/${this.type}/search`, { params: paramsget })
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.recettes = res as Recette[];
+            for (const recette of this.recettes) {
+              recette.difficulte =
+                'Difficulte : ' + Difficulte[recette.difficulte];
+              recette.cout = 'Cout : ' + Cout[recette.cout];
+            }
+          },
+          (err) => {
+            console.log(err);
           }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        );
     });
   }
 
@@ -97,11 +99,11 @@ export class ListeRecetteComponent implements OnInit {
     this._namelike = value;
   }
 
-  get note(): number {
+  get note(): Number {
     return this._note;
   }
 
-  set note(value: number) {
+  set note(value: Number) {
     this._note = value;
   }
 

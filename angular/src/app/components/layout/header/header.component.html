@@ -35,7 +35,7 @@
               <ng-container *ngIf="login;else nonConnecte">
                 <ul>
                   <li><a [routerLink]="['/index']" routerLinkActive="active">Home</a></li>
-                  <li><a [routerLink]="['/recette']" routerLinkActive="active">Recettes</a></li>
+                  <li><a [routerLink]="['/recherche']" routerLinkActive="active">Recherche</a></li>
                   <li><a [routerLink]="['/recette/edit']" routerLinkActive="active">Nouvelle Recette</a></li>
                   <li><a class="btn btn-link" (click)="logout()">Logout</a></li>
                 </ul>
@@ -43,7 +43,7 @@
               <ng-template #nonConnecte>
                 <ul>
                   <li><a [routerLink]="['/index']" routerLinkActive="active">Home</a></li>
-                  <li><a [routerLink]="['/recette']" routerLinkActive="active">Recettes</a></li>
+                  <li><a [routerLink]="['/recherche']" routerLinkActive="active">Recherche</a></li>
                   <li><a [routerLink]="['/inscription']" routerLinkActive="active">Inscription</a></li>
                   <li><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
                 </ul>

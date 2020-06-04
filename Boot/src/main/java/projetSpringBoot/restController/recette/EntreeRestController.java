@@ -108,43 +108,53 @@ public class EntreeRestController {
 
         List<Entree> listeFinale = new ArrayList<Entree>();
         Boolean premiereListe = true;
+        Boolean paramAbsent = true;
         if (namelike != null && premiereListe) {
             listeFinale = filterNameLike(listeFinale, namelike);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
+            paramAbsent = false;
         }
         if (diff != null && premiereListe) {
             listeFinale = filterDiff(listeFinale, diff);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
+            paramAbsent = false;
         }
         if (nodiff != null && premiereListe) {
             listeFinale = filterDiffNot(listeFinale, nodiff);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
+            paramAbsent = false;
         }
         if (cout != null && premiereListe) {
             listeFinale = filterCout(listeFinale, cout);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
+            paramAbsent = false;
         }
         if (nocout != null && premiereListe) {
             listeFinale = filterCoutNot(listeFinale, nocout);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
+            paramAbsent = false;
         }
         if (note != null && premiereListe) {
             listeFinale = filterNote(listeFinale, note);
             if (listeFinale.isEmpty()) {
                 premiereListe = false;
             }
+            paramAbsent = false;
         }
 
+        if (paramAbsent) {
+            return new ResponseEntity<>(entreeService.findAll(), HttpStatus.OK);
+        }
         return new ResponseEntity<>(listeFinale, HttpStatus.OK);
     }
 
