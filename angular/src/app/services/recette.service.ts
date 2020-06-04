@@ -128,6 +128,10 @@ export class RecetteService {
       );
   }
 
+  public delete(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.URL}/recette/id/${id}`);
+  }
+
   public findByNomDiffAndCout(
     nom?: string,
     diff?: Difficulte,

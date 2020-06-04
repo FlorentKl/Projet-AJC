@@ -25,6 +25,7 @@ import { DessertComponent } from './components/dessert/dessert.component';
 import { UserModule } from 'src/app/user/user.module';
 import { RechercheComponent } from './components/recherche/recherche.component';
 import { ListeRecetteComponent } from './components/liste-recette/liste-recette.component';
+import { MesrecettesComponent } from './components/mesrecettes/mesrecettes.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ListeRecetteComponent } from './components/liste-recette/liste-recette.
     DessertComponent,
     RechercheComponent,
     ListeRecetteComponent,
+    MesrecettesComponent,
   ],
   imports: [
     BrowserModule,

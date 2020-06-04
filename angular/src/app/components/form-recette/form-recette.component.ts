@@ -162,9 +162,9 @@ export class FormRecetteComponent implements OnInit {
       .subscribe((res) => {
         console.log('ressss : ');
         console.log(res.id);
-        if (res.id != undefined) {
-          this.router.navigate(['/recette/view/', res.id]);
-        }
+
+          this.router.navigate(['mesrecettes']);
+
       });
   }
 

@@ -11,6 +11,7 @@ import { PlatComponent } from './components/plat/plat.component';
 import { DessertComponent } from './components/dessert/dessert.component';
 import { RechercheComponent } from './components/recherche/recherche.component';
 import { ListeRecetteComponent } from 'src/app/components/liste-recette/liste-recette.component';
+import {MesrecettesComponent} from './components/mesrecettes/mesrecettes.component';
 
 export const routes: Routes = [
   { path: 'index', component: IndexComponent },
@@ -23,4 +24,5 @@ export const routes: Routes = [
   { path: 'recette/edit', component: FormRecetteComponent },
   { path: 'recherche', component: RechercheComponent },
   { path: 'liste', component: ListeRecetteComponent },
+  { path: 'mesrecettes', component : MesrecettesComponent}
 ];
