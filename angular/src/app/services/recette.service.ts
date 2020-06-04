@@ -61,6 +61,7 @@ export class RecetteService {
               'temps': recette.temps,
               'difficulte': recette.difficulte,
               'cout': recette.cout,
+              'dateCreation': recette.dateCreation,
               'picture': {
                 'id': imgNew.id
               }

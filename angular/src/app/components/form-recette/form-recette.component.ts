@@ -142,7 +142,7 @@ export class FormRecetteComponent implements OnInit {
     }
     this.recette.ingredients = this.ingredientsArray;
 
-    
+    this.recette.dateCreation = new Date();
 
     console.log('onUpload pressé');
     console.log(this.selectedFile);
