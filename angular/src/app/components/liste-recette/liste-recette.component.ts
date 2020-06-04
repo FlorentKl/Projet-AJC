@@ -34,38 +34,42 @@ export class ListeRecetteComponent implements OnInit {
 
   private initListe() {
     this.activatedRoute.queryParams.subscribe((params) => {
+      let paramsget = new HttpParams();
       if (params.namelike) {
         this.namelike = params.namelike;
+        paramsget = paramsget.set('namelike', this._namelike);
+        console.log(this.namelike);
       }
       if (params.note) {
         this.note = params.note;
+        paramsget = paramsget.set('note', this._note.toString());
       }
-      if (params.type) {
-        this.type = params.type;
-      }
+
       if (params.difficulte) {
         this.difficulte = params.difficulte;
+        paramsget = paramsget.set('difficulte', this._difficulte);
       }
       if (params.cout) {
         this.cout = params.cout;
+        paramsget = paramsget.set('cout', this._cout);
       }
       if (params.nodifficulte) {
         this.nodifficulte = params.nodifficulte;
+        paramsget = paramsget.set('nodifficulte', this._nodifficulte);
       }
       if (params.nocout) {
         this.nocout = params.nocout;
+        paramsget = paramsget.set('nocout', this._nocout);
       }
-      console.log(this.type);
-      const paramsget = new HttpParams()
-        .set('namelike', this._namelike)
-        .set('note', this._note.toString())
-        .set('difficulte', this._difficulte)
-        .set('cout', this._cout)
-        .set('nodifficulte', this._nodifficulte)
-        .set('nocout', this._nocout);
 
+      if (params.type) {
+        this.type = params.type;
+      }
+
+      console.log(paramsget.get('namelike'));
       this.httpClient
         .get(`${this._searchUrl}/${this.type}/search`, { params: paramsget })
+        // .get(this.searchUrl + '/recette/all')
         .subscribe(
           (res) => {
             console.log(res);
