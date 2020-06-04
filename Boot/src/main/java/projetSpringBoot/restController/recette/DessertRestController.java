@@ -179,6 +179,7 @@ public class DessertRestController {
      * Post Mapping
      */
 
+    @JsonView(Views.RecetteWithAll.class)
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Dessert> addDessert(@RequestBody Dessert dessert, BindingResult br,
             @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
@@ -197,10 +198,10 @@ public class DessertRestController {
         if (optImg.isPresent()) {
             dessert.setImgRecette(optImg.get());
         }
-        Dessert dessertNew = dessertService.insert(dessert);
+        dessert = dessertService.insert(dessert);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/dessert/{id}").buildAndExpand(dessert.getId()).toUri());
-        return new ResponseEntity<>(dessertNew, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(dessert, headers, HttpStatus.CREATED);
     }
 
     /*

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -178,6 +179,7 @@ public class PlatRestController {
      * Post Mapping
      */
 
+    @JsonView(Views.RecetteWithAll.class)
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br,
             @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
@@ -196,10 +198,10 @@ public class PlatRestController {
         if (optImg.isPresent()) {
             plat.setImgRecette(optImg.get());
         }
-        Plat platNew = platService.insert(plat);
+        plat = platService.insert(plat);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/plat/{id}").buildAndExpand(plat.getId()).toUri());
-        return new ResponseEntity<>(platNew, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(plat, headers, HttpStatus.CREATED);
     }
 
     /*

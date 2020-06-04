@@ -178,6 +178,7 @@ public class EntreeRestController {
      * Post Mapping
      */
 
+    @JsonView(Views.RecetteWithAll.class)
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Entree> addEntree(@RequestBody Entree entree, BindingResult br,
             @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
@@ -197,10 +198,10 @@ public class EntreeRestController {
         if (optImg.isPresent()) {
             entree.setImgRecette(optImg.get());
         }
-        Entree entreeNew = entreeService.insert(entree);
+        entree = entreeService.insert(entree);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/entree/{id}").buildAndExpand(entree.getId()).toUri());
-        return new ResponseEntity<>(entreeNew, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(entree, headers, HttpStatus.CREATED);
     }
 
     /*

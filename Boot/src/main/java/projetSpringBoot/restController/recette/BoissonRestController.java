@@ -179,6 +179,7 @@ public class BoissonRestController {
      * Post Mapping
      */
 
+    @JsonView(Views.RecetteWithAll.class)
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Boisson> addBoisson(@RequestBody Boisson boisson, BindingResult br,
             @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
@@ -198,10 +199,10 @@ public class BoissonRestController {
         if (optImg.isPresent()) {
             boisson.setImgRecette(optImg.get());
         }
-        Boisson boissonNew = boissonService.insert(boisson);
+        boisson = boissonService.insert(boisson);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uCB.path("/rest/boisson/{id}").buildAndExpand(boisson.getId()).toUri());
-        return new ResponseEntity<>(boissonNew, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(boisson, headers, HttpStatus.CREATED);
     }
 
     /*

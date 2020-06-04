@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import projetSpringBoot.model.Utilisateur;
 
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer> {
+	@Transactional
 	Optional<Utilisateur> findById(Integer id);
 
 	@Transactional
