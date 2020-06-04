@@ -12,7 +12,7 @@
                     <!-- Receipe Content -->
                     <div class="receipe-content">
                         <span>{{r.dateCreation|date:'dd/MM/yyyy'}}</span>
-                        <a [routerLink]="['/recettes', r.id]" routerLinkActive="active">
+                        <a [routerLink]="['/recette', r.id]" routerLinkActive="active">
                             <h5>{{r.nom}}</h5>
                         </a>
                         <p>{{r.cout}}</p>

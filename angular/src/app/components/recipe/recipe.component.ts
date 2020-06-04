@@ -28,7 +28,7 @@ export class RecipeComponent implements OnInit {
 
   private initRecette(){
     this.erreur = false;
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       if (params.id) {
         this._id = params.id;
         this.recetteService.findById(this._id).subscribe(data => {
