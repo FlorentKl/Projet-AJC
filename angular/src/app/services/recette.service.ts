@@ -55,13 +55,16 @@ export class RecetteService {
               'temps': recette.temps,
               'difficulte': recette.difficulte,
               'cout': recette.cout,
+              'dateCreation': recette.dateCreation,
               'picture': {
                 'id': imgNew.id
               }
             };
+          let parametres = new HttpParams();
+          parametres = parametres.append('login', sessionStorage.getItem('login'));
           let recetteNew: Recette = new Recette();
           let type: string = recette.type.toString().toLowerCase();
-          return this.httpClient.post(`${this.URL}/${type}`, o).pipe(
+          return this.httpClient.post(`${this.URL}/${type}`, o, { params: parametres }).pipe(
             mergeMap((res) => {
               recetteNew = res as Recette;
               id = recetteNew.id;

@@ -142,16 +142,16 @@ export class FormRecetteComponent implements OnInit {
     }
     this.recette.ingredients = this.ingredientsArray;
 
+    this.recette.dateCreation = new Date();
+
     console.log('onUpload pressé');
     console.log(this.selectedFile);
 
     this.recetteService
       .create(this.recette, this.selectedFile)
       .subscribe((res) => {
-        console.log('res');
-        console.log(res);
         //TODO - redirigier vers la page de recette plutot que l'index
-        //this.router.navigate(['index']);
+        this.router.navigate(['index']);
       });
   }
 
