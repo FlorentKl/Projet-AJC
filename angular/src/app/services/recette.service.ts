@@ -24,13 +24,10 @@ export class RecetteService {
   constructor(private httpClient: HttpClient) {}
 
   public checkNom(nom: string): Observable<any> {
-    console.log(nom);
     return this.httpClient.get(`${this.URL}/recette/nom/${nom}`);
   }
 
   public findAll(): Observable<Array<Recette>> {
-    console.log('hello');
-    console.log(this.httpClient.get<Array<Recette>>(this.URL));
     return this.httpClient.get<Array<Recette>>(`${this.URL}/recette/all`);
   }
 
@@ -41,11 +38,8 @@ export class RecetteService {
   public create(recette: Recette, img: any): Observable<any> {
     let id: number;
     const uploadData = new FormData();
-    console.log('img');
-    console.log(img);
 
-      uploadData.append('image', img, img.name);
-
+    uploadData.append('image', img, img.name);
 
     return this.httpClient
       .post('http://localhost:8080/web/rest/image/upload', uploadData)

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import projetSpringBoot.model.Commentaire;
 import projetSpringBoot.model.CommentaireKey;
+import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.repository.CommentaireRepository;
 
 @Service
@@ -61,4 +62,10 @@ public class CommentaireServiceImpl implements CommentaireService {
 		return commentaireRepository.findById(id);
 
 	}
+
+	@Override
+	public List<Commentaire> findByRecette(Integer id) {
+		return commentaireRepository.findByRecette(id);
+	}
+
 }

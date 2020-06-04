@@ -24,6 +24,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	protected void configure(HttpSecurity http) throws Exception {
 
 		// @formatter:off
+
 		http
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
@@ -31,11 +32,21 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 			.and()
 			.csrf().disable()
 			.authorizeRequests().anyRequest().permitAll();
-			// .authorizeRequests().antMatchers("/rest/inscription","/rest/inscription/**").permitAll()
-			// .and()
-			// .authorizeRequests().antMatchers("/rest/**").authenticated().and().httpBasic()
-			// .and()
-			//
+		// http
+		// 	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		// 	.and()
+		// 	.authorizeRequests().antMatchers(HttpMethod.OPTIONS).anonymous()
+		// 	.and()
+		// 	.csrf().disable()
+		// 	.authorizeRequests().antMatchers("/rest/inscription","/rest/inscription/**").permitAll()
+		// 	.and()
+		// 	.authorizeRequests().antMatchers(HttpMethod.GET,"/rest/**").permitAll()
+		// 	.and()
+		// 	.authorizeRequests().antMatchers(HttpMethod.POST,"/rest/**").authenticated().and().httpBasic()
+		// 	.and()
+		// 	.authorizeRequests().antMatchers(HttpMethod.PUT,"/rest/**").authenticated().and().httpBasic()
+		// 	.and()
+		// 	.authorizeRequests().antMatchers(HttpMethod.DELETE,"/rest/**").authenticated().and().httpBasic();
 		// @formatter:on
 	}
 

@@ -19,7 +19,7 @@ public class CommentaireKey implements Serializable {
 	@JoinColumn(name = "recette", foreignKey = @ForeignKey(name = "recette_comment_comment_fk"))
 	private Recette recette;
 
-	@JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class })
+	@JsonView(value = { Views.RecetteWithAll.class, Views.CommentaireView.class, Views.CommentaireListing.class })
 	@ManyToOne
 	@JoinColumn(name = "auteur", foreignKey = @ForeignKey(name = "comment_auteur_fk"))
 	private Utilisateur auteur;

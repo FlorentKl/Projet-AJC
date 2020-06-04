@@ -1,7 +1,8 @@
 <div class="container" *ngIf="recette.picture != null">
   <div class="row">
     <div class="col-12">
-      <img class="rounded mx-auto d-block" style="max-height: 500px" [src]="['data:image/jpeg;base64,'+ recette.picture.image]" alt="">
+      <img class="rounded mx-auto d-block" style="max-height: 500px"
+        [src]="['data:image/jpeg;base64,'+ recette.picture.image]" alt="">
     </div>
   </div>
 </div>
@@ -20,11 +21,12 @@
         </div>
       </div>
 
-      <div  *ngFor="let etape of recette.etapes">
-        <img *ngIf="etape.picture != null" class="rounded mx-auto d-block" style="max-height: 170px" [src]="['data:image/jpeg;base64,'+ etape.picture.image]" alt="">
+      <div *ngFor="let etape of recette.etapes">
+        <img *ngIf="etape.picture != null" class="rounded mx-auto d-block" style="max-height: 170px"
+          [src]="['data:image/jpeg;base64,'+ etape.picture.image]" alt="">
         <div class="single-preparation-step d-flex">
-        <h4>{{etape.numEtape+1}}.</h4>
-        <p>{{etape.texte}}</p>
+          <h4>{{etape.numEtape+1}}.</h4>
+          <p>{{etape.texte}}</p>
         </div>
       </div>
 
@@ -55,17 +57,31 @@
       <div class="receipe-headline my-4" *ngFor="let commentaire of recette.commentaires">
         <div class="receipe-duration">
           <h6>{{commentaire.id.auteur.pseudo}}</h6>
+          <p>Note : {{commentaire.note}}/5</p>
           <p>{{commentaire.texte}}</p>
         </div>
       </div>
-      <div>
+      <ng-container *ngIf="login">
+        <div>
+          <form (ngSubmit)="envoieCommentaire()">
+            <div class="form-group">
+              <label for="sel1">Select list:</label>
+              <select [(ngModel)]="newCommentaire.note" name="texte" class="form-control" id="sel1">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <textarea [(ngModel)]="newCommentaire.texte" name="note" class="form-control"></textarea>
+            <button type="submit" class="btn btn-outline-success my-2">Ajouter un commentaire</button>
+          </form>
+        </div>
+      </ng-container>
 
-        <textarea class="form-control"></textarea>
-        <button class="btn btn-outline-success my-2">Ajouter un commentaire</button>
-      </div>
     </div>
   </div>
 
 
 </div>
-
