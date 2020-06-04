@@ -35,7 +35,7 @@ export class RecetteService {
     return this.httpClient.get<Recette>(`${this.URL}/recette/all/id/${id}`);
   }
 
-  public create(recette: Recette, img: any): Observable<any> {
+  public create(recette: Recette, img: any): any {
     let id: number;
     const uploadData = new FormData();
 
@@ -67,6 +67,7 @@ export class RecetteService {
           );
           let recetteNew: Recette = new Recette();
           let type: string = recette.type.toString().toLowerCase();
+
           return this.httpClient
             .post(`${this.URL}/${type}`, o, { params: parametres })
             .pipe(
@@ -74,6 +75,7 @@ export class RecetteService {
                 recetteNew = res as Recette;
                 id = recetteNew.id;
                 console.log('PARTIE create Etapes');
+                console.log(res);
 
                 let etapes = recette.etapes;
                 let objetEtapes = [];
@@ -112,8 +114,7 @@ export class RecetteService {
                   );
                   tableau.push(createIngredient);
                 }
-                console.log(tableau);
-                return forkJoin(tableau);
+                return [res, forkJoin(tableau)];
               })
             );
         })

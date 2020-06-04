@@ -8,7 +8,12 @@ import { Unite } from '../../model/unite.enum';
 import { EtapeRecette } from '../../model/etape-recette';
 import { CommentaireService } from 'src/app/services/commentaire.service';
 import { Commentaire } from 'src/app/model/commentaire';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-recipe',
@@ -31,7 +36,7 @@ export class RecipeComponent implements OnInit {
   private _texteCtrl: FormControl;
 
   constructor(
-    private fb : FormBuilder,
+    private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private recetteService: RecetteService,
     private commService: CommentaireService,
@@ -40,8 +45,8 @@ export class RecipeComponent implements OnInit {
     this._noteCtrl = fb.control('', Validators.required);
     this._texteCtrl = fb.control('', Validators.required);
     this._formCommentaire = fb.group({
-      note: this._noteCtrl ,
-      texte: this._texteCtrl
+      note: this._noteCtrl,
+      texte: this._texteCtrl,
     });
   }
 
@@ -81,7 +86,6 @@ export class RecipeComponent implements OnInit {
 
   public envoieCommentaire() {
     this.commentaireAuteur = this.login;
-    console.log(this.newCommentaire.note);
     this.commService
       .create(this.commentaireAuteur, this.id, this.newCommentaire)
       .subscribe(
@@ -166,7 +170,6 @@ export class RecipeComponent implements OnInit {
     this._commentaires = v;
   }
 
-
   get formCommentaire(): FormGroup {
     return this._formCommentaire;
   }
@@ -190,7 +193,6 @@ export class RecipeComponent implements OnInit {
   set texteCtrl(value: FormControl) {
     this._texteCtrl = value;
   }
-
 
   get auteursCom(): Array<string> {
     return this._auteursCom;

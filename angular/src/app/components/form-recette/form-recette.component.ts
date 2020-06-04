@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Recette } from '../../model/recette';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { RecetteService } from '../../services/recette.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EtapeRecette } from '../../model/etape-recette';
 import { Ingredient } from '../../model/ingredient';
 import { HttpClient } from '@angular/common/http';
 import { ImageModel } from 'src/app/model/image-model';
-import {debounceTime, map} from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-recette',
@@ -31,7 +37,6 @@ export class FormRecetteComponent implements OnInit {
   private _coutCtrl: FormControl;
   private _imageCtrl: FormControl;
 
-
   // Etapes Recettes
   private _nbEtapes = 0;
   private _etapes: Array<number> = new Array();
@@ -47,12 +52,18 @@ export class FormRecetteComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private recetteService: RecetteService,
     private router: Router,
-    private httpClient: HttpClient,
+    private httpClient: HttpClient
   ) {
     this.nomCtrl = fb.control('', Validators.required);
     this.typeCtrl = fb.control('', Validators.required);
-    this.nbPersonneCtrl = fb.control('', [Validators.required, FormRecetteComponent.positive]);
-    this.tempsCtrl = fb.control('', [Validators.required, FormRecetteComponent.positive]);
+    this.nbPersonneCtrl = fb.control('', [
+      Validators.required,
+      FormRecetteComponent.positive,
+    ]);
+    this.tempsCtrl = fb.control('', [
+      Validators.required,
+      FormRecetteComponent.positive,
+    ]);
     this.difficulteCtrl = fb.control('', Validators.required);
     this.coutCtrl = fb.control('', Validators.required);
     this.imageCtrl = fb.control('', Validators.required);
@@ -63,7 +74,7 @@ export class FormRecetteComponent implements OnInit {
       difficulte: this.difficulteCtrl,
       type: this.typeCtrl,
       cout: this.coutCtrl,
-      image: this.imageCtrl
+      image: this.imageCtrl,
     });
   }
 
@@ -93,22 +104,24 @@ export class FormRecetteComponent implements OnInit {
     this.ingredientsArray.push(new Ingredient());
   }
 
-  static positive(control: FormControl):{ [key: string]: any; } {
+  static positive(control: FormControl): { [key: string]: any } {
     console.log(control.value);
     if (Number(control.value) < 0) {
-      return {positive: true};
+      return { positive: true };
     } else {
       return null;
     }
   }
 
   public onFileChanged(event) {
-    console.log(event);
     this.selectedFile = event.target.files[0];
 
     //validation du format et de la taille d'image
-    if (event.target.files[0].type != "image/jpeg" || event.target.files[0].size > 1048575){
-      this.imageCtrl.setErrors({ 'invalid': true });
+    if (
+      event.target.files[0].type != 'image/jpeg' ||
+      event.target.files[0].size > 1048575
+    ) {
+      this.imageCtrl.setErrors({ invalid: true });
     } else {
       this.imageCtrl.setErrors(null);
     }
@@ -144,14 +157,14 @@ export class FormRecetteComponent implements OnInit {
 
     this.recette.dateCreation = new Date();
 
-    console.log('onUpload pressé');
-    console.log(this.selectedFile);
-
     this.recetteService
       .create(this.recette, this.selectedFile)
       .subscribe((res) => {
-        //TODO - redirigier vers la page de recette plutot que l'index
-        this.router.navigate(['index']);
+        console.log('ressss : ');
+        console.log(res.id);
+        if (res.id != undefined) {
+          this.router.navigate(['/recette/view/', res.id]);
+        }
       });
   }
 
@@ -163,8 +176,6 @@ export class FormRecetteComponent implements OnInit {
       this.fb.control('')
     );
     this.etapes.push(this.nbEtapes);
-    // console.log(this.etapes);
-    console.log(this.etapesRecette);
   }
 
   public supprimerEtape() {
@@ -174,7 +185,6 @@ export class FormRecetteComponent implements OnInit {
       this.nbEtapes--;
       this.etapes.pop();
     }
-    console.log(this.etapes);
   }
 
   public ajouterIngredient() {
@@ -193,8 +203,6 @@ export class FormRecetteComponent implements OnInit {
       this.fb.control('', Validators.required)
     );
     this.ingredients.push(this.nbIngredients);
-    // console.log(this.ingredients);
-    console.log(this.ingredientsArray);
   }
 
   public supprimerIngredient() {
@@ -206,7 +214,6 @@ export class FormRecetteComponent implements OnInit {
       this.nbIngredients--;
       this.ingredients.pop();
     }
-    console.log(this.ingredients);
   }
 
   // Getters and setters
@@ -321,7 +328,6 @@ export class FormRecetteComponent implements OnInit {
   set ingredientsArray(value: Array<Ingredient>) {
     this._ingredientsArray = value;
   }
-
 
   get imageCtrl(): FormControl {
     return this._imageCtrl;
