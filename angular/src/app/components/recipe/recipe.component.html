@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-12 col-lg-8">
       <div class="receipe-headline my-5">
-        <span>{{recette.dateCreation}}</span>
+        <span>{{recette.dateCreation|date:'dd/MM/yyyy'}}</span>
         <h2>{{recette.nom}}</h2>
         <div class="receipe-duration">
           <h6>Pour {{recette.nbPersonne}} personnes</h6>
