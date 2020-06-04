@@ -24,12 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Plat;
 import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.ImageService;
+import projetSpringBoot.service.UtilisateurService;
 import projetSpringBoot.service.recette.PlatService;
 
 @RestController
@@ -41,6 +43,9 @@ public class PlatRestController {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    UtilisateurService utilisateurService;
     /*
      * Get Mapping
      */
@@ -163,10 +168,19 @@ public class PlatRestController {
      */
 
     @PostMapping(value = { "", "/" })
-    public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br, UriComponentsBuilder uCB) {
+    public ResponseEntity<Plat> addPlat(@RequestBody Plat plat, BindingResult br,
+            @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        // Cherche utilisateur et ajoute comme auteur si présent
+        Optional<Utilisateur> optUser = utilisateurService.findByPseudo(auteur);
+        if (optUser.isPresent()) {
+            plat.setAuteur(optUser.get());
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Optional<ImageModel> optImg = imageService.findById(plat.getImgRecette().getId());
         if (optImg.isPresent()) {
             plat.setImgRecette(optImg.get());

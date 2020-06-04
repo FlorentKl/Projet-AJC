@@ -24,12 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.imageModel.ImageModel;
 import projetSpringBoot.model.recette.Boisson;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.views.Views;
 import projetSpringBoot.service.ImageService;
+import projetSpringBoot.service.UtilisateurService;
 import projetSpringBoot.service.recette.BoissonService;
 
 @RestController
@@ -41,6 +43,10 @@ public class BoissonRestController {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    UtilisateurService utilisateurService;
+
     /*
      * Get Mapping
      */
@@ -165,10 +171,19 @@ public class BoissonRestController {
 
     @PostMapping(value = { "", "/" })
     public ResponseEntity<Boisson> addBoisson(@RequestBody Boisson boisson, BindingResult br,
-            UriComponentsBuilder uCB) {
+            @RequestParam(name = "auteur", required = true) String auteur, UriComponentsBuilder uCB) {
         if (br.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        // Cherche utilisateur et ajoute comme auteur si présent
+        Optional<Utilisateur> optUser = utilisateurService.findByPseudo(auteur);
+        if (optUser.isPresent()) {
+            boisson.setAuteur(optUser.get());
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Optional<ImageModel> optImg = imageService.findById(boisson.getImgRecette().getId());
         if (optImg.isPresent()) {
             boisson.setImgRecette(optImg.get());
