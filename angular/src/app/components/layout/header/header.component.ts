@@ -20,4 +20,10 @@ export class HeaderComponent implements OnInit {
     sessionStorage.removeItem('login');
     this.router.navigate(['/index']);
   }
+
+  public recherche(event: any) {
+    this.router.navigate(['/liste'], {
+      queryParams: { namelike: event.target.value },
+    });
+  }
 }
