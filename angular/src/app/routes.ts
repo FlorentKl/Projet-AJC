@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: 'index', component: IndexComponent },
   { path: '', redirectTo: 'index', pathMatch: 'full' },
   { path: 'images', component: ImagesComponent },
-  { path: 'recette/:id', component: RecipeComponent },
+  { path: 'recette/view/:id', component: RecipeComponent },
   { path: 'boissons', component: BoissonComponent },
   { path: 'entrees', component: EntreeComponent },
   { path: 'plats', component: PlatComponent },

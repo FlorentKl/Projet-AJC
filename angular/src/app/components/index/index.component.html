@@ -37,7 +37,7 @@
           <div class="top-cta-content">
             <h3>{{f.nom}}</h3>
             <h6>simple et delicieux</h6>
-            <a [routerLink]="['/recettes', f.id ]" routerLinkActive="active" class="btn delicious-btn">Recette
+            <a [routerLink]="['/recette/view', f.id ]" routerLinkActive="active" class="btn delicious-btn">Recette
               complète</a>
           </div>
         </div>
@@ -65,7 +65,7 @@
           <div class="single-best-receipe-area mb-30">
             <img [src]="['data:image/jpeg;base64,'+ r.picture.image]" alt="">
             <div class="receipe-content">
-              <a [routerLink]="['/recettes', r.id]" class="btn-outline-secondary">
+              <a [routerLink]="['/recette/view', r.id]" class="btn-outline-secondary">
                 <h5>{{r.nom}}</h5>
               </a>
             </div>
@@ -110,7 +110,7 @@
           <!-- Receipe Content -->
           <div class="receipe-content">
             <span>{{r.dateCreation|date:'dd/MM/yyyy'}}</span>
-            <a [routerLink]="['/recette', r.id]" routerLinkActive="active">
+            <a [routerLink]="['/recette/view', r.id]" routerLinkActive="active">
               <h5>{{r.nom}}</h5>
             </a>
             <p>{{r.cout}}</p>
