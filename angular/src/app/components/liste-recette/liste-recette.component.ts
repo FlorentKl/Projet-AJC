@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Recette } from 'src/app/model/recette';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import {Difficulte} from '../../model/difficulte.enum';
+import {Cout} from '../../model/cout.enum';
 
 @Component({
   selector: 'app-liste-recette',
@@ -34,6 +36,10 @@ export class ListeRecetteComponent implements OnInit {
         (res) => {
           console.log(res);
           this.recettes = res as Recette[];
+          for (let recette of this.recettes) {
+            recette.difficulte = 'Difficulte : ' + Difficulte[recette.difficulte];
+            recette.cout = 'Cout : ' + Cout[recette.cout];
+          }
         },
         (err) => {
           console.log(err);

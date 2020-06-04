@@ -13,8 +13,8 @@ export class Recette {
     private _type?: string,
     private _nbPersonne?: number,
     private _temps?: number,
-    private _cout?: Cout,
-    private _difficulte?: Difficulte,
+    private _cout?: string,
+    private _difficulte?: string,
     private _picture?: ImageModel,
     private _dateCreation?: Date,
     private _tags?: string[],
@@ -56,11 +56,11 @@ export class Recette {
     this._temps = value;
   }
 
-  get cout(): Cout {
+  get cout(): string {
     return this._cout;
   }
 
-  set cout(value: Cout) {
+  set cout(value: string) {
     this._cout = value;
   }
 
@@ -104,11 +104,11 @@ export class Recette {
     this._auteur = value;
   }
 
-  get difficulte(): Difficulte {
+  get difficulte(): string {
     return this._difficulte;
   }
 
-  set difficulte(value: Difficulte) {
+  set difficulte(value: string) {
     this._difficulte = value;
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recette } from '../../model/recette';
 import { Difficulte } from '../../model/difficulte.enum';
 import { RecetteService } from '../../services/recette.service';
+import {Cout} from '../../model/cout.enum';
 
 @Component({
   selector: 'app-index',
@@ -21,7 +22,11 @@ export class IndexComponent implements OnInit {
   }
   private initRecettes() {
     this.recetteService.findAll().subscribe((res) => {
-      this._recettes = res;
+      this.recettes = res;
+      for (let recette of this.recettes) {
+        recette.difficulte = 'Difficulte : ' + Difficulte[recette.difficulte];
+        recette.cout = 'Cout : ' + Cout[recette.cout];
+      }
     });
   }
 
