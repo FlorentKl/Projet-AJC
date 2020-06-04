@@ -80,7 +80,7 @@
     </div>
 
 
-    <!--    <app-form-ingredient-recette></app-form-ingredient-recette>-->
+    <!--  Partie Ingrédients-->
     <h6 class="mt-5">Ingrédients</h6>
     <div class="form-row" *ngFor="let i of ingredients">
       <div class="form-group col-12 col-lg-4">
@@ -90,6 +90,9 @@
       <div class="form-group col-12 col-lg-4">
         <label>Quantité </label>
         <input class="form-control" type="number" min="0" [formControlName]="'ingredientQuantite' + i">
+        <div *ngIf="!formRecette.get('ingredientQuantite'+i).valid&&formRecette.get('ingredientQuantite'+i).dirty" class="alert alert-danger">
+          Nombre invalide
+        </div>
       </div>
       <div class="form-group col-12 col-lg-4">
         <label>Unité </label>
@@ -110,7 +113,7 @@
     <button class="btn btn-outline-warning m-1" type="button" (click)="supprimerIngredient()">-
     </button>
 
-    <!--<app-form-etape-recette></app-form-etape-recette>-->
+    <!-- Partie étapes recette -->
     <h6 class="mt-4">Préparation</h6>
     <div class="form-group" *ngFor="let e of etapes">
       <label>Etape {{e + 1}}</label>
