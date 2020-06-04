@@ -34,20 +34,25 @@
             <div class="classynav">
               <ng-container *ngIf="login;else nonConnecte">
                 <ul>
-                  <li><a class="btn btn-link" [routerLink]="['/recette/edit']" routerLinkActive="active"></a>Recette
-                    Edit</li>
+                  <li><a [routerLink]="['/index']" routerLinkActive="active">Home</a></li>
+                  <li><a [routerLink]="['/recette']" routerLinkActive="active">Recettes</a></li>
+                  <li><a [routerLink]="['/recette/edit']" routerLinkActive="active">Nouvelle Recette</a></li>
                   <li><a class="btn btn-link" (click)="logout()">Logout</a></li>
                 </ul>
               </ng-container>
               <ng-template #nonConnecte>
                 <ul>
+                  <li><a [routerLink]="['/index']" routerLinkActive="active">Home</a></li>
+                  <li><a [routerLink]="['/recette']" routerLinkActive="active">Recettes</a></li>
                   <li><a [routerLink]="['/inscription']" routerLinkActive="active">Inscription</a></li>
                   <li><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
                 </ul>
               </ng-template>
               <!-- Newsletter Form -->
-              <div class="search-btn">
-                <i class="fa fa-search" aria-hidden="true"></i>
+              <div class="md-form mt-0 search-btn">
+                <input class="form-control" type="text" placeholder="Recherche" aria-label="Recherche"
+                  (keydown.enter)="recherche($event)">
+                <!--<i class="fa fa-search" aria-hidden="true"></i>-->
               </div>
 
             </div>

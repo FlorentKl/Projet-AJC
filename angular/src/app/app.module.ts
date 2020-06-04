@@ -23,7 +23,8 @@ import { EntreeComponent } from './components/entree/entree.component';
 import { PlatComponent } from './components/plat/plat.component';
 import { DessertComponent } from './components/dessert/dessert.component';
 import { UserModule } from 'src/app/user/user.module';
-import {RechercheComponent} from './components/recherche/recherche.component';
+import { RechercheComponent } from './components/recherche/recherche.component';
+import { ListeRecetteComponent } from './components/liste-recette/liste-recette.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {RechercheComponent} from './components/recherche/recherche.component';
     EntreeComponent,
     PlatComponent,
     DessertComponent,
-    RechercheComponent
+    RechercheComponent,
+    ListeRecetteComponent,
   ],
   imports: [
     BrowserModule,
