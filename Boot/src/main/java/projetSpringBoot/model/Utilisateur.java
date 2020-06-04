@@ -32,14 +32,14 @@ import projetSpringBoot.model.views.Views;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Utilisateur {
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
-            Views.TagView.class, Views.CommentaireView.class })
+            Views.TagView.class, Views.CommentaireView.class, Views.CommentaireListing.class })
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqUser")
     @Column(name = "id_adherent")
     private Integer id;
 
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
-            Views.TagView.class, Views.CommentaireView.class })
+            Views.TagView.class, Views.CommentaireView.class, Views.CommentaireListing.class })
     @Column(name = "username", length = 150, nullable = false)
     private String pseudo;
 
@@ -48,18 +48,18 @@ public class Utilisateur {
     private String password;
 
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
-            Views.TagView.class, Views.CommentaireView.class })
+            Views.TagView.class, Views.CommentaireView.class, Views.CommentaireListing.class })
     @Column(name = "date_inscription")
     @Temporal(TemporalType.DATE)
     private Date dateInscription;
 
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
-            Views.TagView.class, Views.CommentaireView.class })
+            Views.TagView.class, Views.CommentaireView.class, Views.CommentaireListing.class })
     @Column(name = "enable")
     private Boolean enabled;
 
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
-            Views.TagView.class, Views.CommentaireView.class })
+            Views.TagView.class, Views.CommentaireView.class, Views.CommentaireListing.class })
     @OneToOne
     @JoinColumn(name = "id_img", referencedColumnName = "id_pic", foreignKey = @ForeignKey(name = "users_pic_FK"))
     private ImageModel imageProfil;
@@ -77,7 +77,7 @@ public class Utilisateur {
     private Set<UtilisateurRole> roles;
 
     @JsonView(value = { Views.UtilisateurView.class, Views.RecetteView.class, Views.RecetteWithAll.class,
-            Views.TagView.class, Views.CommentaireView.class })
+            Views.TagView.class, Views.CommentaireView.class, Views.CommentaireListing.class })
     @Version
     private Integer version;
 

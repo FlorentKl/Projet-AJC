@@ -19,6 +19,9 @@ public class Views {
     public static class CommentaireView {
     }
 
+    public static class CommentaireListing {
+    }
+
     public static class RecetteWithAll extends RecetteView {
     }
 
