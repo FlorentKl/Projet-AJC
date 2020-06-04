@@ -1,13 +1,23 @@
 <h1 class="text-center">Recherche avancée</h1>
 <div class="container">
-  <form>
+  <form (ngSubmit)="rechercher()">
     <div class="form-group">
       <label for="exampleFormControlInput1">Nom recette</label>
-      <input class="form-control" id="exampleFormControlInput1" placeholder="Rechercher">
+      <input [(ngModel)]="namelike" class="form-control" id="exampleFormControlInput1" placeholder="Rechercher">
+    </div>
+    <div class="form-group">
+      <label for="sel1">Note</label>
+      <select [(ngModel)]="note" name="texte" class="form-control" id="sel1">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
     </div>
     <div class="form-group">
       <label>Type</label>
-      <select class="form-control" [(ngModel)]="recette.type">
+      <select class="form-control" [(ngModel)]="type">
         <option value="boisson">Boisson</option>
         <option value="entree">Entree</option>
         <option value="plat">Plat</option>
@@ -16,7 +26,7 @@
     </div>
     <div class="form-group">
       <label>Difficulté</label>
-      <select class="form-control" [(ngModel)]="recette.difficulte">
+      <select class="form-control" [(ngModel)]="difficulte">
         <option value="F">Facile</option>
         <option value="M">Medium</option>
         <option value="D">Difficile</option>
@@ -25,7 +35,7 @@
     </div>
     <div class="form-group">
       <label>Coût</label>
-      <select class="form-control" [(ngModel)]="recette.cout">
+      <select class="form-control" [(ngModel)]="cout">
         <option value="L">Bon marché</option>
         <option value="M">Moyen</option>
         <option value="E">Cher</option>
@@ -33,7 +43,7 @@
       </select>
     </div>
     <div>
-      <button class="btn btn-success">Rechercher</button>
+      <button class="btn btn-success" type="submit">Rechercher</button>
     </div>
   </form>
 </div>
