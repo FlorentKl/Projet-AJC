@@ -51,8 +51,8 @@ export class FormRecetteComponent implements OnInit {
   ) {
     this.nomCtrl = fb.control('', Validators.required);
     this.typeCtrl = fb.control('', Validators.required);
-    this.nbPersonneCtrl = fb.control('', Validators.compose([Validators.required, FormRecetteComponent.positive]));
-    this.tempsCtrl = fb.control('', Validators.compose([Validators.required, FormRecetteComponent.positive]));
+    this.nbPersonneCtrl = fb.control('', [Validators.required, FormRecetteComponent.positive]);
+    this.tempsCtrl = fb.control('', [Validators.required, FormRecetteComponent.positive]);
     this.difficulteCtrl = fb.control('', Validators.required);
     this.coutCtrl = fb.control('', Validators.required);
     this.imageCtrl = fb.control('', Validators.required);
@@ -84,7 +84,7 @@ export class FormRecetteComponent implements OnInit {
     );
     this.formRecette.addControl(
       'ingredientQuantite' + this.nbIngredients,
-      this.fb.control('', Validators.required)
+      this.fb.control('', [Validators.required, FormRecetteComponent.positive])
     );
     this.formRecette.addControl(
       'ingredientUnite' + this.nbIngredients,
@@ -186,7 +186,7 @@ export class FormRecetteComponent implements OnInit {
     );
     this.formRecette.addControl(
       'ingredientQuantite' + this.nbIngredients,
-      this.fb.control('', Validators.compose([Validators.required, FormRecetteComponent.positive]))
+      this.fb.control('', [Validators.required, FormRecetteComponent.positive])
     );
     this.formRecette.addControl(
       'ingredientUnite' + this.nbIngredients,

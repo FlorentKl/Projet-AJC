@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-12 col-lg-8">
       <div class="receipe-headline my-5">
-        <span>{{recette.dateCreation}}</span>
+        <span>{{recette.dateCreation|date:'dd/MM/yyyy'}}</span>
         <h2>{{recette.nom}}</h2>
         <div class="receipe-duration">
           <h6>Pour {{recette.nbPersonne}} personnes</h6>
@@ -53,29 +53,33 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h4>Commentaires</h4>
+      <h4 *ngIf="!(login==null&&recette.commentaires.length==0)">Commentaires</h4>
       <div class="receipe-headline my-4" *ngFor="let commentaire of recette.commentaires">
         <div class="receipe-duration">
           <h6>{{commentaire.id.auteur.pseudo}}</h6>
           <p>Note : {{commentaire.note}}/5</p>
           <p>{{commentaire.texte}}</p>
+
         </div>
       </div>
       <ng-container *ngIf="login">
         <div>
-          <form (ngSubmit)="envoieCommentaire()">
+          <form (ngSubmit)="envoieCommentaire()" [formGroup]="formCommentaire">
             <div class="form-group">
-              <label for="sel1">Select list:</label>
-              <select [(ngModel)]="newCommentaire.note" name="texte" class="form-control" id="sel1">
+              <select [(ngModel)]="newCommentaire.note" name="texte" class="form-control" id="sel1" formControlName="note">
+                <option value="0" disabled selected="selected">Selectionnez une note</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
-                <option value="3" selected>3</option>
+                <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
               </select>
             </div>
-            <textarea [(ngModel)]="newCommentaire.texte" name="note" class="form-control"></textarea>
-            <button type="submit" class="btn btn-outline-success my-2">Ajouter un commentaire</button>
+            <textarea [(ngModel)]="newCommentaire.texte" name="note" class="form-control" placeholder="Ecrivez votre commentaire" formControlName="texte"></textarea>
+            <button type="submit" class="btn btn-outline-success my-2" [disabled]="disable()">Ajouter un commentaire</button>
+            <span *ngFor="let commentaire of recette.commentaires" >
+              <span class="mx-3" *ngIf="commentaire.id.auteur.pseudo==login">Vous avez déjà ajouté un commentaire</span>
+            </span>
           </form>
         </div>
       </ng-container>
