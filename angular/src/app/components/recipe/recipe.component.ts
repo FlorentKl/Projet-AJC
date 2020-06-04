@@ -34,6 +34,7 @@ export class RecipeComponent implements OnInit {
   ngOnInit(): void {
     this.initRecette();
     this.newCommentaire = new Commentaire();
+    this.newCommentaire.note = 3;
     this.commService.finAllFromRecette(this.id).subscribe(
       (res) => {
         this.commentaires = res;

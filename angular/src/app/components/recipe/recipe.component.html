@@ -65,16 +65,17 @@
         <div>
           <form (ngSubmit)="envoieCommentaire()">
             <div class="form-group">
-              <label for="sel1">Select list:</label>
+              <label for="sel1">Note : </label>
               <select [(ngModel)]="newCommentaire.note" name="texte" class="form-control" id="sel1">
+                
                 <option value="1">1</option>
                 <option value="2">2</option>
-                <option value="3" selected>3</option>
+                <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
               </select>
             </div>
-            <textarea [(ngModel)]="newCommentaire.texte" name="note" class="form-control"></textarea>
+            <textarea [(ngModel)]="newCommentaire.texte" name="note" class="form-control" placeholder="Ecrivez votre commentaire"></textarea>
             <button type="submit" class="btn btn-outline-success my-2">Ajouter un commentaire</button>
           </form>
         </div>
