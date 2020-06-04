@@ -24,6 +24,7 @@ export class RecipeComponent implements OnInit {
   private _commentaires: any;
   private _newCommentaire: Commentaire;
   private _newCommentaireAuteur: string;
+  private _auteursCom: Array<string> = new Array();
 
   private _formCommentaire: FormGroup;
   private _noteCtrl: FormControl;
@@ -73,7 +74,6 @@ export class RecipeComponent implements OnInit {
           data.etapes.sort(function (a, b) {
             return a.numEtape - b.numEtape;
           });
-          console.log(this.recette.commentaires);
         });
       }
     });
@@ -95,7 +95,7 @@ export class RecipeComponent implements OnInit {
   }
 
   public disable(): boolean {
-    return !this.formCommentaire.valid||!this.noteCtrl.dirty;
+    return !this.formCommentaire.valid || !this.noteCtrl.dirty;
   }
 
   public get login() {
@@ -189,5 +189,14 @@ export class RecipeComponent implements OnInit {
 
   set texteCtrl(value: FormControl) {
     this._texteCtrl = value;
+  }
+
+
+  get auteursCom(): Array<string> {
+    return this._auteursCom;
+  }
+
+  set auteursCom(value: Array<string>) {
+    this._auteursCom = value;
   }
 }

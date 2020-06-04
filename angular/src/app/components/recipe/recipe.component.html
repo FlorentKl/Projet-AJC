@@ -59,6 +59,7 @@
           <h6>{{commentaire.id.auteur.pseudo}}</h6>
           <p>Note : {{commentaire.note}}/5</p>
           <p>{{commentaire.texte}}</p>
+
         </div>
       </div>
       <ng-container *ngIf="login">
@@ -76,6 +77,9 @@
             </div>
             <textarea [(ngModel)]="newCommentaire.texte" name="note" class="form-control" placeholder="Ecrivez votre commentaire" formControlName="texte"></textarea>
             <button type="submit" class="btn btn-outline-success my-2" [disabled]="disable()">Ajouter un commentaire</button>
+            <span *ngFor="let commentaire of recette.commentaires" >
+              <span class="mx-3" *ngIf="commentaire.id.auteur.pseudo==login">Vous avez déjà ajouté un commentaire</span>
+            </span>
           </form>
         </div>
       </ng-container>
