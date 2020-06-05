@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {Difficulte} from '../../model/difficulte.enum';
-import {Cout} from '../../model/cout.enum';
-import {Recette} from '../../model/recette';
-import {RecetteService} from '../../services/recette.service';
-import {Router} from '@angular/router';
+import { Difficulte } from '../../model/difficulte.enum';
+import { Cout } from '../../model/cout.enum';
+import { Recette } from '../../model/recette';
+import { RecetteService } from '../../services/recette.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mesrecettes',
   templateUrl: './mesrecettes.component.html',
-  styleUrls: ['./mesrecettes.component.css']
+  styleUrls: ['./mesrecettes.component.css'],
 })
 export class MesrecettesComponent implements OnInit {
   private _recettes: Recette[];
   private _login: string;
 
-
-  constructor(private recetteService: RecetteService, private router: Router,) { }
+  constructor(private recetteService: RecetteService, private router: Router) {}
 
   ngOnInit() {
     this.initRecettes();
@@ -33,8 +32,8 @@ export class MesrecettesComponent implements OnInit {
   }
 
   public supprimer(id: number) {
-    this.recetteService.delete(id).subscribe(res => {
-      this.ngOnInit();
+    this.recetteService.delete(id).subscribe((res) => {
+      window.location.reload();
     });
   }
 
@@ -45,7 +44,6 @@ export class MesrecettesComponent implements OnInit {
   set recettes(value: Recette[]) {
     this._recettes = value;
   }
-
 
   get login(): string {
     return this._login;
