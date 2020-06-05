@@ -24,6 +24,7 @@ export class RechercheComponent implements OnInit {
   ngOnInit() {
   }
   public rechercher(){
+    console.log(this.difficulte);
   this.router.navigate(['/liste'],
     {queryParams: {
         namelike: this.namelike,

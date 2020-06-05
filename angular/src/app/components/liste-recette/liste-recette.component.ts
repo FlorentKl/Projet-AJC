@@ -47,7 +47,7 @@ export class ListeRecetteComponent implements OnInit {
 
       if (params.difficulte) {
         this.difficulte = params.difficulte;
-        paramsget = paramsget.set('difficulte', this._difficulte);
+        paramsget = paramsget.set('diff', this._difficulte);
       }
       if (params.cout) {
         this.cout = params.cout;
