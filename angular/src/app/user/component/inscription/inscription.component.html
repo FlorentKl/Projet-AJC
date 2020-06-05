@@ -13,9 +13,8 @@
         </div>
         <div class="form-group">
             <label>mot de passe:</label>
-            <input [type]="show1 ? 'text' : 'password'" [(ngModel)]="user.password" class="form-control"
-                formControlName="password" placeholder="Mot de passe">
-            <button (click)="password1()">Show</button>
+            <input type="password" [(ngModel)]="user.password" class="form-control" formControlName="password"
+                placeholder="Mot de passe">
             <div *ngIf="passwordCtrl.dirty&&passwordCtrl.hasError('required')" class="alert alert-danger">
                 mot de passe obligatoire
             </div>
@@ -25,9 +24,8 @@
         </div>
         <div class="form-group">
             <label>confirmer votre mot de passe:</label>
-            <input [type]="show2 ? 'text' : 'password'" class="form-control" formControlName="confirme"
+            <input type="password" class="form-control" formControlName="confirme"
                 placeholder="Vérifier le mot de passe">
-            <button (click)="password2()">Show</button>
             <div *ngIf="confirmeCtrl.dirty&&confirmeCtrl.hasError('required')" class="alert alert-danger">
                 confirmation obligatoire
             </div>
