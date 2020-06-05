@@ -27,6 +27,12 @@ export class RecetteService {
     return this.httpClient.get(`${this.URL}/recette/nom/${nom}`);
   }
 
+  public findByAuteur(auteur: string): Observable<Array<Recette>> {
+    return this.httpClient.get<Array<Recette>>(
+      `${this.URL}/recette/auteur/${auteur}`
+    );
+  }
+
   public findBest(): Observable<Array<Recette>> {
     let note: number = 5;
     let params = new HttpParams().set('note', note.toString());

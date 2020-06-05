@@ -17,12 +17,12 @@ export class MesrecettesComponent implements OnInit {
   constructor(private recetteService: RecetteService, private router: Router) {}
 
   ngOnInit() {
-    this.initRecettes();
     this.login = sessionStorage.getItem('login');
+    this.initRecettes();
   }
 
   private initRecettes() {
-    this.recetteService.findAll().subscribe((res) => {
+    this.recetteService.findByAuteur(this.login).subscribe((res) => {
       this._recettes = res;
       for (let recette of this._recettes) {
         recette.difficulte = 'Difficulte : ' + Difficulte[recette.difficulte];

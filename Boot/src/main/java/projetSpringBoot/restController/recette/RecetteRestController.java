@@ -21,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import projetSpringBoot.model.Utilisateur;
 import projetSpringBoot.model.Ingredients.Ingredient;
 import projetSpringBoot.model.recette.Couts;
 import projetSpringBoot.model.recette.Dessert;
 import projetSpringBoot.model.recette.Difficulte;
 import projetSpringBoot.model.recette.Recette;
 import projetSpringBoot.model.views.Views;
+import projetSpringBoot.service.UtilisateurService;
 import projetSpringBoot.service.recette.RecetteService;
 
 @RestController
@@ -36,6 +38,8 @@ public class RecetteRestController {
     @Autowired
     RecetteService recetteService;
 
+    @Autowired
+    UtilisateurService userService;
     /*
      * Get Mapping
      */
@@ -92,6 +96,17 @@ public class RecetteRestController {
     @GetMapping("/all/notnom/{nom}")
     public ResponseEntity<List<Recette>> findAllByNomNotLike(@PathVariable("nom") String nom) {
         return new ResponseEntity<>(recetteService.findByNomNotContaining(nom), HttpStatus.OK);
+    }
+
+    @JsonView(Views.RecetteView.class)
+    @GetMapping("/auteur/{auteur}")
+    public ResponseEntity<List<Recette>> findByAuteur(@PathVariable("auteur") String auteur) {
+        Optional<Utilisateur> optUser = userService.findByPseudo(auteur);
+        if (optUser.isPresent()) {
+            return new ResponseEntity<>(recetteService.findByAuteur(optUser.get()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @JsonView(Views.RecetteWithAll.class)
