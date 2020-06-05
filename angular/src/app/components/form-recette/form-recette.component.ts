@@ -21,6 +21,8 @@ import { debounceTime, map } from 'rxjs/operators';
   styleUrls: ['./form-recette.component.css'],
 })
 export class FormRecetteComponent implements OnInit {
+  //Login
+  login: any;
   //Image
   public selectedFile;
   public event1;
@@ -79,6 +81,8 @@ export class FormRecetteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.login = sessionStorage.getItem('login');
+
     this._nbEtapes = 0;
     this._etapes = [0];
     this.formRecette.addControl(
@@ -163,8 +167,7 @@ export class FormRecetteComponent implements OnInit {
         console.log('ressss : ');
         console.log(res.id);
 
-          this.router.navigate(['mesrecettes']);
-
+        this.router.navigate(['mesrecettes']);
       });
   }
 

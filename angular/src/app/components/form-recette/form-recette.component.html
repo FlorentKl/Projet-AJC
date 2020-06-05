@@ -1,142 +1,146 @@
-<div class="container">
-  <p>Veuillez remplir l'intégralité des champs de ce formulaire afin d'enregistrer une nouvelle recette.</p>
-  <!--  Informations générales-->
-  <h6 class="mt-4">Informations générales</h6>
-  <form (ngSubmit)="save()" [formGroup]="formRecette">
+<ng-container *ngIf="login;else nonConnecte">
+  <div class="container">
+    <p>Veuillez remplir l'intégralité des champs de ce formulaire afin d'enregistrer une nouvelle recette.</p>
+    <!--  Informations générales-->
+    <h6 class="mt-4">Informations générales</h6>
+    <form (ngSubmit)="save()" [formGroup]="formRecette">
 
-    <div class="form-row">
-      <div class="form-group col-12 col-lg-6">
-        <label>Nom de la recette</label>
-        <input [(ngModel)]="recette.nom" class="form-control" formControlName="nom">
-        <div *ngIf="nomCtrl.hasError('required')&&nomCtrl.dirty" class="alert alert-danger">
-          Donnée manquante
+      <div class="form-row">
+        <div class="form-group col-12 col-lg-6">
+          <label>Nom de la recette</label>
+          <input [(ngModel)]="recette.nom" class="form-control" formControlName="nom">
+          <div *ngIf="nomCtrl.hasError('required')&&nomCtrl.dirty" class="alert alert-danger">
+            Donnée manquante
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-lg-6">
+          <label>Type de préparation</label>
+          <select class="custom-select" [(ngModel)]="recette.type" formControlName="type">
+            <option value="Entree">Entrée</option>
+            <option value="Plat">Plat</option>
+            <option value="Dessert">Dessert</option>
+            <option value="Boisson">Boisson</option>
+          </select>
+          <div *ngIf="typeCtrl.hasError('required')&&typeCtrl.dirty" class="alert alert-danger">
+            Donnée manquante
+          </div>
         </div>
       </div>
 
-      <div class="form-group col-12 col-lg-6">
-        <label>Type de préparation</label>
-        <select class="custom-select" [(ngModel)]="recette.type" formControlName="type">
-          <option value="Entree">Entrée</option>
-          <option value="Plat">Plat</option>
-          <option value="Dessert">Dessert</option>
-          <option value="Boisson">Boisson</option>
-        </select>
-        <div *ngIf="typeCtrl.hasError('required')&&typeCtrl.dirty" class="alert alert-danger">
-          Donnée manquante
+      <div class="form-row">
+        <div class="form-group col-12 col-lg-6">
+          <label>Niveau de difficulté</label>
+          <select class="custom-select" [(ngModel)]="recette.difficulte" formControlName="difficulte">
+            <option value="F">Facile</option>
+            <option value="M">Medium</option>
+            <option value="D">Difficile</option>
+            <option value="E">Expert</option>
+          </select>
         </div>
-      </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-12 col-lg-6">
-        <label>Niveau de difficulté</label>
-        <select class="custom-select" [(ngModel)]="recette.difficulte" formControlName="difficulte">
-          <option value="F">Facile</option>
-          <option value="M">Medium</option>
-          <option value="D">Difficile</option>
-          <option value="E">Expert</option>
-        </select>
-      </div>
-
-      <div class="form-group col-12 col-lg-6">
-        <label>Coût</label>
-        <select class="custom-select" [(ngModel)]="recette.cout" formControlName="cout">
-          <option value="L">Bon marché</option>
-          <option value="M">Moyen</option>
-          <option value="E">Cher</option>
-          <option value="VE">Très cher</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-12 col-lg-6">
-        <label>Pour combien de personnes</label>
-        <input [(ngModel)]="recette.nbPersonne" class="form-control" type="number" min="0" formControlName="nbPersonne">
-        <div *ngIf="!nbPersonneCtrl.valid&&nbPersonneCtrl.dirty" class="alert alert-danger">
-          Nombre invalide
+        <div class="form-group col-12 col-lg-6">
+          <label>Coût</label>
+          <select class="custom-select" [(ngModel)]="recette.cout" formControlName="cout">
+            <option value="L">Bon marché</option>
+            <option value="M">Moyen</option>
+            <option value="E">Cher</option>
+            <option value="VE">Très cher</option>
+          </select>
         </div>
       </div>
 
-      <div class="form-group col-12 col-lg-6">
-        <label>Durée de préparation (en minutes)</label>
-        <input [(ngModel)]="recette.temps" class="form-control" type="number" min="0" formControlName="temps">
-        <div *ngIf="!tempsCtrl.valid&&tempsCtrl.dirty" class="alert alert-danger">
-          Nombre invalide
+      <div class="form-row">
+        <div class="form-group col-12 col-lg-6">
+          <label>Pour combien de personnes</label>
+          <input [(ngModel)]="recette.nbPersonne" class="form-control" type="number" min="0"
+            formControlName="nbPersonne">
+          <div *ngIf="!nbPersonneCtrl.valid&&nbPersonneCtrl.dirty" class="alert alert-danger">
+            Nombre invalide
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-lg-6">
+          <label>Durée de préparation (en minutes)</label>
+          <input [(ngModel)]="recette.temps" class="form-control" type="number" min="0" formControlName="temps">
+          <div *ngIf="!tempsCtrl.valid&&tempsCtrl.dirty" class="alert alert-danger">
+            Nombre invalide
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>Photo principale</label>
-      <div class="custom-file">
-        <input type="file" accept=".jpg, .jpeg"(change)="onFileChanged($event)" formControlName="image" class="custom-file-input" id="inputGroupFile01">
-        <label class="custom-file-label" for="inputGroupFile01">Choisissez une image au format .jpeg ou .jpg et d'une taille inférieure à 1MB</label>
-        <div *ngIf="!imageCtrl.valid&&imageCtrl.dirty" class="alert alert-danger">
-          Image invalide
+      <div class="form-group">
+        <label>Photo principale</label>
+        <div class="custom-file">
+          <input type="file" accept=".jpg, .jpeg" (change)="onFileChanged($event)" formControlName="image"
+            class="custom-file-input" id="inputGroupFile01">
+          <label class="custom-file-label" for="inputGroupFile01">Choisissez une image au format .jpeg ou .jpg et d'une
+            taille inférieure à 1MB</label>
+          <div *ngIf="!imageCtrl.valid&&imageCtrl.dirty" class="alert alert-danger">
+            Image invalide
+          </div>
         </div>
+        <img [src]="imgURL" height="200" class="rounded mx-auto d-block my-3 shadow mb-5 bg-white rounded"
+          style="max-height: 500px" *ngIf="imgURL">
       </div>
-      <img [src]="imgURL" height="200" class="rounded mx-auto d-block my-3 shadow mb-5 bg-white rounded" style="max-height: 500px" *ngIf="imgURL">
-    </div>
 
 
-    <!--  Partie Ingrédients-->
-    <h6 class="mt-5">Ingrédients</h6>
-    <div class="form-row" *ngFor="let i of ingredients">
-      <div class="form-group col-12 col-lg-4">
-        <label>Ingrédient {{i + 1}} </label>
-        <input class="form-control" [formControlName]="'ingredientNom' + i">
-      </div>
-      <div class="form-group col-12 col-lg-4">
-        <label>Quantité </label>
-        <input class="form-control" type="number" min="0" [formControlName]="'ingredientQuantite' + i">
-        <div *ngIf="!formRecette.get('ingredientQuantite'+i).valid&&formRecette.get('ingredientQuantite'+i).dirty" class="alert alert-danger">
-          Nombre invalide
+      <!--  Partie Ingrédients-->
+      <h6 class="mt-5">Ingrédients</h6>
+      <div class="form-row" *ngFor="let i of ingredients">
+        <div class="form-group col-12 col-lg-4">
+          <label>Ingrédient {{i + 1}} </label>
+          <input class="form-control" [formControlName]="'ingredientNom' + i">
         </div>
+        <div class="form-group col-12 col-lg-4">
+          <label>Quantité </label>
+          <input class="form-control" type="number" min="0" [formControlName]="'ingredientQuantite' + i">
+          <div *ngIf="!formRecette.get('ingredientQuantite'+i).valid&&formRecette.get('ingredientQuantite'+i).dirty"
+            class="alert alert-danger">
+            Nombre invalide
+          </div>
+        </div>
+        <div class="form-group col-12 col-lg-4">
+          <label>Unité </label>
+          <select class="custom-select" [formControlName]="'ingredientUnite' + i">
+            <option value="MG">Milligrammes</option>
+            <option value="G">Grammes</option>
+            <option value="KG">Kilogrammes</option>
+            <option value="ML">Millilitres</option>
+            <option value="CL">Centilitres</option>
+            <option value="L">Litres</option>
+          </select>
+        </div>
+
       </div>
-      <div class="form-group col-12 col-lg-4">
-        <label>Unité </label>
-        <select class="custom-select" [formControlName]="'ingredientUnite' + i">
-          <option value="MG">Milligrammes</option>
-          <option value="G">Grammes</option>
-          <option value="KG">Kilogrammes</option>
-          <option value="ML">Millilitres</option>
-          <option value="CL">Centilitres</option>
-          <option value="L">Litres</option>
-        </select>
+
+      <button class="btn btn-outline-success m-1" type="button" (click)="ajouterIngredient()">+
+      </button>
+      <button class="btn btn-outline-warning m-1" type="button" (click)="supprimerIngredient()">-
+      </button>
+
+      <!-- Partie étapes recette -->
+      <h6 class="mt-4">Préparation</h6>
+      <div class="form-group" *ngFor="let e of etapes">
+        <label>Etape {{e + 1}}</label>
+        <textarea class="form-control" [formControlName]="'etapeRecette' + e"></textarea>
       </div>
 
-    </div>
+      <button class="btn btn-outline-success m-1" type="button" (click)="ajouterEtape()">+
+      </button>
+      <button class="btn btn-outline-warning m-1" type="button" (click)="supprimerEtape()">-
+      </button>
 
-    <button class="btn btn-outline-success m-1" type="button" (click)="ajouterIngredient()">+
-    </button>
-    <button class="btn btn-outline-warning m-1" type="button" (click)="supprimerIngredient()">-
-    </button>
-
-    <!-- Partie étapes recette -->
-    <h6 class="mt-4">Préparation</h6>
-    <div class="form-group" *ngFor="let e of etapes">
-      <label>Etape {{e + 1}}</label>
-      <textarea class="form-control" [formControlName]="'etapeRecette' + e"></textarea>
-    </div>
-
-    <button class="btn btn-outline-success m-1" type="button" (click)="ajouterEtape()">+
-    </button>
-    <button class="btn btn-outline-warning m-1" type="button" (click)="supprimerEtape()">-
-    </button>
-
-    <!--bouton validation -->
-    <div>
-      <button class="btn btn-outline-success m-1" type="submit" [disabled]="!formRecette.valid">Enregistrer</button>
-      <a [routerLink]="['/index']" routerLinkActive="active" class="btn btn-outline-danger m-1">annuler</a>
-    </div>
-  </form>
-</div>
-<!-- nbPersonne
-temps
-cout
-difficulte
-picture
-tags
-etapes
--->
+      <!--bouton validation -->
+      <div>
+        <button class="btn btn-outline-success m-1" type="submit" [disabled]="!formRecette.valid">Enregistrer</button>
+        <a [routerLink]="['/index']" routerLinkActive="active" class="btn btn-outline-danger m-1">annuler</a>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<ng-template #nonConnecte>
+  <div class="alert alert-danger">
+    Indisponible
+  </div>
+</ng-template>
